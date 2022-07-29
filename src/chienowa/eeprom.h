@@ -66,8 +66,8 @@ typedef struct {
 } eeprom_config;
 
 int eeprom_init(eeprom_config *const e_config);
-int eeprom_read(uint8_t *const pBuffer, uint16_t addr, uint32_t num);
-int eeprom_write(uint8_t *const pBuffer, uint16_t addr, uint32_t num);
+void eeprom_read(uint8_t *const pBuffer, uint16_t addr, uint32_t num);
+void eeprom_write(uint8_t *const pBuffer, uint16_t addr, uint32_t num);
 void get_status(void);
 void eeprom_set_block(EEPROM_BLOCK_t block);
 int eeprom_runtime(void);

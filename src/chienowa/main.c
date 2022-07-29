@@ -89,11 +89,10 @@ void init(void) {
 //		clone.crc = 100;
 //		eeprom_write((uint8_t *)&clone, 0x0000, 41);
 		eeprom_read((uint8_t *)&g_numberSetting, 0x0000, 41);
+		eeprom_write((uint8_t *)&g_numberSetting, 0x0000, 41);
+		eeprom_read((uint8_t *)&clone, 0x0000, 41);
 //		caster.a = g_numberSetting;
 	}
-
-	while(eeprom_runtime());
-
 }
 
 const uint8_t max = 40;
