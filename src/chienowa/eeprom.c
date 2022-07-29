@@ -39,10 +39,10 @@ struct Transmit_Package *current_pakage;
 
 int push_package_queue(struct Transmit_Package *pakage) {
 	uint8_t next = data_queue.head + 1;
-	if(next >= 10){
+	if (next >= 10) {
 		next = 0;
 	}
-	if(next == data_queue.tail){
+	if (next == data_queue.tail) {
 		return -1;
 	}
 	data_queue.pakages[data_queue.head] = *pakage;
@@ -52,63 +52,64 @@ int push_package_queue(struct Transmit_Package *pakage) {
 }
 int pop_package_queue(void) {
 	uint8_t next = data_queue.tail + 1;
-	if(next >= 10){
+	if (next >= 10) {
 		next = 0;
 	}
-	if(data_queue.tail == data_queue.head){
+	if (data_queue.tail == data_queue.head) {
 		return -1;
 	}
 	current_pakage = &data_queue.pakages[data_queue.tail];
 	data_queue.tail = next;
 	return 0;
 }
-struct Runtime_Queue_Data{
+struct Runtime_Queue_Data {
 	uint8_t *p_data;
 	uint16_t len;
 	uint16_t addr;
 };
 struct Runtime_Queue_Data *current_runtime_data;
-struct Runtime_Queue{
+struct Runtime_Queue {
 	uint16_t queue;
 	struct Runtime_Queue_Data data[16];
 	uint8_t head;
 	uint8_t tail;
 } runtime_queue;
 
-enum RUMTIME_QUEUE_E{
+enum RUMTIME_QUEUE_E {
 	READ = 0x0000, WRITE = 0x0001
-}current_runtime_type;
-int push_runtime_queue(enum RUMTIME_QUEUE_E input, uint8_t *const p_data, uint16_t addr, uint16_t len){
+} current_runtime_type;
+int push_runtime_queue(enum RUMTIME_QUEUE_E input, uint8_t *const p_data,
+		uint16_t addr, uint16_t len) {
 	uint8_t next = runtime_queue.head + 1;
-	if(next >= 16){
+	if (next >= 16) {
 		next = 0;
 	}
-	if(next == runtime_queue.tail){
+	if (next == runtime_queue.tail) {
 		return -1;
 	}
 	uint16_t bit = 0x0001 << (15 - runtime_queue.head);
-	if(input)
+	if (input)
 		runtime_queue.queue |= bit;
-	else{
+	else {
 		runtime_queue.queue &= (~bit);
 	}
 	runtime_queue.data[runtime_queue.head].p_data = p_data;
 	runtime_queue.data[runtime_queue.head].addr = addr;
 	runtime_queue.data[runtime_queue.head].len = len;
 	runtime_queue.head = next;
-    return 0;
+	return 0;
 }
-int pop_runtime_queue(void){
+int pop_runtime_queue(void) {
 	uint8_t next = runtime_queue.tail + 1;
-	if(next >= 16){
+	if (next >= 16) {
 		next = 0;
 	}
-	if(runtime_queue.tail == runtime_queue.head){
+	if (runtime_queue.tail == runtime_queue.head) {
 		return -1;
 	}
-    uint16_t bit = 0x0001 << (15 - runtime_queue.tail);
-    bit &= runtime_queue.queue;
-    bit = bit >> (15 - runtime_queue.tail);
+	uint16_t bit = 0x0001 << (15 - runtime_queue.tail);
+	bit &= runtime_queue.queue;
+	bit = bit >> (15 - runtime_queue.tail);
 	current_runtime_type = bit ? WRITE : READ;
 	current_runtime_data = &runtime_queue.data[runtime_queue.tail];
 	runtime_queue.tail = next;
@@ -139,7 +140,7 @@ union Page_Data {
 		uint8_t addr0;
 		uint8_t addr1;
 		uint8_t data[32];
-	} refined;
+	};
 	uint8_t transmit_buffer[32 + 3];
 };
 struct {
@@ -155,33 +156,34 @@ struct {
 void read_callback(void) {
 	if (eeprom_buffer.current_page != 0) {
 		for (int i = 0; i < 32; i++) {
-			eeprom_buffer.p_data[i] = eeprom_buffer.page_data.refined.data[i];
+			eeprom_buffer.p_data[i] = eeprom_buffer.page_data.data[i];
 		}
 		eeprom_buffer.p_data += 32;
 		eeprom_buffer.addr += (uint16_t) 32
-							* (eeprom_buffer.max_page - eeprom_buffer.current_page + 1);
-		eeprom_buffer.page_data.refined.cmd = EEPROM_READ;
-		eeprom_buffer.page_data.refined.addr0 = eeprom_buffer.addr >> 8;
-		eeprom_buffer.page_data.refined.addr1 = eeprom_buffer.addr;
+				* (eeprom_buffer.max_page - eeprom_buffer.current_page + 1);
+		eeprom_buffer.page_data.cmd = EEPROM_READ;
+		eeprom_buffer.page_data.addr0 = eeprom_buffer.addr >> 8;
+		eeprom_buffer.page_data.addr1 = eeprom_buffer.addr;
 		eeprom_buffer.current_page--;
 		if (eeprom_buffer.current_page == 0 && eeprom_buffer.rsvd != 0) {
-			add_transmit_data_queue(eeprom_buffer.page_data.refined.data, eeprom_buffer.rsvd,
+			add_transmit_data_queue(eeprom_buffer.page_data.data,
+					eeprom_buffer.rsvd, read_callback);
+			runtime_state = 2;
+			eeprom_runtime();
+		} else if (eeprom_buffer.current_page != 0) {
+			add_transmit_data_queue(eeprom_buffer.page_data.data, 32,
 					read_callback);
-			runtime_state = 2;
-			eeprom_runtime();
-		}else if(eeprom_buffer.current_page != 0){
-			add_transmit_data_queue(eeprom_buffer.page_data.refined.data, 32, read_callback);
 			eeprom_runtime();
 			runtime_state = 2;
-		}else{
+		} else {
 			CSI_CS_HIGH();
 			eeprom_buffer.busy = 0;
 		}
-	}else{
+	} else {
 		//Run callback last time
 		CSI_CS_HIGH();
 		for (int i = 0; i < eeprom_buffer.rsvd; i++) {
-			eeprom_buffer.p_data[i] = eeprom_buffer.page_data.refined.data[i];
+			eeprom_buffer.p_data[i] = eeprom_buffer.page_data.data[i];
 		}
 		eeprom_buffer.busy = 0;
 	}
@@ -192,16 +194,18 @@ int read(uint8_t *const pBuffer, uint16_t addr, uint32_t num) {
 		eeprom_buffer.current_page = eeprom_buffer.max_page = num / 32;
 		eeprom_buffer.rsvd = num % 32;
 		eeprom_buffer.p_data = pBuffer;
-		eeprom_buffer.page_data.refined.cmd = EEPROM_READ;
+		eeprom_buffer.page_data.cmd = EEPROM_READ;
 		eeprom_buffer.addr = addr;
-		eeprom_buffer.page_data.refined.addr0 = eeprom_buffer.addr >> 8;
-		eeprom_buffer.page_data.refined.addr1 = eeprom_buffer.addr;
-		if(eeprom_buffer.current_page > 0)
-			add_transmit_data_queue(eeprom_buffer.page_data.transmit_buffer, 32 + 3, read_callback);
-		else if(eeprom_buffer.rsvd != 0){
-			add_transmit_data_queue(eeprom_buffer.page_data.transmit_buffer, eeprom_buffer.rsvd + 3, read_callback);
+		eeprom_buffer.page_data.addr0 = eeprom_buffer.addr >> 8;
+		eeprom_buffer.page_data.addr1 = eeprom_buffer.addr;
+		if (eeprom_buffer.current_page > 0)
+			add_transmit_data_queue(eeprom_buffer.page_data.transmit_buffer,
+					32 + 3, read_callback);
+		else if (eeprom_buffer.rsvd != 0) {
+			add_transmit_data_queue(eeprom_buffer.page_data.transmit_buffer,
+					eeprom_buffer.rsvd + 3, read_callback);
 		}
-	} else{
+	} else {
 		push_runtime_queue(READ, pBuffer, addr, num);
 		eeprom_runtime();
 		return -1;
@@ -209,65 +213,66 @@ int read(uint8_t *const pBuffer, uint16_t addr, uint32_t num) {
 	return 0;
 }
 
-void write_callback(void){
+void write_callback(void) {
 	CSI_CS_HIGH();
-	if(eeprom_buffer.current_page != 0){
+	if (eeprom_buffer.current_page != 0) {
 		eeprom_buffer.current_page--;
 		eeprom_buffer.p_data += 32;
 		eeprom_buffer.addr += (uint16_t) 32
 				* (eeprom_buffer.max_page - eeprom_buffer.current_page);
-		eeprom_buffer.page_data.refined.cmd = EEPROM_WRITE;
-		eeprom_buffer.page_data.refined.addr0 = eeprom_buffer.addr >> 8;
-		eeprom_buffer.page_data.refined.addr1 = eeprom_buffer.addr;
-		if(eeprom_buffer.current_page == 0 && eeprom_buffer.rsvd != 0){
+		eeprom_buffer.page_data.cmd = EEPROM_WRITE;
+		eeprom_buffer.page_data.addr0 = eeprom_buffer.addr >> 8;
+		eeprom_buffer.page_data.addr1 = eeprom_buffer.addr;
+		if (eeprom_buffer.current_page == 0 && eeprom_buffer.rsvd != 0) {
 			for (int i = 0; i < eeprom_buffer.rsvd; i++) {
-				 eeprom_buffer.page_data.refined.data[i] = eeprom_buffer.p_data[i];
+				eeprom_buffer.page_data.data[i] = eeprom_buffer.p_data[i];
 			}
 			write_enable();
-			add_transmit_data_queue(eeprom_buffer.page_data.transmit_buffer, eeprom_buffer.rsvd + 3,
-								write_callback);
+			add_transmit_data_queue(eeprom_buffer.page_data.transmit_buffer,
+					eeprom_buffer.rsvd + 3, write_callback);
 			runtime_state = 1;
-		}else if(eeprom_buffer.current_page != 0){
+		} else if (eeprom_buffer.current_page != 0) {
 			for (int i = 0; i < 32; i++) {
-				 eeprom_buffer.page_data.refined.data[i] = eeprom_buffer.p_data[i];
+				eeprom_buffer.page_data.data[i] = eeprom_buffer.p_data[i];
 			}
 			write_enable();
-			add_transmit_data_queue(eeprom_buffer.page_data.transmit_buffer, 32 + 3,
-											write_callback);
+			add_transmit_data_queue(eeprom_buffer.page_data.transmit_buffer,
+					32 + 3, write_callback);
 			runtime_state = 1;
-		}else{
+		} else {
 			eeprom_buffer.busy = 0;
 			runtime_state = 0;
 		}
-	}else{
+	} else {
 		eeprom_buffer.busy = 0;
 		runtime_state = 0;
 	}
 }
-int write(uint8_t *const pBuffer, uint16_t addr, uint32_t num){
+int write(uint8_t *const pBuffer, uint16_t addr, uint32_t num) {
 	if (!eeprom_buffer.busy) {
 		eeprom_buffer.busy = 1;
 		eeprom_buffer.current_page = eeprom_buffer.max_page = num / 32;
 		eeprom_buffer.rsvd = num % 32;
 		eeprom_buffer.p_data = pBuffer;
-		eeprom_buffer.page_data.refined.cmd = EEPROM_WRITE;
+		eeprom_buffer.page_data.cmd = EEPROM_WRITE;
 		eeprom_buffer.addr = addr;
-		eeprom_buffer.page_data.refined.addr0 = eeprom_buffer.addr >> 8;
-		eeprom_buffer.page_data.refined.addr1 = eeprom_buffer.addr;
+		eeprom_buffer.page_data.addr0 = eeprom_buffer.addr >> 8;
+		eeprom_buffer.page_data.addr1 = eeprom_buffer.addr;
 		write_enable();
-		if(eeprom_buffer.max_page != 0){
-			for(int i=0; i<32; i++){
-				eeprom_buffer.page_data.refined.data[i] = pBuffer[i];
+		if (eeprom_buffer.max_page != 0) {
+			for (int i = 0; i < 32; i++) {
+				eeprom_buffer.page_data.data[i] = pBuffer[i];
 			}
-			add_transmit_data_queue(eeprom_buffer.page_data.transmit_buffer, 32 + 3, write_callback);
-		}else if(eeprom_buffer.rsvd != 0){
-			for(uint8_t i=0; i<eeprom_buffer.rsvd; i++){
-				eeprom_buffer.page_data.refined.data[i] = pBuffer[i];
+			add_transmit_data_queue(eeprom_buffer.page_data.transmit_buffer,
+					32 + 3, write_callback);
+		} else if (eeprom_buffer.rsvd != 0) {
+			for (uint8_t i = 0; i < eeprom_buffer.rsvd; i++) {
+				eeprom_buffer.page_data.data[i] = pBuffer[i];
 			}
-			add_transmit_data_queue(eeprom_buffer.page_data.transmit_buffer, eeprom_buffer.rsvd + 3,
-											write_callback);
+			add_transmit_data_queue(eeprom_buffer.page_data.transmit_buffer,
+					eeprom_buffer.rsvd + 3, write_callback);
 		}
-	} else{
+	} else {
 		eeprom_runtime();
 		return -1;
 	}
@@ -276,18 +281,20 @@ int write(uint8_t *const pBuffer, uint16_t addr, uint32_t num){
 
 int eeprom_runtime(void) {
 	//Check runtime queue
-	if((runtime_queue.head != runtime_queue.tail)
-			&& (runtime_state == 0) && eeprom_buffer.busy == 0){
+	if ((runtime_queue.head != runtime_queue.tail) && (runtime_state == 0)
+			&& eeprom_buffer.busy == 0) {
 		pop_runtime_queue();
 		switch (current_runtime_type) {
-			case READ:
-				read(current_runtime_data->p_data, current_runtime_data->addr, current_runtime_data->len);
-				break;
-			case WRITE:
-				write(current_runtime_data->p_data, current_runtime_data->addr, current_runtime_data->len);
-				break;
-			default:
-				break;
+		case READ:
+			read(current_runtime_data->p_data, current_runtime_data->addr,
+					current_runtime_data->len);
+			break;
+		case WRITE:
+			write(current_runtime_data->p_data, current_runtime_data->addr,
+					current_runtime_data->len);
+			break;
+		default:
+			break;
 		}
 	}
 	//Check data queue
@@ -392,9 +399,9 @@ int eeprom_init(eeprom_config *const e_config) {
 	return 0;
 }
 
-void eeprom_read(uint8_t *const pBuffer, uint16_t addr, uint32_t num){
+void eeprom_read(uint8_t *const pBuffer, uint16_t addr, uint32_t num) {
 	push_runtime_queue(READ, pBuffer, addr, num);
 }
-void eeprom_write(uint8_t *const pBuffer, uint16_t addr, uint32_t num){
+void eeprom_write(uint8_t *const pBuffer, uint16_t addr, uint32_t num) {
 	push_runtime_queue(WRITE, pBuffer, addr, num);
 }
