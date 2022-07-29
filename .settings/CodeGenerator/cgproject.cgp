@@ -173,6 +173,8 @@
         <TMRD0 />
       </Effect>
     </TRDCLKUSE1>
+    <TRDCLKTag Name="TRDCLKTag" Value="-1" />
+    <TRDCLKUSE0 Name="TRDCLKUSE0" Value="0" />
     <CodePath Name="CodePath" Text=".\" />
     <ReportType Name="ReportType" Text="Html" />
     <CreationDateType Name="CreationDateType" Text="OutputDate" />
@@ -200,8 +202,6 @@
     <PrjVersion Name="PrjVersion" Text="1.2.0.1" />
     <ProductVersion Name="ProductVersion" Text="2.18.00.01" />
     <LinkFileName Name="LinkFileName" Text="" />
-    <TRDCLKTag Name="TRDCLKTag" Value="-1" />
-    <TRDCLKUSE0 Name="TRDCLKUSE0" Value="0" />
     <TO02_PWM Name="TO02_PWM" Text="false" />
     <TO03_PWM Name="TO03_PWM" Text="false" />
     <INPT0USE0 Name="INPT0USE0" Text="false" />
@@ -1068,16 +1068,16 @@
             <R_IICA0_Set_PowerOff UserName="" LibName="R_IICAn_Set_PowerOff" InUse="0" />
           </IICA0>
           <IICA1 Chip="R5F104MF,R5F104MG,R5F104MH,R5F104MJ,R5F104PF,R5F104PG,R5F104PH,R5F104PJ,R5F104MK, R5F104ML,R5F104PK,R5F104PL" InUse="">
-            <R_IICA1_Create UserName="" LibName="R_IICAn_Create" InUse="" Init="1" InitMode="" />
-            <R_IICA1_Master_Send UserName="" LibName="R_IICAn_Master_Send" InUse="" />
-            <R_IICA1_Master_Receive UserName="" LibName="R_IICAn_Master_Receive" InUse="" />
-            <R_IICA1_Slave_Send UserName="" LibName="R_IICAn_Slave_Send" InUse="" />
-            <R_IICA1_Slave_Receive UserName="" LibName="R_IICAn_Slave_Receive" InUse="" />
-            <R_IICA1_Stop UserName="" LibName="R_IICAn_Stop" InUse="" />
-            <R_IICA1_StopCondition UserName="" LibName="R_IICAn_StopCondition" InUse="" />
-            <R_IICA1_Set_SnoozeOn UserName="" LibName="R_IICAn_Set_SnoozeOn" InUse="" />
-            <R_IICA1_Set_SnoozeOff UserName="" LibName="R_IICAn_Set_SnoozeOff" InUse="" />
-            <R_IICA1_Set_PowerOff UserName="" LibName="R_IICAn_Set_PowerOff" InUse="" />
+            <R_IICA1_Create UserName="" LibName="R_IICAn_Create" InUse="0" Init="1" InitMode="" />
+            <R_IICA1_Master_Send UserName="" LibName="R_IICAn_Master_Send" InUse="0" />
+            <R_IICA1_Master_Receive UserName="" LibName="R_IICAn_Master_Receive" InUse="0" />
+            <R_IICA1_Slave_Send UserName="" LibName="R_IICAn_Slave_Send" InUse="0" />
+            <R_IICA1_Slave_Receive UserName="" LibName="R_IICAn_Slave_Receive" InUse="0" />
+            <R_IICA1_Stop UserName="" LibName="R_IICAn_Stop" InUse="0" />
+            <R_IICA1_StopCondition UserName="" LibName="R_IICAn_StopCondition" InUse="0" />
+            <R_IICA1_Set_SnoozeOn UserName="" LibName="R_IICAn_Set_SnoozeOn" InUse="0" />
+            <R_IICA1_Set_SnoozeOff UserName="" LibName="R_IICAn_Set_SnoozeOff" InUse="0" />
+            <R_IICA1_Set_PowerOff UserName="" LibName="R_IICAn_Set_PowerOff" InUse="0" />
           </IICA1>
         </r_cg_serial.c>
         <r_cg_serial_user.c UserName="r_cg_serial_user.c" LibName="_user.c" InUse="1">
@@ -1232,15 +1232,15 @@
             <r_iica0_callback_getstopcondition UserName="" LibName="r_iican_callback_getstopcondition" InUse="0" />
           </IICA0>
           <IICA1 Chip="R5F104MF,R5F104MG,R5F104MH,R5F104MJ,R5F104PF,R5F104PG,R5F104PH,R5F104PJ,R5F104MK, R5F104ML,R5F104PK,R5F104PL" InUse="">
-            <R_IICA1_Create_UserInit UserName="" LibName="R_IICAn_Create_UserInit" InUse="" />
-            <r_iica1_interrupt UserName="" INTHandle="" LibName="r_iican_interrupt" InUse="" />
-            <r_iica1_callback_master_sendend UserName="" LibName="r_iican_callback_master_sendend" InUse="" />
-            <r_iica1_callback_master_receiveend UserName="" LibName="r_iican_callback_master_receiveend" InUse="" />
-            <r_iica1_callback_slave_sendend UserName="" LibName="r_iican_callback_slave_sendend" InUse="" />
-            <r_iica1_callback_slave_receiveend UserName="" LibName="r_iican_callback_slave_receiveend" InUse="" />
-            <r_iica1_callback_master_error UserName="" LibName="r_iican_callback_master_error" InUse="" />
-            <r_iica1_callback_slave_error UserName="" LibName="r_iican_callback_slave_error" InUse="" />
-            <r_iica1_callback_getstopcondition UserName="" LibName="r_iican_callback_getstopcondition" InUse="" />
+            <R_IICA1_Create_UserInit UserName="" LibName="R_IICAn_Create_UserInit" InUse="0" />
+            <r_iica1_interrupt UserName="" INTHandle="" LibName="r_iican_interrupt" InUse="0" />
+            <r_iica1_callback_master_sendend UserName="" LibName="r_iican_callback_master_sendend" InUse="0" />
+            <r_iica1_callback_master_receiveend UserName="" LibName="r_iican_callback_master_receiveend" InUse="0" />
+            <r_iica1_callback_slave_sendend UserName="" LibName="r_iican_callback_slave_sendend" InUse="0" />
+            <r_iica1_callback_slave_receiveend UserName="" LibName="r_iican_callback_slave_receiveend" InUse="0" />
+            <r_iica1_callback_master_error UserName="" LibName="r_iican_callback_master_error" InUse="0" />
+            <r_iica1_callback_slave_error UserName="" LibName="r_iican_callback_slave_error" InUse="0" />
+            <r_iica1_callback_getstopcondition UserName="" LibName="r_iican_callback_getstopcondition" InUse="0" />
           </IICA1>
         </r_cg_serial_user.c>
         <r_cg_serial.h UserName="r_cg_serial.h" LibName=".h" InUse="1" />
@@ -1702,7 +1702,6 @@
         <gtraceused Name="gtraceused" Value="" />
         <cg_onchip Name="cg_onchip" Value="" />
         <cg_security9 Name="cg_security9" Value="00" />
-        <rrm Name="rrm" Value="7FE00" />
         <cg_security6 Name="cg_security6" Value="00" />
         <cg_crc_area Name="cg_crc_area" Value="00" />
         <cg_iawctl_value Name="cg_iawctl_value" Value="00" />
@@ -1714,6 +1713,7 @@
         <pior_value Name="pior_value" Value="00" />
         <cg_ocd_ram_size Name="cg_ocd_ram_size" Value="512" />
         <cg_option Name="cg_option" Value="84" />
+        <rrm Name="rrm" Value="7FE00" />
         <cg_security7 Name="cg_security7" Value="00" />
         <lvi_option Name="lvi_option" Value="FF" />
       </GlobleUserTag>
@@ -1744,7 +1744,7 @@
         <Channel3 Chip="RL78G14_80pin,RL78G14_81pin,RL78G14_100pin" UART="3" CSI="31" IIC="31" Channel="3" />
       </SAU1>
       <IICA0 Accelerate="No" MacroName="IICA" Channel="0" SetFlag="False" TabEnable="True" />
-      <IICA1 Accelerate="No" Chip="R5F104MF,R5F104MG,R5F104MH,R5F104MJ,R5F104PF,R5F104PG,R5F104PH,R5F104PJ,R5F104MK, R5F104ML,R5F104PK,R5F104PL" MacroName="IICA" Channel="1" TabEnable="True" />
+      <IICA1 Accelerate="No" Chip="R5F104MF,R5F104MG,R5F104MH,R5F104MJ,R5F104PF,R5F104PG,R5F104PH,R5F104PJ,R5F104MK, R5F104ML,R5F104PK,R5F104PL" MacroName="IICA" Channel="1" SetFlag="False" TabEnable="True" />
     </Serial>
     <ADC SetFlag="True" HelpID="adc" NeedRefresh="False">
       <ADC SetFlag="True" MacroName="ADC" />
@@ -1754,7 +1754,7 @@
     </DAC>
     <TAU SetFlag="True" HelpID="timer" NeedRefresh="False">
       <TAU0 Accelerate="No" MacroName="TAU" Channel="0" ChannelNum="0,1,2,3" SetFlag="True" TabEnable="True" />
-      <TAU1 Chip="RL78G14_80pin,RL78G14_100pin" Accelerate="No" MacroName="TAU" Channel="1" ChannelNum="0,1,2,3" TabEnable="True" SetFlag="False" />
+      <TAU1 Chip="RL78G14_80pin,RL78G14_100pin" Accelerate="No" MacroName="TAU" Channel="1" ChannelNum="0,1,2,3" SetFlag="False" TabEnable="True" />
       <TMRJ0 SetFlag="False" MacroName="TMRJ" Channel="0" TabEnable="True" />
       <TMRD0 SetFlag="False" MacroName="TMRD" Channel="0" TabEnable="True" />
       <TMRD1 SetFlag="False" MacroName="TMRD" Channel="1" TabEnable="True" />
@@ -2318,7 +2318,7 @@
           <setting name="Pull_up" value="unused" />
           <setting name="TTL_buffer" value="unused" />
           <setting name="N-ch_open-drain" value="unused" />
-          <setting name="Output_value" value="0" />
+          <setting name="Output_value" value="1" />
         </P140>
         <P141>
           <setting name="Operation" value="output" />
@@ -2425,8 +2425,8 @@
           <setting name="Transfer_mode" value="single" />
           <setting name="Data_length" value="8 bits" />
           <setting name="SSI00" value="Unused" />
-          <setting name="Data_direction" value="LSB" />
-          <setting name="Data_timing" value="type 1" />
+          <setting name="Data_direction" value="MSB" />
+          <setting name="Data_timing" value="type 4" />
           <setting name="BaudrateVal" value="9600" />
           <setting name="Clock" value="0" />
           <setting name="Transmit_end_callback_function" value="generated" />
@@ -2630,7 +2630,7 @@
       <setting name="AD_Trigger" value="softtri" />
       <setting name="AD_Trigger_Timer" value="0" />
       <setting name="Mode" value="ONESELECT" />
-      <setting name="InputPins" value="8" />
+      <setting name="InputPins" value="5" />
       <setting name="InputPinsAttach" value="ANI0 - ANI3" />
       <setting name="AD_Inputpin16" value="unused" />
       <setting name="AD_Inputpin17" value="unused" />
@@ -2673,8 +2673,8 @@
           <setting name="OperationMode" value="16bits" />
           <setting name="Count_clock" value="MCK clock" />
           <setting name="Sub_clock_mode" value="-1" />
-          <setting name="Interval_value" value="1" />
-          <setting name="Value_scale" value="0" />
+          <setting name="Interval_value" value="100" />
+          <setting name="Value_scale" value="1" />
           <setting name="Intervalvalue_High8bits" value="100" />
           <setting name="Intervalvalue_High8bits_scale" value="-1" />
           <setting name="Intervalvalue_Low8bits" value="100" />
