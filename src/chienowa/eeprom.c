@@ -148,7 +148,7 @@ struct {
 	uint8_t current_page;
 	uint8_t max_page;
 	uint16_t addr;
-	uint8_t rsvd;
+	uint8_t remain;
 	uint8_t busy;
 	union Page_Data page_data;
 } eeprom_buffer;
@@ -165,9 +165,9 @@ void read_callback(void) {
 		eeprom_buffer.page_data.addr0 = eeprom_buffer.addr >> 8;
 		eeprom_buffer.page_data.addr1 = eeprom_buffer.addr;
 		eeprom_buffer.current_page--;
-		if (eeprom_buffer.current_page == 0 && eeprom_buffer.rsvd != 0) {
+		if (eeprom_buffer.current_page == 0 && eeprom_buffer.remain != 0) {
 			add_transmit_data_queue(eeprom_buffer.page_data.data,
-					eeprom_buffer.rsvd, read_callback);
+					eeprom_buffer.remain, read_callback);
 			runtime_state = 2;
 			eeprom_runtime();
 		} else if (eeprom_buffer.current_page != 0) {
@@ -182,7 +182,7 @@ void read_callback(void) {
 	} else {
 		//Run callback last time
 		CSI_CS_HIGH();
-		for (int i = 0; i < eeprom_buffer.rsvd; i++) {
+		for (int i = 0; i < eeprom_buffer.remain; i++) {
 			eeprom_buffer.p_data[i] = eeprom_buffer.page_data.data[i];
 		}
 		eeprom_buffer.busy = 0;
@@ -192,7 +192,7 @@ int read(uint8_t *const pBuffer, uint16_t addr, uint32_t num) {
 	if (!eeprom_buffer.busy) {
 		eeprom_buffer.busy = 1;
 		eeprom_buffer.current_page = eeprom_buffer.max_page = num / 32;
-		eeprom_buffer.rsvd = num % 32;
+		eeprom_buffer.remain = num % 32;
 		eeprom_buffer.p_data = pBuffer;
 		eeprom_buffer.page_data.cmd = EEPROM_READ;
 		eeprom_buffer.addr = addr;
@@ -201,9 +201,9 @@ int read(uint8_t *const pBuffer, uint16_t addr, uint32_t num) {
 		if (eeprom_buffer.current_page > 0)
 			add_transmit_data_queue(eeprom_buffer.page_data.transmit_buffer,
 					32 + 3, read_callback);
-		else if (eeprom_buffer.rsvd != 0) {
+		else if (eeprom_buffer.remain != 0) {
 			add_transmit_data_queue(eeprom_buffer.page_data.transmit_buffer,
-					eeprom_buffer.rsvd + 3, read_callback);
+					eeprom_buffer.remain + 3, read_callback);
 		}
 	} else {
 		push_runtime_queue(READ, pBuffer, addr, num);
@@ -223,13 +223,13 @@ void write_callback(void) {
 		eeprom_buffer.page_data.cmd = EEPROM_WRITE;
 		eeprom_buffer.page_data.addr0 = eeprom_buffer.addr >> 8;
 		eeprom_buffer.page_data.addr1 = eeprom_buffer.addr;
-		if (eeprom_buffer.current_page == 0 && eeprom_buffer.rsvd != 0) {
-			for (int i = 0; i < eeprom_buffer.rsvd; i++) {
+		if (eeprom_buffer.current_page == 0 && eeprom_buffer.remain != 0) {
+			for (int i = 0; i < eeprom_buffer.remain; i++) {
 				eeprom_buffer.page_data.data[i] = eeprom_buffer.p_data[i];
 			}
 			write_enable();
 			add_transmit_data_queue(eeprom_buffer.page_data.transmit_buffer,
-					eeprom_buffer.rsvd + 3, write_callback);
+					eeprom_buffer.remain + 3, write_callback);
 			runtime_state = 1;
 		} else if (eeprom_buffer.current_page != 0) {
 			for (int i = 0; i < 32; i++) {
@@ -252,7 +252,7 @@ int write(uint8_t *const pBuffer, uint16_t addr, uint32_t num) {
 	if (!eeprom_buffer.busy) {
 		eeprom_buffer.busy = 1;
 		eeprom_buffer.current_page = eeprom_buffer.max_page = num / 32;
-		eeprom_buffer.rsvd = num % 32;
+		eeprom_buffer.remain = num % 32;
 		eeprom_buffer.p_data = pBuffer;
 		eeprom_buffer.page_data.cmd = EEPROM_WRITE;
 		eeprom_buffer.addr = addr;
@@ -265,12 +265,12 @@ int write(uint8_t *const pBuffer, uint16_t addr, uint32_t num) {
 			}
 			add_transmit_data_queue(eeprom_buffer.page_data.transmit_buffer,
 					32 + 3, write_callback);
-		} else if (eeprom_buffer.rsvd != 0) {
-			for (uint8_t i = 0; i < eeprom_buffer.rsvd; i++) {
+		} else if (eeprom_buffer.remain != 0) {
+			for (uint8_t i = 0; i < eeprom_buffer.remain; i++) {
 				eeprom_buffer.page_data.data[i] = pBuffer[i];
 			}
 			add_transmit_data_queue(eeprom_buffer.page_data.transmit_buffer,
-					eeprom_buffer.rsvd + 3, write_callback);
+					eeprom_buffer.remain + 3, write_callback);
 		}
 	} else {
 		eeprom_runtime();
