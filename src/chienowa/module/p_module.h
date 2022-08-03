@@ -2,7 +2,7 @@
  * p_module.h
  *
  *  Created on: Jul 27, 2022
- *      Author: Hung
+ *      Author: Renan
  */
 
 #ifndef CHIENOWA_MODULE_P_MODULE_H_

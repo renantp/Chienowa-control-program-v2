@@ -21,14 +21,11 @@
  Global variable struct
  ***********************************************************************************************************************/
 
-
 /***********************************************************************************************************************
  Starting point
  ***********************************************************************************************************************/
 void init(void);
 void loop(void);
-
-
 
 /***********************************************************************************************************************
  Status check
@@ -92,17 +89,17 @@ void k9(void);
 /***********************************************************************************************************************
  Setting
  ***********************************************************************************************************************/
-void s1_alkali_acid_tank_setting(void);
-void s11_alkali_tank_data_set(void);
-void s111_alkali_tank_data_check(void);
-void s12_acid_tank_data_set(void);
-void s121_acid_tank_data_check(void);
-void s13_salt_tank_data_set(void);
-void s131_salt_tank_data_check(void);
-void s2_water_softer_data_check(void);
-void s3_water_softer_filter_replace_calculate(void);
-void s4(void);
-void s5(void);
+//void s1_alkali_acid_tank_setting(void);
+//void s11_alkali_tank_data_set(void);
+//void s111_alkali_tank_data_check(void);
+//void s12_acid_tank_data_set(void);
+//void s121_acid_tank_data_check(void);
+//void s13_salt_tank_data_set(void);
+//void s131_salt_tank_data_check(void);
+//void s2_water_softer_data_check(void);
+//void s3_water_softer_filter_replace_calculate(void);
+//void s4(void);
+//void s5(void);
 
 /***********************************************************************************************************************
  B sector

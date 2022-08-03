@@ -2,7 +2,7 @@
  * e_module.h
  *
  *  Created on: Jul 29, 2022
- *      Author: Hung
+ *      Author: Renan
  */
 
 #ifndef CHIENOWA_MODULE_E_MODULE_H_

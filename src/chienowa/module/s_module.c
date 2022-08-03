@@ -2,7 +2,7 @@
  * s_module.c
  *
  *  Created on: Jul 29, 2022
- *      Author: Hung
+ *      Author: Renan
  */
 
 #include "s_module.h"
