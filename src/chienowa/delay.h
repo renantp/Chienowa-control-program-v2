@@ -15,6 +15,7 @@ extern "C" {
 
 extern volatile uint32_t g_systemTick;
 int ns_delay_ms(uint32_t *stamp, uint32_t ms);
+int wait(uint32_t ms);
 
 #ifdef __cplusplus
 }
