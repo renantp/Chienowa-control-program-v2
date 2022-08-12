@@ -19,6 +19,12 @@
 
 #define SV1		(P1_bit.no7)
 #define SV2		(P5_bit.no5)
+#define SV3		(P7_bit.no6)
+#define SV4		(P7_bit.no7)
+#define SV5		(P6_bit.no7)
+#define SV6		(P6_bit.no6)
+#define PUMP_1	(P6_bit.no2)
+#define PUMP_2	(P6_bit.no1)
 #define SP		(P6_bit.no0)
 
 #define FL1		(P7_bit.no1)
@@ -29,5 +35,23 @@
 #define FL6		(P7_bit.no0)
 #define FL7		(P5_bit.no4)
 #define FL8		(P3_bit.no3)
+
+extern union FLAG_U {
+	struct {
+		uint8_t sv1 : 1;
+		uint8_t sv2 : 1;
+		uint8_t sv5 : 1;
+		uint8_t sv6 : 1;
+		uint8_t sv7 : 1;
+
+		uint8_t pump_1 : 1;
+		uint8_t pump_2 : 1;
+		uint8_t salt_pump : 1;
+
+		uint8_t p111 : 1;
+		uint8_t p112 : 1;
+	};
+	uint8_t raw[10];
+}flag;
 
 #endif /* CHIENOWA_PIN_DEFINE_H_ */
