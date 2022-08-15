@@ -1,40 +1,40 @@
 /***********************************************************************************************************************
- * DISCLAIMER
- * This software is supplied by Renesas Electronics Corporation and is only intended for use with Renesas products.
- * No other uses are authorized. This software is owned by Renesas Electronics Corporation and is protected under all
- * applicable laws, including copyright laws. 
- * THIS SOFTWARE IS PROVIDED "AS IS" AND RENESAS MAKES NO WARRANTIES REGARDING THIS SOFTWARE, WHETHER EXPRESS, IMPLIED
- * OR STATUTORY, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NON-INFRINGEMENT.  ALL SUCH WARRANTIES ARE EXPRESSLY DISCLAIMED.TO THE MAXIMUM EXTENT PERMITTED NOT PROHIBITED BY
- * LAW, NEITHER RENESAS ELECTRONICS CORPORATION NOR ANY OF ITS AFFILIATED COMPANIES SHALL BE LIABLE FOR ANY DIRECT,
- * INDIRECT, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES FOR ANY REASON RELATED TO THIS SOFTWARE, EVEN IF RENESAS OR
- * ITS AFFILIATES HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
- * Renesas reserves the right, without notice, to make changes to this software and to discontinue the availability 
- * of this software. By using this software, you agree to the additional terms and conditions found by accessing the 
- * following link:
- * http://www.renesas.com/disclaimer
- *
- * Copyright (C) 2011, 2020 Renesas Electronics Corporation. All rights reserved.
- ***********************************************************************************************************************/
+* DISCLAIMER
+* This software is supplied by Renesas Electronics Corporation and is only intended for use with Renesas products.
+* No other uses are authorized. This software is owned by Renesas Electronics Corporation and is protected under all
+* applicable laws, including copyright laws. 
+* THIS SOFTWARE IS PROVIDED "AS IS" AND RENESAS MAKES NO WARRANTIES REGARDING THIS SOFTWARE, WHETHER EXPRESS, IMPLIED
+* OR STATUTORY, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+* NON-INFRINGEMENT.  ALL SUCH WARRANTIES ARE EXPRESSLY DISCLAIMED.TO THE MAXIMUM EXTENT PERMITTED NOT PROHIBITED BY
+* LAW, NEITHER RENESAS ELECTRONICS CORPORATION NOR ANY OF ITS AFFILIATED COMPANIES SHALL BE LIABLE FOR ANY DIRECT,
+* INDIRECT, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES FOR ANY REASON RELATED TO THIS SOFTWARE, EVEN IF RENESAS OR
+* ITS AFFILIATES HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+* Renesas reserves the right, without notice, to make changes to this software and to discontinue the availability 
+* of this software. By using this software, you agree to the additional terms and conditions found by accessing the 
+* following link:
+* http://www.renesas.com/disclaimer
+*
+* Copyright (C) 2011, 2021 Renesas Electronics Corporation. All rights reserved.
+***********************************************************************************************************************/
 
 /***********************************************************************************************************************
- * File Name    : r_cg_port.h
- * Version      : CodeGenerator for RL78/G14 V2.05.05.01 [25 Nov 2020]
- * Device(s)    : R5F104ML
- * Tool-Chain   : CCRL
- * Description  : This file implements device driver for PORT module.
- * Creation Date: 7/26/2022
- ***********************************************************************************************************************/
+* File Name    : r_cg_port.h
+* Version      : CodeGenerator for RL78/G14 V2.05.06.02 [08 Nov 2021]
+* Device(s)    : R5F104ML
+* Tool-Chain   : CCRL
+* Description  : This file implements device driver for PORT module.
+* Creation Date: 8/12/2022
+***********************************************************************************************************************/
 
 #ifndef PORT_H
 #define PORT_H
 
 /***********************************************************************************************************************
- Macro definitions (Register bit)
- ***********************************************************************************************************************/
+Macro definitions (Register bit)
+***********************************************************************************************************************/
 /*
- Port Mode Register (PMm)
- */
+    Port Mode Register (PMm)
+*/
 /* Pmn pin I/O mode selection (PMm7 - PMm0) */
 #define _01_PMn0_NOT_USE        (0x01U) /* not use Pn0 as digital I/O */
 #define _01_PMn0_MODE_INPUT     (0x01U) /* use Pn0 as input mode */
@@ -62,8 +62,8 @@
 #define _00_PMn7_MODE_OUTPUT    (0x00U) /* use Pn7 as output mode */
 
 /*
- Port Register (Pm)
- */
+    Port Register (Pm)
+*/
 /* Pmn pin data (Pm0 to Pm7) */
 #define _00_Pn0_OUTPUT_0        (0x00U) /* Pn0 output 0 */
 #define _01_Pn0_OUTPUT_1        (0x01U) /* Pn0 output 1 */
@@ -83,8 +83,8 @@
 #define _80_Pn7_OUTPUT_1        (0x80U) /* Pn7 output 1 */
 
 /*
- Pull-up Resistor Option Register (PUm)
- */
+    Pull-up Resistor Option Register (PUm)
+*/
 /* Pmn pin on-chip pull-up resistor selection (PUmn) */
 #define _00_PUn0_PULLUP_OFF     (0x00U) /* Pn0 pull-up resistor not connected */
 #define _01_PUn0_PULLUP_ON      (0x01U) /* Pn0 pull-up resistor connected */
@@ -104,8 +104,8 @@
 #define _80_PUn7_PULLUP_ON      (0x80U) /* Pn7 pull-up resistor connected */
 
 /*
- Port Input Mode Register (PIMm)
- */
+    Port Input Mode Register (PIMm)
+*/
 /* Pmn pin input buffer selection (PIMmn) */
 #define _00_PIMn0_TTL_OFF       (0x00U) /* set Pn0 normal input buffer */
 #define _01_PIMn0_TTL_ON        (0x01U) /* set Pn0 TTL input buffer */
@@ -125,8 +125,8 @@
 #define _80_PIMn7_TTL_ON        (0x80U) /* set Pn7 TTL input buffer */
 
 /*
- Port Output Mode Register (POMm)
- */
+    Port Output Mode Register (POMm)
+*/
 /* Pmn pin output mode selection (POMmn) */
 #define _00_POMn0_NCH_OFF       (0x00U) /* set Pn0 output normal mode */
 #define _01_POMn0_NCH_ON        (0x01U) /* set Pn0 output N-ch open-drain mode */
@@ -146,8 +146,8 @@
 #define _80_POMn7_NCH_ON        (0x80U) /* set Pn7 output N-ch open-drain mode */
 
 /*
- Port Operation Mode Register (PMCm)
- */
+    Port Operation Mode Register (PMCm)
+*/
 /* Pmn pin digital input buffer selection (PMCmn) */
 #define _01_PMCn0_NOT_USE       (0x01U) /* not use Pn0 digital input */
 #define _00_PMCn0_DI_ON         (0x00U) /* enable Pn0 digital input */
@@ -167,8 +167,8 @@
 #define _00_PMCn7_DI_ON         (0x00U) /* enable Pn7 digital input */
 
 /*
- AD port configuration register (ADPC)
- */
+    AD port configuration register (ADPC)
+*/
 /* Analog input/digital input switching (ADPC3 - ADPC0) */
 #define _00_ADPC_DI_OFF         (0x00U) /* use P20 - P27 and P150 - P153 as analog input */
 #define _0C_ADPC_DI_ON          (0x0CU) /* use P153 as digital input */
@@ -185,8 +185,8 @@
 #define _01_ADPC_DI_ON          (0x01U) /* use P20 - P27 and P150 - P153 as digital input */
 
 /***********************************************************************************************************************
- Macro definitions
- ***********************************************************************************************************************/
+Macro definitions
+***********************************************************************************************************************/
 #define _80_PM0_DEFAULT         (0x80U) /* PM0 default value */
 #define _FC_PM3_DEFAULT         (0xFCU) /* PM3 default value */
 #define _C0_PM4_DEFAULT         (0xC0U) /* PM4 default value */
@@ -202,12 +202,12 @@
 #define _7F_PMC14_DEFAULT       (0x7FU) /* PMC14 default value */
 
 /***********************************************************************************************************************
- Typedef definitions
- ***********************************************************************************************************************/
+Typedef definitions
+***********************************************************************************************************************/
 
 /***********************************************************************************************************************
- Global functions
- ***********************************************************************************************************************/
+Global functions
+***********************************************************************************************************************/
 void R_PORT_Create(void);
 
 /* Start user code for function. Do not edit comment generated here */

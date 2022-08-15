@@ -1,40 +1,40 @@
 /***********************************************************************************************************************
- * DISCLAIMER
- * This software is supplied by Renesas Electronics Corporation and is only intended for use with Renesas products.
- * No other uses are authorized. This software is owned by Renesas Electronics Corporation and is protected under all
- * applicable laws, including copyright laws. 
- * THIS SOFTWARE IS PROVIDED "AS IS" AND RENESAS MAKES NO WARRANTIES REGARDING THIS SOFTWARE, WHETHER EXPRESS, IMPLIED
- * OR STATUTORY, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NON-INFRINGEMENT.  ALL SUCH WARRANTIES ARE EXPRESSLY DISCLAIMED.TO THE MAXIMUM EXTENT PERMITTED NOT PROHIBITED BY
- * LAW, NEITHER RENESAS ELECTRONICS CORPORATION NOR ANY OF ITS AFFILIATED COMPANIES SHALL BE LIABLE FOR ANY DIRECT,
- * INDIRECT, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES FOR ANY REASON RELATED TO THIS SOFTWARE, EVEN IF RENESAS OR
- * ITS AFFILIATES HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
- * Renesas reserves the right, without notice, to make changes to this software and to discontinue the availability 
- * of this software. By using this software, you agree to the additional terms and conditions found by accessing the 
- * following link:
- * http://www.renesas.com/disclaimer
- *
- * Copyright (C) 2011, 2020 Renesas Electronics Corporation. All rights reserved.
- ***********************************************************************************************************************/
+* DISCLAIMER
+* This software is supplied by Renesas Electronics Corporation and is only intended for use with Renesas products.
+* No other uses are authorized. This software is owned by Renesas Electronics Corporation and is protected under all
+* applicable laws, including copyright laws. 
+* THIS SOFTWARE IS PROVIDED "AS IS" AND RENESAS MAKES NO WARRANTIES REGARDING THIS SOFTWARE, WHETHER EXPRESS, IMPLIED
+* OR STATUTORY, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+* NON-INFRINGEMENT.  ALL SUCH WARRANTIES ARE EXPRESSLY DISCLAIMED.TO THE MAXIMUM EXTENT PERMITTED NOT PROHIBITED BY
+* LAW, NEITHER RENESAS ELECTRONICS CORPORATION NOR ANY OF ITS AFFILIATED COMPANIES SHALL BE LIABLE FOR ANY DIRECT,
+* INDIRECT, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES FOR ANY REASON RELATED TO THIS SOFTWARE, EVEN IF RENESAS OR
+* ITS AFFILIATES HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+* Renesas reserves the right, without notice, to make changes to this software and to discontinue the availability 
+* of this software. By using this software, you agree to the additional terms and conditions found by accessing the 
+* following link:
+* http://www.renesas.com/disclaimer
+*
+* Copyright (C) 2011, 2021 Renesas Electronics Corporation. All rights reserved.
+***********************************************************************************************************************/
 
 /***********************************************************************************************************************
- * File Name    : r_cg_timer.h
- * Version      : CodeGenerator for RL78/G14 V2.05.05.01 [25 Nov 2020]
- * Device(s)    : R5F104ML
- * Tool-Chain   : CCRL
- * Description  : This file implements device driver for TAU module.
- * Creation Date: 7/26/2022
- ***********************************************************************************************************************/
+* File Name    : r_cg_timer.h
+* Version      : CodeGenerator for RL78/G14 V2.05.06.02 [08 Nov 2021]
+* Device(s)    : R5F104ML
+* Tool-Chain   : CCRL
+* Description  : This file implements device driver for TAU module.
+* Creation Date: 8/12/2022
+***********************************************************************************************************************/
 
 #ifndef TAU_H
 #define TAU_H
 
 /***********************************************************************************************************************
- Macro definitions (Register bit)
- ***********************************************************************************************************************/
+Macro definitions (Register bit)
+***********************************************************************************************************************/
 /*
- Peripheral Enable Register 0 (PER0)
- */
+    Peripheral Enable Register 0 (PER0)
+*/
 /* Control of timer array unit 0 input clock (TAU0EN) */
 #define _00_TAU0_CLOCK_STOP                     (0x00U)   /* stops supply of input clock */
 #define _01_TAU0_CLOCK_SUPPLY                   (0x01U)   /* supplies input clock */
@@ -43,8 +43,8 @@
 #define _02_TAU1_CLOCK_SUPPLY                   (0x02U)   /* supplies input clock */
 
 /*
- Timer Clock Select Register m (TPSm)
- */
+    Timer Clock Select Register m (TPSm)
+*/
 /* Operating mode and clear mode selection (PRSm03 - PRSm00) */
 #define _0000_TAU_CKM0_FCLK_0                   (0x0000U) /* ckm0 - fCLK */
 #define _0001_TAU_CKM0_FCLK_1                   (0x0001U) /* ckm0 - fCLK/2^1 */
@@ -91,8 +91,8 @@
 #define _3000_TAU_CKM3_FCLK_14                  (0x3000U) /* ckm2 - fCLK/2^14 */
 
 /*
- Timer Mode Register mn (TMRmn)
- */
+    Timer Mode Register mn (TMRmn)
+*/
 /* Selection of macro clock (MCK) of channel n (CKSmn1 - CKSmn0) */
 #define _0000_TAU_CLOCK_SELECT_CKM0             (0x0000U) /* operation clock CK0 set by PRS register */ 
 #define _8000_TAU_CLOCK_SELECT_CKM1             (0x8000U) /* operation clock CK1 set by PRS register */
@@ -132,15 +132,15 @@
 #define _0001_TAU_START_INT_USED                (0x0001U) /* interrupt is generated when counting is started */
 
 /*
- Timer Status Register mn (TSRmn)
- */
+    Timer Status Register mn (TSRmn)
+*/
 /* Counter overflow status of channel n (OVF) */
 #define _0000_TAU_OVERFLOW_NOT_OCCURS           (0x0000U) /* overflow does not occur */
 #define _0001_TAU_OVERFLOW_OCCURS               (0x0001U) /* overflow occurs */
 
 /*
- Timer Channel Enable Status Register m (TEm)
- */
+    Timer Channel Enable Status Register m (TEm)
+*/
 /* Indication of operation enable/stop status of channel 0 (TEm0) */
 #define _0000_TAU_CH0_OPERATION_STOP            (0x0000U) /* operation is stopped */
 #define _0001_TAU_CH0_OPERATION_ENABLE          (0x0001U) /* operation is enabled */
@@ -161,8 +161,8 @@
 #define _0800_TAU_CH3_H8_OPERATION_ENABLE       (0x0800U) /* operation is enabled */
 
 /*
- Timer Channel Start Register m (TSm)
- */
+    Timer Channel Start Register m (TSm)
+*/
 /* Operation enable (start) trigger of channel 0 (TSm0) */
 #define _0000_TAU_CH0_START_TRG_OFF             (0x0000U) /* no trigger operation */
 #define _0001_TAU_CH0_START_TRG_ON              (0x0001U) /* operation is enabled (start trigger is generated) */
@@ -183,8 +183,8 @@
 #define _0800_TAU_CH3_H8_START_TRG_ON           (0x0800U) /* operation is enabled (start trigger is generated) */
 
 /*
- Timer Channel Stop Register m (TTm)
- */
+    Timer Channel Stop Register m (TTm)
+*/
 /* Operation stop trigger of channel 0 (TTm0) */
 #define _0000_TAU_CH0_STOP_TRG_OFF              (0x0000U) /* no trigger operation */
 #define _0001_TAU_CH0_STOP_TRG_ON               (0x0001U) /* operation is stopped (stop trigger is generated) */
@@ -205,8 +205,8 @@
 #define _0800_TAU_CH3_H8_STOP_TRG_ON            (0x0800U) /* operation is stopped (stop trigger is generated) */
 
 /*
- Timer Input Select Register m (TIS0)
- */
+    Timer Input Select Register m (TIS0)
+*/
 /* Selection of timer input used with channel 0 (TIS04) */
 #define _00_TAU_CH0_INPUT_TI00                  (0x00U)   /* input signal of timer input pin (TI00) */
 #define _10_TAU_CH0_INPUT_ELC                   (0x10U)   /* event input signal from ELC */
@@ -219,8 +219,8 @@
 #define _05_TAU_CH1_INPUT_FSUB                  (0x05U)   /* sub colock (fSUB) */
 
 /*
- Timer Output Enable Register m (TOEm)
- */
+    Timer Output Enable Register m (TOEm)
+*/
 /* Timer output enable/disable of channel 0 (TOEm0) */
 #define _0001_TAU_CH0_OUTPUT_ENABLE             (0x0001U) /* the TOm0 operation enabled by count operation */
 #define _0000_TAU_CH0_OUTPUT_DISABLE            (0x0000U) /* the TOm0 operation stopped by count operation */
@@ -235,8 +235,8 @@
 #define _0000_TAU_CH3_OUTPUT_DISABLE            (0x0000U) /* the TOm3 operation stopped by count operation */
 
 /*
- Timer Output Register m (TOm)
- */
+    Timer Output Register m (TOm)
+*/
 /* Timer output of channel 0 (TOm0) */
 #define _0000_TAU_CH0_OUTPUT_VALUE_0            (0x0000U) /* timer output value is "0" */
 #define _0001_TAU_CH0_OUTPUT_VALUE_1            (0x0001U) /* timer output value is "1" */
@@ -251,8 +251,8 @@
 #define _0008_TAU_CH3_OUTPUT_VALUE_1            (0x0008U) /* timer output value is "1" */
 
 /*
- Timer Output Level Register 0 (TOLm)
- */
+    Timer Output Level Register 0 (TOLm)
+*/
 /* Control of timer output level of channel 1 (TOLm1) */
 #define _0000_TAU_CH1_OUTPUT_LEVEL_H            (0x0000U) /* positive logic output (active-high) */
 #define _0002_TAU_CH1_OUTPUT_LEVEL_L            (0x0002U) /* inverted output (active-low) */
@@ -264,8 +264,8 @@
 #define _0008_TAU_CH3_OUTPUT_LEVEL_L            (0x0008U) /* inverted output (active-low) */
 
 /*
- Timer Output Mode Register m (TOMm)
- */
+    Timer Output Mode Register m (TOMm)
+*/
 /* Control of timer output mode of channel 1 (TOMm1) */
 #define _0000_TAU_CH1_OUTPUT_TOGGLE             (0x0000U) /* toggle operation mode */
 #define _0002_TAU_CH1_OUTPUT_COMBIN             (0x0002U) /* combination operation mode */
@@ -277,15 +277,15 @@
 #define _0008_TAU_CH3_OUTPUT_COMBIN             (0x0008U) /* combination operation mode */
 
 /*
- Input Switch Control Register (ISC)
- */
+    Input Switch Control Register (ISC)
+*/
 /* Switching channel 7 input of timer array unit (ISC1) */
 #define _00_TAU_CH7_NO_INPUT                    (0x00U)   /* timer input is not used */
 #define _02_TAU_CH7_RXD3_INPUT                  (0x02U)   /* input signal of RxD3 pin is used as timer input */
 
 /*
- Noise Filter Enable Register 1 (NFEN1)
- */
+    Noise Filter Enable Register 1 (NFEN1)
+*/
 /* Enable/disable using noise filter of TI03 pin input signal (TNFEN03) */
 #define _00_TAU_CH3_NOISE_OFF                   (0x00U)   /* noise filter OFF */
 #define _08_TAU_CH3_NOISE_ON                    (0x08U)   /* noise filter ON */
@@ -300,15 +300,15 @@
 #define _01_TAU_CH0_NOISE_ON                    (0x01U)   /* noise filter ON */
 
 /*
- Format of Peripheral Enable Register 1 (PER1)
- */
+    Format of Peripheral Enable Register 1 (PER1)
+*/
 /* Control of timer RJ0 input clock supply (TRJ0EN) */
 #define _00_TMRJ_CLOCK_STOP                     (0x00U)    /* stops input clock supply */
 #define _01_TMRJ_CLOCK_ENABLE                   (0x01U)    /* enables input clock supply */
 
 /* 
- Timer RJ Control Register (TRJCR0)
- */
+    Timer RJ Control Register (TRJCR0)
+*/
 /* Timer RJ count start bit (TSTART) */
 #define _00_TMRJ_COUNT_STOP                     (0x00U)    /* count stops */
 #define _01_TMRJ_COUNT_START                    (0x01U)    /* count starts */
@@ -326,8 +326,8 @@
 #define _20_TMRJ_UNDERFLOW_OCCUR                (0x20U)    /* underflow */
 
 /* 
- Timer RJ I/O Control Register (TRJIOC0)
- */
+    Timer RJ I/O Control Register (TRJIOC0)
+*/
 #define _00_TMRJ_TRJIOC_INITIAL_VALUE           (0x00U)
 /* TRJIO polarity switch bit (TEDGSEL) */
 #define _00_TMRJ_TRJIO_POLARITY_0               (0x00U)    /* TRJIO polarity switch bit = 0  */
@@ -346,8 +346,8 @@
 #define _80_TMRJ_EVENT_ENABLE_PWM               (0x80U)    /* event is counted during PWM signal period */
 
 /* 
- Timer RJ Mode Register (TRJMR0)
- */
+    Timer RJ Mode Register (TRJMR0)
+*/
 /* Timer RJ operating mode select bit (TMOD2 - TMOD0) */
 #define _00_TMRJ_MODE_TIMER                     (0x00U)    /* timer mode */
 #define _01_TMRJ_MODE_PULSE_OUTPUT              (0x01U)    /* pulse output mode */
@@ -366,8 +366,8 @@
 #define _60_TMRJ_COUNT_SOURCE_FSUB              (0x60U)    /* fSUB */
 
 /*
- Timer RJ event pin selection register 0 (TRJISR0)
- */
+    Timer RJ event pin selection register 0 (TRJISR0)
+*/
 /* PWM signal selection (RCCPSEL1, RCCPSEL0) */
 #define _00_TMRJ_PWM_TRDIOD1                    (0x00U)    /* TRDIOD1 */
 #define _01_TMRJ_PWM_TRDIOC1                    (0x01U)    /* TRDIOC1 */
@@ -378,15 +378,15 @@
 #define _04_TMRJ_PWM_POLARITY_H                 (0x04U)    /* H period is counted */
 
 /* 
- Peripheral enable register 1 (PER1)
- */
+     Peripheral enable register 1 (PER1)
+*/
 /* Control of timer RD input clock supply (TRD0EN) */
 #define _00_TMRD_NOSUPPLY                       (0x00U)   /* stops input clock supply */
 #define _10_TMRD_SUPPLY                         (0x10U)   /* enables input clock supply */
 
 /* 
- Timer RD ELC Register (TRDELC)
- */
+    Timer RD ELC Register (TRDELC)
+*/
 /* ELC event input 0 select for timer RD input capture D0 (ELCICE0) */
 #define _00_TMRD0_INPUTCAPTURE                  (0x00U)   /* input capture D0 is selected */
 #define _01_TMRD0_ELC                           (0x01U)   /* the event link controller (ELC) is not selected */
@@ -401,8 +401,8 @@
 #define _20_TMRD1_CUTOFF_ENABLED                (0x20U)   /* forced cutoff is enabled */
 
 /*
- Timer RD Start Register (TRDSTR)
- */
+    Timer RD Start Register (TRDSTR)
+*/
 #define _03_TRD_COUNT_STATR_INITIAL_VALUE       (0x03U)   /* trd0/trd1 count satrts */
 /* TRD0 count start flag (TSTART0) */
 #define _00_TMRD_TRD0_COUNT_STOP                (0x00U)   /* trd0 count stops */
@@ -418,8 +418,8 @@
 #define _08_TMRD_TRD1_COUNT_CONTINUES           (0x08U)   /* count continues after the compare match */
 
 /* 
- Timer RD Mode Register (TRDMR)
- */
+    Timer RD Mode Register (TRDMR)
+*/
 /* Timer RD synchronous bit (SYNC) */
 #define _00_TMRD_INDEPENDENTLY                  (0x00U)   /* registers TRD0 and TRD1 operate independently */
 #define _01_TMRD_SYNCHRONOUSLY                  (0x01U)   /* registers TRD0 and TRD1 operate synchronously */
@@ -437,8 +437,8 @@
 #define _80_TMRD_TRDGRD1_BUFFER                 (0x80U)   /* buffer register of TRDGRB1 register */
 
 /* 
- Timer RD PWM Mode Register (TRDPMR)
- */
+    Timer RD PWM Mode Register (TRDPMR)
+*/
 /* PWM mode of TRDIOB0 select bit (PWMB0) */
 #define _00_TMRD_TRDIOB0_TIMER_MODE             (0x00U)   /* TRDIOB0 used as timer mode */
 #define _01_TMRD_TRDIOB0_PWM_MODE               (0x01U)   /* TRDIOB0 used as PWM mode */
@@ -459,8 +459,8 @@
 #define _40_TMRD_TRDIOD1_PWM_MODE               (0x40U)   /* TRDIOD1 used as PWM mode */
 
 /* 
- Timer RD Function Control Register (TRDFCR)
- */
+    Timer RD Function Control Register (TRDFCR)
+*/
 /* Combination mode select bit (CMD1, CMD0) */
 #define _00_TMRD_TRANSFER_DEFAULT               (0x00U)   /* in timer mode, PWM mode, or PWM3 mode */
 #define _01_TMRD_TRANSFER_RESET_SYNCHRONOUS     (0x01U)   /* in reset synchronous PWM mode */
@@ -475,13 +475,13 @@
 /* External clock input select bit (STCLK) */
 #define _00_TMRD_EXTERNAL_CLOCK_DISABLE         (0x00U)   /* external clock input disabled */
 #define _40_TMRD_EXTERNAL_CLOCK_ENABLE          (0x40U)   /* external clock input enabled  */
-/* PWM3 mode select bit (PWM3) */
+/* PWM3 mode select bit (PWM3) */   
 #define _00_TMRD_PWM3_MODE                      (0x00U)   /* PWM3 mode */
 #define _80_TMRD_OTHER_MODE                     (0x80U)   /* other mode */
 
 /* 
- Timer RD Output Master Enable Register 1 (TRDOER1)
- */
+    Timer RD Output Master Enable Register 1 (TRDOER1)
+*/
 #define _F0_TMRD_CHANNEL0_OUTPUT_DEFAULT        (0xF0U)
 #define _0F_TMRD_CHANNEL1_OUTPUT_DEFAULT        (0x0FU)
 /* TRDIOA0 output disable bit (EA0) */
@@ -510,8 +510,8 @@
 #define _80_TMRD_TRDIOD1_OUTPUT_DISABLE         (0x80U)   /* disable output */
 
 /* 
- Timer RD Output Master Enable Register 2 (TRDOER2)
- */
+    Timer RD Output Master Enable Register 2 (TRDOER2)
+*/
 /* INT0 of pulse output forced cutoff signal input enabled bit (PTO) */
 #define _00_TMRD_ALL_OUTPUT_DISABLE             (0x00U)   /* pulse output forced cutoff input disabled */
 #define _80_TMRD_ALL_OUTPUT_ENABLE              (0x80U)   /* pulse output forced cutoff input enabled */
@@ -520,8 +520,8 @@
 #define _01_TMRD_INTERCEPTION                   (0x01U)   /* forcibly cut off */
 
 /* 
- Timer RD Output Control Register (TRDOCR)
- */
+    Timer RD Output Control Register (TRDOCR)
+*/
 /* TRDIOA0 output level select bit (TOA0) */
 #define _00_TMRD_TRDIOA0_INITIAL_OUTPUT_L       (0x00U)   /* initial output "L" or inactive level */
 #define _01_TMRD_TRDIOA0_INITIAL_OUTPUT_H       (0x01U)   /* initial output "H" or active level */
@@ -548,8 +548,8 @@
 #define _80_TMRD_TRDIOD1_INITIAL_OUTPUT_H       (0x80U)   /* initial output "H" or active level */
 
 /* 
- Timer RD Digital Filter Function Select Register i (TRDDFi)
- */
+    Timer RD Digital Filter Function Select Register i (TRDDFi)
+*/
 /* TRDIOA pin digital filter function select bit (DFA) */
 #define _00_TMRD_TRDIOA_DIGITAL_FILTER_DISABLE  (0x00U)   /* TRDIOA pin digital filter function is not used */
 #define _01_TMRD_TRDIOA_DIGITAL_FILTER_ENABLE   (0x01U)   /* TRDIOA pin digital filter function is used */
@@ -589,8 +589,8 @@
 #define _C0_TMRD_TRDIOA_HIGH_OUTPUT             (0xC0U)   /* high output */
 
 /* 
- Timer RD Control Register i (TRDCRi)
- */
+    Timer RD Control Register i (TRDCRi)
+*/
 /* Count source select bit (TCK2 - TCK0) */
 #define _00_TMRD_INETNAL_CLOCK_F1_FIH           (0x00U)   /* fCLK, fIH */
 #define _01_TMRD_INETNAL_CLOCK_F2               (0x01U)   /* fCLK/2 */
@@ -611,8 +611,8 @@
 #define _C0_TMRD_COUNTER_CLEAR_TRDGRD           (0xC0U)   /* clear by input capture with TRDGRDi register */
 
 /* 
- Timer RD I/O Control Register Ai (TRDIORAi)
- */
+    Timer RD I/O Control Register Ai (TRDIORAi)
+*/
 /* TRDGRA control bit (IOA1, IOA0) */
 #define _00_TMRD_TRDGRA_CAPTURE_RISING          (0x00U)   /* input capture to the TRDGRAi register at the rising edge */
 #define _01_TMRD_TRDGRA_CAPTURE_FALLING         (0x01U)   /* input capture to TRDGRAi register at falling edge */
@@ -637,8 +637,8 @@
 #define _40_TMRD_TRDGRB_CAPTURE                 (0x40U)   /* input capture */
 
 /* 
- Timer RD I/O Control Register Ci (TRDIORCi)
- */
+    Timer RD I/O Control Register Ci (TRDIORCi)
+*/
 /* TRDGRC control bit (IOC1, IOC0) */
 #define _00_TMRD_TRDGRC_CAPTURE_RISING          (0x00U)   /* input capture to the TRDGRCi register at rising edge */
 #define _01_TMRD_TRDGRC_CAPTURE_FALLING         (0x01U)   /* input capture to TRDGRCi register at falling edge */
@@ -669,8 +669,8 @@
 #define _80_TMRD_TRDGRD_GENERAL_BUFFER_REGISTER (0x80U)   /* general register or buffer register */
 
 /* 
- Timer RD Status Register 0 (TRDSR0)
- */
+    Timer RD Status Register 0 (TRDSR0)
+*/
 #define _E0_TMRD_TRDSR0_DEFAULT_VALUR           (0xE0U)   /* TRDSR0 register default value */
 /* Input capture/compare match flag A (IMFA) */
 #define _00_TMRD0_INTA_FLAG_CLEAR               (0x00U)   /* interrupt A not generate */
@@ -689,8 +689,8 @@
 #define _10_TMRD0_INTOV_GENERATE_FLAG           (0x10U)   /* interrupt overflow generate */
 
 /* 
- Timer RD Status Register 1 (TRDSR1)
- */
+    Timer RD Status Register 1 (TRDSR1)
+*/
 #define _C0_TMRD_TRDSR1_DEFAULT_VALUR           (0xC0U)   /* TRDSR1 register default value */
 /* Input capture/compare match flag A (IMFA) */
 #define _00_TMRD1_INTA_FLAG_CLEAR               (0x00U)   /* interrupt A not generate */
@@ -709,8 +709,8 @@
 #define _10_TMRD1_INTOV_GENERATE_FLAG           (0x10U)   /* interrupt overflow generate */
 
 /* 
- Timer RD Interrupt Enable Register i (TRDIERi)
- */
+    Timer RD Interrupt Enable Register i (TRDIERi)
+*/
 /* Input capture/compare match interrupt enable bit A (IMIEA) */
 #define _00_TMRD_IMIA_DISABLE                   (0x00U)   /* disable interrupt (IMIA) by the IMFA bit */
 #define _01_TMRD_IMIA_ENABLE                    (0x01U)   /* enable interrupt (IMIA) by the IMFA bit */
@@ -728,8 +728,8 @@
 #define _10_TMRD_OVIE_ENABLE                    (0x10U)   /* enable interrupt (OVI) by the OVF or UDF bit */
 
 /* 
- Timer RD PWM Mode Output Level Control Register i (TRDPOCRi)
- */
+    Timer RD PWM Mode Output Level Control Register i (TRDPOCRi)
+*/
 /* PWM mode output level control bit B (POLB) */
 #define _00_TMRD_TRDIOB_OUTPUT_ACTIVE_L         (0x00U)   /* "L" active TRDIOBi output level is selected */
 #define _01_TMRD_TRDIOB_OUTPUT_ACTIVE_H         (0x01U)   /* "H" active TRDIOBi output level is selected */
@@ -741,8 +741,8 @@
 #define _04_TMRD_TRDIOD_OUTPUT_ACTIVE_H         (0x04U)   /* "H" active TRDIODi output level is selected */
 
 /* 
- Timer RG Mode Register (TRGMR)
- */
+    Timer RG Mode Register (TRGMR)
+*/
 /* PWM mode select bit (TRGPWM) */
 #define _00_TMRG_MODE_TIMER                     (0x00U)   /* timer Mode */
 #define _01_TMRG_MODE_PWM                       (0x01U)   /* PWM mode */
@@ -768,8 +768,8 @@
 #define _80_TMRG_COUNT_START                    (0x80U)   /* count starts */
 
 /* 
- Timer RG Count Control Register (TRGCNTC)
- */
+    Timer RG Count Control Register (TRGCNTC)
+*/
 /* Counter enable bit 0 (CNTEN0) */
 #define _00_TMRG_COUNTER_BIT0_DISABLE           (0x00U)   /* disabled counter 0 */
 #define _01_TMRG_COUNTER_BIT0_ENABLE            (0x01U)   /* decrement (TRGCLKA is high and rising edge of TRGCLKB) */
@@ -796,8 +796,8 @@
 #define _80_TMRG_COUNTER_BIT7_ENABLE            (0x80U)   /* increment (TRGCLKA is low and rising edge of TRGCLKB) */
 
 /* 
- Timer RG Control Register (TRGCR)
- */
+    Timer RG Control Register (TRGCR)
+*/
 /* Count source select bit (TRGTCK2 - TRGTCK0) */
 #define _00_TMRG_COUNT_SOURCE_FCLK              (0x00U)   /* fCLK */
 #define _01_TMRG_COUNT_SOURCE_FCLK2             (0x01U)   /* fCLK/2 */
@@ -816,8 +816,8 @@
 #define _40_TMRG_CLEAR_SOURCE_TRGGRB            (0x40U)   /* cleared by TRGGRB register */
 
 /* 
- Timer RG Interrupt Enable Register (TRGIER)
- */
+    Timer RG Interrupt Enable Register (TRGIER)
+*/
 /* Input-capture/compare-match interrupt enable bit A (TRGIMIEA) */
 #define _00_TMRG_INTERRUPT_CAPCOMA_DISABLE      (0x00U)   /* interrupt by IMIEA bit disabled */
 #define _01_TMRG_INTERRUPT_CAPCOMA_ENABLE       (0x01U)   /* interrupt by IMIEA bit enabled */
@@ -832,8 +832,8 @@
 #define _08_TMRG_INTERRUPT_OVERFLOW_ENABLE      (0x08U)   /* interrupt by OVF bit enabled */
 
 /* 
- Timer RG Status Register (TRGSR)
- */
+    Timer RG Status Register (TRGSR)
+*/
 /* Input-capture/compare-match flag A (TRGIMFA) */
 #define _00_TMRG_INTA_FLAG_CLEAR                (0x00U)   /* interrupt A not generate */
 #define _01_TMRG_INTA_GENERATE_FLAG             (0x01U)   /* interrupt A generate */
@@ -851,8 +851,8 @@
 #define _10_TMRG_DIRECTION_GENERATE_FLAG        (0x10U)   /* TRG register is incremented */
 
 /* 
- Timer RG I/O Control Register (TRGIOR)
- */
+    Timer RG I/O Control Register (TRGIOR)
+*/
 /* TRGGRA control bit (TRGIOA1 - TRGIOA0) */
 #define _00_TMRG_TRGGRA_CAPRISING_CMPDISABLE    (0x00U)   /* capture at the rising edge, pin output is disabled */
 #define _01_TMRG_TRGGRA_CAPFALLING_CMPLOW       (0x01U)   /* capture at the falling edge, low-level output at compare */
@@ -876,24 +876,30 @@
 #define _00_TMRG_TRGGRB_BUFFER_UNUSED           (0x00U)   /* not used as the buffer register of the TRGGRB register */
 #define _80_TMRG_TRGGRB_BUFFER_USED             (0x80U)   /* used as the buffer register of the TRGGRB register */
 
+
 /***********************************************************************************************************************
- Macro definitions
- ***********************************************************************************************************************/
+Macro definitions
+***********************************************************************************************************************/
 /* 16-bit timer data register 00 (TDR00) */
-#define _0C7F_TAU_TDR00_VALUE                   (0x0C7FU)
+#define _7CFF_TAU_TDR00_VALUE                   (0x7CFFU)
 /* Clock divisor for TAU0 channel 0 */
 #define _0001_TAU0_CHANNEL0_DIVISOR             (0x0001U)
 
 /***********************************************************************************************************************
- Typedef definitions
- ***********************************************************************************************************************/
-typedef enum {
-	TMCHANNELA, TMCHANNELB, TMCHANNELC, TMCHANNELD, TMCHANNELELC
+Typedef definitions
+***********************************************************************************************************************/
+typedef enum
+{
+    TMCHANNELA,
+    TMCHANNELB,
+    TMCHANNELC,
+    TMCHANNELD,
+    TMCHANNELELC
 } timer_channel_t;
 
 /***********************************************************************************************************************
- Global functions
- ***********************************************************************************************************************/
+Global functions
+***********************************************************************************************************************/
 void R_TAU0_Create(void);
 void R_TAU0_Channel0_Start(void);
 void R_TAU0_Channel0_Stop(void);

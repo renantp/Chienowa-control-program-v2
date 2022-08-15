@@ -6,8 +6,9 @@
  */
 
 #include "main.h"
+#include "runtime.h"
 #include "../r_cg_serial.h"
-
+struct GLOBAL g;
 eeprom_config e_config = { .csi_flag = &g_csi01_flag, .csi_send_receive =
 		R_CSI01_Send_Receive };
 uint32_t tick;
@@ -52,6 +53,8 @@ void loop(void) {
 //			eeprom_read((uint8_t*) &clone, 0x0000, 41);
 		}
 	}
+	runtime();
+
 	if (eeprom_runtime() == 1 && eeprom_working == 0) {
 		eeprom_working = 1;
 	} else if (eeprom_working == 1 && eeprom_runtime() == 0) {

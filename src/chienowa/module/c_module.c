@@ -13,8 +13,6 @@
 #include "../adc.h"
 #include "e_module.h"
 
-int g_electrolysis_status;
-
 struct C_5_3 {
 	uint8_t state;
 	uint8_t rsvd;
@@ -26,7 +24,7 @@ int c53_over_voltage_3_check(float *voltage){
 	uint32_t *tick = &c5_3.tick;
 	switch (*state) {
 		case 0:
-			if(g_electrolysis_status == 1){
+			if(g.flag.electrolysis == 1){
 				if(ns_delay_ms(tick, g_timerSetting.t13_s * 1000)){
 					*state = 1;
 				}else{
@@ -60,7 +58,7 @@ int c52_over_voltage_2_check(float *voltage){
 	uint32_t *tick = &c5_2.tick;
 	switch (*state) {
 		case 0:
-			if(g_electrolysis_status == 1){
+			if(g.flag.electrolysis == 1){
 				if(ns_delay_ms(tick, g_timerSetting.t12_s * 1000))
 					*state = 1;
 			}else{
@@ -68,7 +66,7 @@ int c52_over_voltage_2_check(float *voltage){
 			}
 			break;
 		case 1:
-			if (g_electrolysis_status == 1) {
+			if (g.flag.electrolysis == 1) {
 				//TODO: Check for over voltage 2
 				if(g_adc.voltage > *voltage){
 					if(g_error_status.over_voltage_2 == 0){
@@ -105,7 +103,7 @@ int c51_over_voltage_1_check(float *voltage){
 	uint32_t *tick = &c5_1.tick;
 	switch (*state) {
 		case 0:
-			if(g_electrolysis_status == 1){
+			if(g.flag.electrolysis == 1){
 				if(ns_delay_ms(tick, g_timerSetting.t11_s * 1000))
 					*state = 1;
 			}else{
@@ -113,7 +111,7 @@ int c51_over_voltage_1_check(float *voltage){
 			}
 			break;
 		case 1:
-			if(g_electrolysis_status == 1){
+			if(g.flag.electrolysis == 1){
 				//TODO: Check for over voltage 1
 				if (g_adc.voltage > *voltage) {
 					if(g_error_status.over_voltage_1 == 0){
@@ -271,7 +269,7 @@ int c12_electrolysis_start(void) {
 
 //TODO: C11 - Electrolysis status
 int c11_electrolysis_status(void) {
-	if (g_electrolysis_status == 1) {
+	if (g.flag.electrolysis == 1) {
 		if (g_ALD != 3 && g_ACD != 3) {
 			//TODO: C11 Condition?
 			return 1;
@@ -284,3 +282,5 @@ int c1_electrolusis_status_check(void) {
 
 	return 0;
 }
+
+int c5_electrolysis_CVCC_status(void) { return 0; }

@@ -1,47 +1,47 @@
 /***********************************************************************************************************************
- * DISCLAIMER
- * This software is supplied by Renesas Electronics Corporation and is only intended for use with Renesas products.
- * No other uses are authorized. This software is owned by Renesas Electronics Corporation and is protected under all
- * applicable laws, including copyright laws. 
- * THIS SOFTWARE IS PROVIDED "AS IS" AND RENESAS MAKES NO WARRANTIES REGARDING THIS SOFTWARE, WHETHER EXPRESS, IMPLIED
- * OR STATUTORY, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NON-INFRINGEMENT.  ALL SUCH WARRANTIES ARE EXPRESSLY DISCLAIMED.TO THE MAXIMUM EXTENT PERMITTED NOT PROHIBITED BY
- * LAW, NEITHER RENESAS ELECTRONICS CORPORATION NOR ANY OF ITS AFFILIATED COMPANIES SHALL BE LIABLE FOR ANY DIRECT,
- * INDIRECT, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES FOR ANY REASON RELATED TO THIS SOFTWARE, EVEN IF RENESAS OR
- * ITS AFFILIATES HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
- * Renesas reserves the right, without notice, to make changes to this software and to discontinue the availability 
- * of this software. By using this software, you agree to the additional terms and conditions found by accessing the 
- * following link:
- * http://www.renesas.com/disclaimer
- *
- * Copyright (C) 2011, 2020 Renesas Electronics Corporation. All rights reserved.
- ***********************************************************************************************************************/
+* DISCLAIMER
+* This software is supplied by Renesas Electronics Corporation and is only intended for use with Renesas products.
+* No other uses are authorized. This software is owned by Renesas Electronics Corporation and is protected under all
+* applicable laws, including copyright laws. 
+* THIS SOFTWARE IS PROVIDED "AS IS" AND RENESAS MAKES NO WARRANTIES REGARDING THIS SOFTWARE, WHETHER EXPRESS, IMPLIED
+* OR STATUTORY, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+* NON-INFRINGEMENT.  ALL SUCH WARRANTIES ARE EXPRESSLY DISCLAIMED.TO THE MAXIMUM EXTENT PERMITTED NOT PROHIBITED BY
+* LAW, NEITHER RENESAS ELECTRONICS CORPORATION NOR ANY OF ITS AFFILIATED COMPANIES SHALL BE LIABLE FOR ANY DIRECT,
+* INDIRECT, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES FOR ANY REASON RELATED TO THIS SOFTWARE, EVEN IF RENESAS OR
+* ITS AFFILIATES HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+* Renesas reserves the right, without notice, to make changes to this software and to discontinue the availability 
+* of this software. By using this software, you agree to the additional terms and conditions found by accessing the 
+* following link:
+* http://www.renesas.com/disclaimer
+*
+* Copyright (C) 2011, 2021 Renesas Electronics Corporation. All rights reserved.
+***********************************************************************************************************************/
 
 /***********************************************************************************************************************
- * File Name    : r_cg_rtc.h
- * Version      : CodeGenerator for RL78/G14 V2.05.05.01 [25 Nov 2020]
- * Device(s)    : R5F104ML
- * Tool-Chain   : CCRL
- * Description  : This file implements device driver for RTC module.
- * Creation Date: 7/26/2022
- ***********************************************************************************************************************/
+* File Name    : r_cg_rtc.h
+* Version      : CodeGenerator for RL78/G14 V2.05.06.02 [08 Nov 2021]
+* Device(s)    : R5F104ML
+* Tool-Chain   : CCRL
+* Description  : This file implements device driver for RTC module.
+* Creation Date: 8/12/2022
+***********************************************************************************************************************/
 
 #ifndef RTC_H
 #define RTC_H
 
 /***********************************************************************************************************************
- Macro definitions (Register bit)
- ***********************************************************************************************************************/
+Macro definitions (Register bit)
+***********************************************************************************************************************/
 /*
- Peripheral enable register 0 (PER0)
- */
+    Peripheral enable register 0 (PER0)
+*/
 /* Control of real-time clock (RTC) input clock (RTCEN) */
 #define _00_RTC_CLOCK_STOP            (0x00U)    /* stops supply of input clock */
 #define _08_RTC_CLOCK_SUPPLY          (0x80U)    /* supplies input clock */
 
 /*
- Real-time clock register 0 (RTCC0)
- */
+    Real-time clock register 0 (RTCC0)
+*/
 /* Real-time clock operation control (RTCE) */
 #define _00_RTC_COUNTER_STOP          (0x00U)    /* stops clock operation */
 #define _80_RTC_COUNTER_START         (0x80U)    /* starts clock operation */
@@ -64,8 +64,8 @@
 #define _20_RTC_RTC1HZ_ENABLE         (0x20U)    /* enable output of RTC1HZ pin (1 kHz) */
 
 /*
- Real-time clock control register 1 (RTCC1)
- */
+    Real-time clock control register 1 (RTCC1)
+*/
 /* Alarm operation control (WALE) */
 #define _00_RTC_ALARM_DISABLE         (0x00U)    /* alarm match operation is invalid */
 #define _80_RTC_ALARM_ENABLE          (0x80U)    /* alarm match operation is valid */
@@ -86,8 +86,8 @@
 #define _01_RTC_COUNTER_PAUSE         (0x01U)   /* stops SEC to YEAR counters. Mode to read or write counter value */
 
 /***********************************************************************************************************************
- Macro definitions
- ***********************************************************************************************************************/
+Macro definitions
+***********************************************************************************************************************/
 #define _00_RTC_COUNTER_YEAR          (0x00U)
 #define _01_RTC_COUNTER_MONTH         (0x01U)
 #define _01_RTC_COUNTER_DAY           (0x01U)
@@ -98,36 +98,46 @@
 #define RTC_WAITTIME                  (320U)   /* change the waiting time according to the system */
 
 /***********************************************************************************************************************
- Typedef definitions
- ***********************************************************************************************************************/
-typedef struct {
-	uint8_t sec;
-	uint8_t min;
-	uint8_t hour;
-	uint8_t day;
-	uint8_t week;
-	uint8_t month;
-	uint8_t year;
+Typedef definitions
+***********************************************************************************************************************/
+typedef struct 
+{
+    uint8_t sec;
+    uint8_t min;
+    uint8_t hour;
+    uint8_t day;
+    uint8_t week;
+    uint8_t month;
+    uint8_t year;
 } rtc_counter_value_t;
-typedef struct {
-	uint8_t alarmwm;
-	uint8_t alarmwh;
-	uint8_t alarmww;
+typedef struct
+{
+    uint8_t alarmwm;
+    uint8_t alarmwh;
+    uint8_t alarmww;
 } rtc_alarm_value_t;
-typedef enum {
-	HOUR12, HOUR24
-} rtc_hour_system_t;
-typedef enum {
-	HALFSEC = 1U, ONESEC, ONEMIN, ONEHOUR, ONEDAY, ONEMONTH
-} rtc_int_period_t;
+typedef enum
+{ 
+    HOUR12,
+    HOUR24
+}rtc_hour_system_t;
+typedef enum 
+{
+    HALFSEC = 1U,
+    ONESEC,
+    ONEMIN,
+    ONEHOUR,
+    ONEDAY,
+    ONEMONTH
+}rtc_int_period_t;
 
 /***********************************************************************************************************************
- Global functions
- ***********************************************************************************************************************/
+Global functions
+***********************************************************************************************************************/
 void R_RTC_Create(void);
 void R_RTC_Start(void);
 void R_RTC_Stop(void);
-MD_STATUS R_RTC_Get_CounterValue(rtc_counter_value_t *const counter_read_val);
+MD_STATUS R_RTC_Get_CounterValue(rtc_counter_value_t * const counter_read_val);
 MD_STATUS R_RTC_Set_CounterValue(rtc_counter_value_t counter_write_val);
 
 /* Start user code for function. Do not edit comment generated here */

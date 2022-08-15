@@ -13,6 +13,7 @@
 
 #define UART_MAX_LEN (6)
 #define TIMER_SETTING_MAX (40)
+#define SYSTEM_MODE (g.system_mode)
 
 extern uint8_t g_uart2_rx_data[UART_MAX_LEN], g_uart2_tx_data[UART_MAX_LEN];
 extern circular_buffer g_rx_data;
@@ -76,5 +77,28 @@ extern struct Number_Setting_s {
 	float saltPumpVoltage;
 	char crc;
 } g_numberSetting;
+
+enum WASH_MODE {
+	HAND_WASHING_MODE,
+	WATER_MODE,
+	ACID_MODE,
+	ALKALI_MODE
+};
+enum STATUS {
+	NORMAL
+};
+
+extern struct GLOBAL{
+	struct {
+		uint8_t electrolysis;
+		uint8_t cvcc_run;
+		uint8_t c22_start;
+		uint8_t hand_sensor;
+	}flag;
+	uint8_t system_mode;
+	enum WASH_MODE mode, previous_mode;
+	enum STATUS status;
+}g;
+
 
 #endif /* CHIENOWA_GLOBAL_VARIABLE_H_ */

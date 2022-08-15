@@ -1,40 +1,40 @@
 /***********************************************************************************************************************
- * DISCLAIMER
- * This software is supplied by Renesas Electronics Corporation and is only intended for use with Renesas products.
- * No other uses are authorized. This software is owned by Renesas Electronics Corporation and is protected under all
- * applicable laws, including copyright laws. 
- * THIS SOFTWARE IS PROVIDED "AS IS" AND RENESAS MAKES NO WARRANTIES REGARDING THIS SOFTWARE, WHETHER EXPRESS, IMPLIED
- * OR STATUTORY, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NON-INFRINGEMENT.  ALL SUCH WARRANTIES ARE EXPRESSLY DISCLAIMED.TO THE MAXIMUM EXTENT PERMITTED NOT PROHIBITED BY
- * LAW, NEITHER RENESAS ELECTRONICS CORPORATION NOR ANY OF ITS AFFILIATED COMPANIES SHALL BE LIABLE FOR ANY DIRECT,
- * INDIRECT, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES FOR ANY REASON RELATED TO THIS SOFTWARE, EVEN IF RENESAS OR
- * ITS AFFILIATES HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
- * Renesas reserves the right, without notice, to make changes to this software and to discontinue the availability 
- * of this software. By using this software, you agree to the additional terms and conditions found by accessing the 
- * following link:
- * http://www.renesas.com/disclaimer
- *
- * Copyright (C) 2011, 2020 Renesas Electronics Corporation. All rights reserved.
- ***********************************************************************************************************************/
+* DISCLAIMER
+* This software is supplied by Renesas Electronics Corporation and is only intended for use with Renesas products.
+* No other uses are authorized. This software is owned by Renesas Electronics Corporation and is protected under all
+* applicable laws, including copyright laws. 
+* THIS SOFTWARE IS PROVIDED "AS IS" AND RENESAS MAKES NO WARRANTIES REGARDING THIS SOFTWARE, WHETHER EXPRESS, IMPLIED
+* OR STATUTORY, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+* NON-INFRINGEMENT.  ALL SUCH WARRANTIES ARE EXPRESSLY DISCLAIMED.TO THE MAXIMUM EXTENT PERMITTED NOT PROHIBITED BY
+* LAW, NEITHER RENESAS ELECTRONICS CORPORATION NOR ANY OF ITS AFFILIATED COMPANIES SHALL BE LIABLE FOR ANY DIRECT,
+* INDIRECT, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES FOR ANY REASON RELATED TO THIS SOFTWARE, EVEN IF RENESAS OR
+* ITS AFFILIATES HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+* Renesas reserves the right, without notice, to make changes to this software and to discontinue the availability 
+* of this software. By using this software, you agree to the additional terms and conditions found by accessing the 
+* following link:
+* http://www.renesas.com/disclaimer
+*
+* Copyright (C) 2011, 2021 Renesas Electronics Corporation. All rights reserved.
+***********************************************************************************************************************/
 
 /***********************************************************************************************************************
- * File Name    : r_cg_serial.h
- * Version      : CodeGenerator for RL78/G14 V2.05.05.01 [25 Nov 2020]
- * Device(s)    : R5F104ML
- * Tool-Chain   : CCRL
- * Description  : This file implements device driver for Serial module.
- * Creation Date: 7/26/2022
- ***********************************************************************************************************************/
+* File Name    : r_cg_serial.h
+* Version      : CodeGenerator for RL78/G14 V2.05.06.02 [08 Nov 2021]
+* Device(s)    : R5F104ML
+* Tool-Chain   : CCRL
+* Description  : This file implements device driver for Serial module.
+* Creation Date: 8/12/2022
+***********************************************************************************************************************/
 
 #ifndef SERIAL_H
 #define SERIAL_H
 
 /***********************************************************************************************************************
- Macro definitions (Register bit)
- ***********************************************************************************************************************/
+Macro definitions (Register bit)
+***********************************************************************************************************************/
 /*
- Serial Clock Select Register m (SPSm)
- */
+    Serial Clock Select Register m (SPSm)
+*/
 /* Section of operation clock (CKm0) (PRSm03 - PRSm00) */
 #define _0000_SAU_CK00_FCLK_0            (0x0000U)    /* ck00 - fCLK */
 #define _0001_SAU_CK00_FCLK_1            (0x0001U)    /* ck00 - fCLK/2^1 */
@@ -71,8 +71,8 @@
 #define _00F0_SAU_CK01_FCLK_15           (0x00F0U)    /* ck01 - fCLK/2^15 */
 
 /*
- Serial Mode Register mn (SMRmn)
- */
+    Serial Mode Register mn (SMRmn)
+*/
 #define _0020_SAU_SMRMN_INITIALVALUE     (0x0020U)
 /* Selection of macro clock (MCK) of channel n (CKSmn) */
 #define _0000_SAU_CLOCK_SELECT_CK00      (0x0000U)    /* operation clock CK0 set by PRS register */ 
@@ -95,8 +95,8 @@
 #define _0001_SAU_BUFFER_EMPTY           (0x0001U)    /* buffer empty interrupt */
 
 /*
- Serial Communication Operation Setting Register mn (SCRmn)
- */
+    Serial Communication Operation Setting Register mn (SCRmn)
+*/
 /* Setting of operation mode of channel n (TXEmn, RXEmn) */
 #define _0000_SAU_NOT_COMMUNICATION      (0x0000U)    /* does not start communication */
 #define _4000_SAU_RECEPTION              (0x4000U)    /* reception only */
@@ -128,8 +128,8 @@
 #define _0007_SAU_LENGTH_8               (0x0007U)    /* 8-bit data length */
 
 /*
- Serial Output Level Register m (SOLm)
- */
+    Serial Output Level Register m (SOLm)
+*/
 /* Selects inversion of the level of the transmit data of channel n in UART mode */
 #define _0000_SAU_CHANNEL0_NORMAL        (0x0000U)    /* normal bit level */
 #define _0001_SAU_CHANNEL0_INVERTED      (0x0001U)    /* inverted bit level */
@@ -141,8 +141,8 @@
 #define _0008_SAU_CHANNEL3_INVERTED      (0x0008U)    /* inverted bit level */
 
 /*
- Noise Filter Enable Register 0 (NFEN0)
- */
+    Noise Filter Enable Register 0 (NFEN0)
+*/
 /* Use of noise filter */
 #define _00_SAU_RXD3_FILTER_OFF          (0x00U)      /* noise filter off */
 #define _40_SAU_RXD3_FILTER_ON           (0x40U)      /* noise filter on */
@@ -154,8 +154,8 @@
 #define _01_SAU_RXD0_FILTER_ON           (0x01U)      /* noise filter on */
 
 /*
- Format of Serial Status Register mn (SSRmn)
- */
+    Format of Serial Status Register mn (SSRmn)
+*/
 /* Communication status indication flag of channel n (TSFmn) */
 #define _0040_SAU_UNDER_EXECUTE          (0x0040U)    /* communication is under execution */
 /* Buffer register status indication flag of channel n (BFFmn) */
@@ -168,8 +168,8 @@
 #define _0001_SAU_OVERRUN_ERROR          (0x0001U)    /* an overrun error occurs */
 
 /*
- Serial Channel Start Register m (SSm)
- */
+    Serial Channel Start Register m (SSm)
+*/
 /* Operation start trigger of channel 0 (SSm0) */
 #define _0000_SAU_CH0_START_TRG_OFF      (0x0000U)    /* no trigger operation */
 #define _0001_SAU_CH0_START_TRG_ON       (0x0001U)    /* sets SEm0 to 1 and enters the communication wait status */
@@ -184,8 +184,8 @@
 #define _0008_SAU_CH3_START_TRG_ON       (0x0008U)    /* sets SEm3 to 1 and enters the communication wait status */
 
 /*
- Serial Channel Stop Register m (STm)
- */
+    Serial Channel Stop Register m (STm)
+*/
 /* Operation stop trigger of channel 0 (STm0) */
 #define _0000_SAU_CH0_STOP_TRG_OFF       (0x0000U)    /* no trigger operation */
 #define _0001_SAU_CH0_STOP_TRG_ON        (0x0001U)    /* operation is stopped (stop trigger is generated) */
@@ -200,8 +200,8 @@
 #define _0008_SAU_CH3_STOP_TRG_ON        (0x0008U)    /* operation is stopped (stop trigger is generated) */
 
 /*
- Format of Serial Flag Clear Trigger Register mn (SIRmn)
- */
+    Format of Serial Flag Clear Trigger Register mn (SIRmn)
+*/
 /* Clear trigger of overrun error flag of channel n (OVCTmn) */
 #define _0001_SAU_SIRMN_OVCTMN           (0x0001U)
 /* Clear trigger of parity error flag of channel n (PECTmn) */
@@ -210,8 +210,8 @@
 #define _0004_SAU_SIRMN_FECTMN           (0x0004U)
 
 /*
- Serial Output Enable Register m (SOEm)
- */
+    Serial Output Enable Register m (SOEm)
+*/
 /* Serial output enable/disable of channel 0 (SOEm0) */
 #define _0001_SAU_CH0_OUTPUT_ENABLE      (0x0001U)    /* enables output by serial communication operation */
 #define _0000_SAU_CH0_OUTPUT_DISABLE     (0x0000U)    /* stops output by serial communication operation */
@@ -226,8 +226,8 @@
 #define _0000_SAU_CH3_OUTPUT_DISABLE     (0x0000U)    /* stops output by serial communication operation */
 
 /*
- Serial Output Register m (SOm)
- */
+    Serial Output Register m (SOm)
+*/
 /* Serial data output of channel 0 (SOm0) */
 #define _0000_SAU_CH0_DATA_OUTPUT_0      (0x0000U)    /* Serial data output value is "0" */
 #define _0001_SAU_CH0_DATA_OUTPUT_1      (0x0001U)    /* Serial data output value is "1" */
@@ -254,8 +254,8 @@
 #define _0800_SAU_CH3_CLOCK_OUTPUT_1     (0x0800U)    /* Serial clock output value is "1" */
 
 /*
- SAU Standby Control Register m (SSCm)
- */
+    SAU Standby Control Register m (SSCm)
+*/
 /* SAU Standby Wakeup Control Bit (SWC) */
 #define _0000_SAU_CH0_SNOOZE_OFF         (0x0000U)    /* disable start function from STOP state of chip */
 #define _0001_SAU_CH0_SNOOZE_ON          (0x0001U)    /* enable start function from STOP state of chip */
@@ -267,15 +267,15 @@
 #define _04_SAU_IIC_SENDED_ADDRESS_FLAG  (0x04U)
 
 /*
- Input switch control register (ISC)
- */
+    Input switch control register (ISC)
+*/
 /* Channel 0 SSI00 input setting in CSI communication and slave mode (SSIE00) */
 #define _00_SAU_SSI00_UNUSED             (0x00U)      /* disables SSI00 pin input */
 #define _80_SAU_SSI00_USED               (0x80U)      /* enables SSI00 pin input */
 
 /*
- IICA Control Register (IICCTLn0)
- */
+    IICA Control Register (IICCTLn0)
+*/
 /* IIC operation enable (IICEn) */
 #define _00_IICA_OPERATION_DISABLE       (0x00U)    /* stop operation */
 #define _80_IICA_OPERATION_ENABLE        (0x80U)    /* enable operation */
@@ -302,8 +302,8 @@
 #define _01_IICA_STOP_GENERATE           (0x01U)    /* generate stop condition */
 
 /*
- IICA Status Register (IICSn)
- */
+    IICA Status Register (IICSn)
+*/
 /* Master device status (MSTSn) */
 #define _00_IICA_STATUS_NOTMASTER        (0x00U)    /* slave device status or communication standby status */
 #define _80_IICA_STATUS_MASTER           (0x80U)    /* master device communication status */
@@ -330,8 +330,8 @@
 #define _01_IICA_STOP_DETECTED           (0x01U)    /* stop condition detected */
 
 /*
- IICA Flag Register (IICFn)
- */
+    IICA Flag Register (IICFn)
+*/
 /* STT clear flag (STCFn) */
 #define _00_IICA_STARTFLAG_GENERATE      (0x00U)    /* generate start condition */
 #define _80_IICA_STARTFLAG_UNSUCCESSFUL  (0x80U)    /* start condition generation unsuccessful */
@@ -346,8 +346,8 @@
 #define _01_IICA_RESERVATION_DISABLE     (0x01U)    /* disable communication reservation */
 
 /*
- IICA Control Register 1 (IICCTLn1)
- */
+    IICA Control Register 1 (IICCTLn1)
+*/
 /* Control of address match wakeup (WUPn) */
 #define _00_IICA_WAKEUP_STOP             (0x00U)    /* stop address match wakeup function in STOP mode */
 #define _80_IICA_WAKEUP_ENABLE           (0x80U)    /* enable address match wakeup function in STOP mode */
@@ -371,8 +371,8 @@
 #define _00_IICA_MASTER_FLAG_CLEAR       (0x00U)
 
 /***********************************************************************************************************************
- Macro definitions
- ***********************************************************************************************************************/
+Macro definitions
+***********************************************************************************************************************/
 #define _CE00_CSI01_DIVISOR              (0xCE00U)
 #define _CE00_UART2_RECEIVE_DIVISOR      (0xCE00U)
 #define _CE00_UART2_TRANSMIT_DIVISOR     (0xCE00U)
@@ -380,18 +380,17 @@
 #define _CE00_UART3_TRANSMIT_DIVISOR     (0xCE00U)
 
 /***********************************************************************************************************************
- Typedef definitions
- ***********************************************************************************************************************/
+Typedef definitions
+***********************************************************************************************************************/
 
 /***********************************************************************************************************************
- Global functions
- ***********************************************************************************************************************/
+Global functions
+***********************************************************************************************************************/
 void R_SAU0_Create(void);
 void R_CSI01_Create(void);
 void R_CSI01_Start(void);
 void R_CSI01_Stop(void);
-MD_STATUS R_CSI01_Send_Receive(uint8_t *const tx_buf, uint16_t tx_num,
-		uint8_t *const rx_buf);
+MD_STATUS R_CSI01_Send_Receive(uint8_t * const tx_buf, uint16_t tx_num, uint8_t * const rx_buf);
 static void r_csi01_callback_error(uint8_t err_type);
 static void r_csi01_callback_receiveend(void);
 static void r_csi01_callback_sendend(void);
@@ -399,8 +398,8 @@ void R_SAU1_Create(void);
 void R_UART2_Create(void);
 void R_UART2_Start(void);
 void R_UART2_Stop(void);
-MD_STATUS R_UART2_Send(uint8_t *const tx_buf, uint16_t tx_num);
-MD_STATUS R_UART2_Receive(uint8_t *const rx_buf, uint16_t rx_num);
+MD_STATUS R_UART2_Send(uint8_t * const tx_buf, uint16_t tx_num);
+MD_STATUS R_UART2_Receive(uint8_t * const rx_buf, uint16_t rx_num);
 static void r_uart2_callback_error(uint8_t err_type);
 static void r_uart2_callback_receiveend(void);
 static void r_uart2_callback_sendend(void);
@@ -408,8 +407,8 @@ static void r_uart2_callback_softwareoverrun(uint16_t rx_data);
 void R_UART3_Create(void);
 void R_UART3_Start(void);
 void R_UART3_Stop(void);
-MD_STATUS R_UART3_Send(uint8_t *const tx_buf, uint16_t tx_num);
-MD_STATUS R_UART3_Receive(uint8_t *const rx_buf, uint16_t rx_num);
+MD_STATUS R_UART3_Send(uint8_t * const tx_buf, uint16_t tx_num);
+MD_STATUS R_UART3_Receive(uint8_t * const rx_buf, uint16_t rx_num);
 static void r_uart3_callback_error(uint8_t err_type);
 static void r_uart3_callback_receiveend(void);
 static void r_uart3_callback_sendend(void);

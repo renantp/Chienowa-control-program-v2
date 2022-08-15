@@ -10,6 +10,7 @@
 
 #include "../../r_cg_macrodriver.h"
 
-extern int g_electrolysis_status;
+int c3_acid_tank_level_check(void);
+int c5_electrolysis_CVCC_status(void);
 
 #endif /* CHIENOWA_MODULE_C_MODULE_H_ */
