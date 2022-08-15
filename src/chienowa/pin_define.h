@@ -17,15 +17,16 @@
 #define LEVEL_ON	(0U)
 #define LEVEL_OFF	(1U)
 
-#define SV1		(P1_bit.no7)
-#define SV2		(P5_bit.no5)
-#define SV3		(P7_bit.no6)
-#define SV4		(P7_bit.no7)
-#define SV5		(P6_bit.no7)
-#define SV6		(P6_bit.no6)
-#define PUMP_1	(P6_bit.no2)
-#define PUMP_2	(P6_bit.no1)
-#define SP		(P6_bit.no0)
+#define SV1_PIN		(P1_bit.no7)
+#define SV2_PIN		(P5_bit.no5)
+#define SV3_PIN		(P7_bit.no6)
+#define SV4_PIN		(P7_bit.no7)
+#define SV5_PIN		(P6_bit.no7)
+#define SV6_PIN		(P6_bit.no6)
+#define SV7_PIN		(P6_bit.no5)
+#define PUMP_1_PIN	(P6_bit.no2)
+#define PUMP_2_PIN	(P6_bit.no1)
+#define SP_PIN		(P6_bit.no0)
 
 #define FL1		(P7_bit.no1)
 #define FL2		(P7_bit.no2)
@@ -40,6 +41,8 @@ extern union FLAG_U {
 	struct {
 		uint8_t sv1 : 1;
 		uint8_t sv2 : 1;
+		uint8_t sv3 : 1;
+		uint8_t sv4 : 1;
 		uint8_t sv5 : 1;
 		uint8_t sv6 : 1;
 		uint8_t sv7 : 1;

@@ -14,6 +14,7 @@
 #define UART_MAX_LEN (6)
 #define TIMER_SETTING_MAX (40)
 #define SYSTEM_MODE (g.system_mode)
+#define WASH_MODE	(g.mode)
 
 extern uint8_t g_uart2_rx_data[UART_MAX_LEN], g_uart2_tx_data[UART_MAX_LEN];
 extern circular_buffer g_rx_data;
@@ -63,7 +64,7 @@ extern struct Timer_Setting_s{
 	uint16_t t39_h;
 	uint16_t t40_s;
 	char crc;
-}g_timerSetting;
+}g_T_S;
 extern struct Number_Setting_s {
 	float upperVoltage1;
 	float upperVoltage2;
@@ -78,25 +79,74 @@ extern struct Number_Setting_s {
 	char crc;
 } g_numberSetting;
 
-enum WASH_MODE {
+enum WASH_MODE_E {
 	HAND_WASHING_MODE,
 	WATER_MODE,
 	ACID_MODE,
 	ALKALI_MODE
 };
 enum STATUS {
-	NORMAL
+	NORMAL,
+	INDIVIDUAL,
+	WASHING,
 };
+struct IO_Struct{
+	uint8_t AlkalineEmptyLevel: 1;
+	uint8_t AlkalineLowLevel: 1;
+	uint8_t AlkalineHighLevel: 1;
+	uint8_t AcidEmptyLevel: 1;
+	uint8_t AcidLowLevel: 1;
+	uint8_t AcidHighLevel: 1;
+	uint8_t SaltLowLevel: 1;
+	uint8_t SaltHighLevel: 1;
 
+	struct{
+		uint8_t sv1: 1;
+		uint8_t sv2: 1;
+		uint8_t sv3: 1;
+		uint8_t sv4: 1;
+		uint8_t sv5: 1;
+		uint8_t sv6: 1;
+		uint8_t sv7: 1;
+		uint8_t sv8: 1;
+
+		uint8_t RSVD: 8; //	Reserved
+	}valve; // 2 byte
+
+	uint8_t pump_1: 1;
+	uint8_t pump_2: 1;
+	uint8_t salt_pump: 1;
+	uint8_t CVCC_ON: 1;
+	uint8_t HandSensorON: 1;
+	uint8_t HandSensorOFF: 1;
+	uint8_t RSVD1: 2; // Reserved
+};
 extern struct GLOBAL{
 	struct {
 		uint8_t electrolysis;
 		uint8_t cvcc_run;
+		uint8_t c1;
 		uint8_t c22_start;
 		uint8_t hand_sensor;
+		uint8_t alkali_drainning;
+		uint8_t acid_drainning;
+
+		uint8_t individual;
+		struct IO_Struct io;
 	}flag;
+	struct{
+		uint32_t c1_on;
+		uint32_t faucet_off;
+		uint32_t water_discharge;
+	}timer;
+	struct IO_Struct io;
+//	struct {
+//		union{
+//
+//		};
+//	}error;
 	uint8_t system_mode;
-	enum WASH_MODE mode, previous_mode;
+	enum WASH_MODE_E mode, previous_mode;
 	enum STATUS status;
 }g;
 

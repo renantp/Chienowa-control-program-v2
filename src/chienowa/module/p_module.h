@@ -13,6 +13,42 @@
 /***********************************************************************************************************************
  Main operation
  ***********************************************************************************************************************/
+int p1_initial_working_mode_start_process(void);
+int p0_system_main_prpocess(void);
+int p01_system_main_sub_system(void); //Do not need
+int p11_startup_draining_water(void);
+int p111_startup_drain_tank(void);
+int p112_alkali_drain_stop(void);
+int p113_acid_drain_stop(void);
+int p114_alkali_drain_final_stop(void);
+int p115_acid_drain_final_stop(void);
+int p12_startup_water_supply(void);
+int p13_startup_electrolysis_operation(void);
+int p131_electrolysis_start(void);
+int p132_initial_electrolysis_stop(void);
+int p14_initial_2nd_draining_water(void);
+int p15_2nd_electrolysis_water_generation_process(void);
+int p151_2nd_electrolysis_start_process(void);
+int p152_2nd_initial_electrolysis_stop_process(void);
+
+int p2_water_discharge_mode(void);
+int p21_alkali_water_discharge_mode(void);
+int p22_acid_water_discharge_mode(void);
+int p23_water_discharge_mode(void);
+int p24_hand_wash_mode(void);
+void p2411(void);
+void p2412(void);
+void p2413(void);
+void p2421(void);
+void p2422(void);
+void p2423(void);
+void p2431(void);
+void p2432(void);
+void p2433(void);
+
+int p8_stop_all_processing(void);
+
+int p313_flow_rate_adjustment(void);
 //int p_main(void);
 //int p1_initial_startup_operation(void);
 //int p11_startup_draining_water(void);
