@@ -44,15 +44,23 @@
           <Path>src\chienowa\adc.h</Path>
           <Path>src\chienowa\circular_buffer.c</Path>
           <Path>src\chienowa\circular_buffer.h</Path>
+          <Path>src\chienowa\crc8.c</Path>
+          <Path>src\chienowa\crc8.h</Path>
           <Path>src\chienowa\delay.c</Path>
           <Path>src\chienowa\delay.h</Path>
           <Path>src\chienowa\eeprom.c</Path>
           <Path>src\chienowa\eeprom.h</Path>
           <Path>src\chienowa\global_variable.h</Path>
+          <Path>src\chienowa\hand_sensor.c</Path>
+          <Path>src\chienowa\hand_sensor.h</Path>
           <Path>src\chienowa\main.c</Path>
           <Path>src\chienowa\main.h</Path>
           <Path>src\chienowa\pin_define.h</Path>
+          <Path>src\chienowa\runtime.c</Path>
+          <Path>src\chienowa\runtime.h</Path>
           <Category Name="module">
+            <Path>src\chienowa\module\b_module.c</Path>
+            <Path>src\chienowa\module\b_module.h</Path>
             <Path>src\chienowa\module\c_module.c</Path>
             <Path>src\chienowa\module\c_module.h</Path>
             <Path>src\chienowa\module\e_module.c</Path>
@@ -61,13 +69,15 @@
             <Path>src\chienowa\module\p_module.h</Path>
             <Path>src\chienowa\module\s_module.c</Path>
             <Path>src\chienowa\module\s_module.h</Path>
+            <Path>src\chienowa\module\t_module.c</Path>
+            <Path>src\chienowa\module\t_module.h</Path>
           </Category>
         </Category>
       </Category>
     </Files>
     <Device Category="com.renesas.cdt.managedbuild.renesas.ccrl.common.option.cpu.s3" Series="RL78">R5F104ML</Device>
     <BuildOptions Name="CC-RL" Version="v1.10.00">
-      <BuildMode Active="False" Name="HardwareDebug">
+      <BuildMode Active="True" Name="HardwareDebug">
         <GeneralOptions/>
         <CompileOptions>
           <Option>-cpu=S3</Option>
@@ -117,13 +127,18 @@
           <Path>HardwareDebug\stkinit.obj</Path>
           <Path>HardwareDebug\adc.obj</Path>
           <Path>HardwareDebug\circular_buffer.obj</Path>
+          <Path>HardwareDebug\crc8.obj</Path>
           <Path>HardwareDebug\delay.obj</Path>
           <Path>HardwareDebug\eeprom.obj</Path>
+          <Path>HardwareDebug\hand_sensor.obj</Path>
           <Path>HardwareDebug\main.obj</Path>
+          <Path>HardwareDebug\b_module.obj</Path>
           <Path>HardwareDebug\c_module.obj</Path>
           <Path>HardwareDebug\e_module.obj</Path>
           <Path>HardwareDebug\p_module.obj</Path>
           <Path>HardwareDebug\s_module.obj</Path>
+          <Path>HardwareDebug\t_module.obj</Path>
+          <Path>HardwareDebug\runtime.obj</Path>
           <Path>HardwareDebug\r_cg_adc.obj</Path>
           <Path>HardwareDebug\r_cg_adc_user.obj</Path>
           <Path>HardwareDebug\r_cg_cgc.obj</Path>
@@ -145,7 +160,7 @@
           <IncludePathForC>"${ProjDirPath}\generate"</IncludePathForC>
         </CommonOptions>
       </BuildMode>
-      <BuildMode Active="True" Name="Debug">
+      <BuildMode Active="False" Name="Debug">
         <GeneralOptions/>
         <CompileOptions>
           <Option>-cpu=S3</Option>
@@ -190,13 +205,18 @@
           <Path>Debug\stkinit.obj</Path>
           <Path>Debug\adc.obj</Path>
           <Path>Debug\circular_buffer.obj</Path>
+          <Path>Debug\crc8.obj</Path>
           <Path>Debug\delay.obj</Path>
           <Path>Debug\eeprom.obj</Path>
+          <Path>Debug\hand_sensor.obj</Path>
           <Path>Debug\main.obj</Path>
+          <Path>Debug\b_module.obj</Path>
           <Path>Debug\c_module.obj</Path>
           <Path>Debug\e_module.obj</Path>
           <Path>Debug\p_module.obj</Path>
           <Path>Debug\s_module.obj</Path>
+          <Path>Debug\t_module.obj</Path>
+          <Path>Debug\runtime.obj</Path>
           <Path>Debug\r_cg_adc.obj</Path>
           <Path>Debug\r_cg_adc_user.obj</Path>
           <Path>Debug\r_cg_cgc.obj</Path>
@@ -260,13 +280,18 @@
           <Path>Release\stkinit.obj</Path>
           <Path>Release\adc.obj</Path>
           <Path>Release\circular_buffer.obj</Path>
+          <Path>Release\crc8.obj</Path>
           <Path>Release\delay.obj</Path>
           <Path>Release\eeprom.obj</Path>
+          <Path>Release\hand_sensor.obj</Path>
           <Path>Release\main.obj</Path>
+          <Path>Release\b_module.obj</Path>
           <Path>Release\c_module.obj</Path>
           <Path>Release\e_module.obj</Path>
           <Path>Release\p_module.obj</Path>
           <Path>Release\s_module.obj</Path>
+          <Path>Release\t_module.obj</Path>
+          <Path>Release\runtime.obj</Path>
           <Path>Release\r_cg_adc.obj</Path>
           <Path>Release\r_cg_adc_user.obj</Path>
           <Path>Release\r_cg_cgc.obj</Path>
@@ -465,6 +490,8 @@
         &lt;TMRD0 /&gt;&#13;
       &lt;/Effect&gt;&#13;
     &lt;/TRDCLKUSE1&gt;&#13;
+    &lt;TRDCLKTag Name="TRDCLKTag" Value="-1" /&gt;&#13;
+    &lt;TRDCLKUSE0 Name="TRDCLKUSE0" Value="0" /&gt;&#13;
     &lt;CodePath Name="CodePath" Text=".\" /&gt;&#13;
     &lt;ReportType Name="ReportType" Text="Html" /&gt;&#13;
     &lt;CreationDateType Name="CreationDateType" Text="OutputDate" /&gt;&#13;
@@ -490,10 +517,8 @@
     &lt;HasRRMRam Name="HasRRMRam" Text="7FE00" /&gt;&#13;
     &lt;HasTraceRam Name="HasTraceRam" Text="F4300" /&gt;&#13;
     &lt;PrjVersion Name="PrjVersion" Text="1.2.0.1" /&gt;&#13;
-    &lt;ProductVersion Name="ProductVersion" Text="2.18.00.01" /&gt;&#13;
+    &lt;ProductVersion Name="ProductVersion" Text="2.19.00.01" /&gt;&#13;
     &lt;LinkFileName Name="LinkFileName" Text="" /&gt;&#13;
-    &lt;TRDCLKTag Name="TRDCLKTag" Value="-1" /&gt;&#13;
-    &lt;TRDCLKUSE0 Name="TRDCLKUSE0" Value="0" /&gt;&#13;
     &lt;TO02_PWM Name="TO02_PWM" Text="false" /&gt;&#13;
     &lt;TO03_PWM Name="TO03_PWM" Text="false" /&gt;&#13;
     &lt;INPT0USE0 Name="INPT0USE0" Text="false" /&gt;&#13;
@@ -546,12 +571,12 @@
         &lt;/Port2&gt;&#13;
         &lt;Port3 Pullup="true"&gt;&#13;
           &lt;P30 Chip="RL78G14_30pin,RL78G14_32pin,RL78G14_36pin,RL78G14_40pin,RL78G14_44pin,RL78G14_48pin,RL78G14_49pin,RL78G14_52pin,RL78G14_64pin,RL78G14_80pin,RL78G14_100pin" Name="P30/INTP3/RTC1HZ/_SCK00/SCL00/TRJO0" Nch="true" TTL="true" AltFunc="P30" Point="I/O" /&gt;&#13;
-          &lt;P31 Chip="RL78G14_48pin,RL78G14_49pin,RL78G14_52pin,RL78G14_64pin,RL78G14_80pin,RL78G14_100pin,RL78G14_128pin" Name="P31/TI03/TO03/INTP4" AltFunc="" Point="I/O" /&gt;&#13;
+          &lt;P31 Chip="RL78G14_48pin,RL78G14_49pin,RL78G14_52pin,RL78G14_64pin,RL78G14_80pin,RL78G14_100pin,RL78G14_128pin" Name="P31/TI03/TO03/INTP4" AltFunc="P31" Point="I/O" /&gt;&#13;
         &lt;/Port3&gt;&#13;
         &lt;Port4 Pullup="true"&gt;&#13;
           &lt;P40 Name="P40/TOOL0" AltFunc="TOOL0" Point="I/O" /&gt;&#13;
-          &lt;P41 Chip="RL78G14_44pin,RL78G14_48pin,RL78G14_49pin,RL78G14_52pin,RL78G14_64pin,RL78G14_80pin,RL78G14_100pin,RL78G14_128pin" Name="P41" AltFunc="" Point="I/O" /&gt;&#13;
-          &lt;P42 Chip="RL78G14_64pin,RL78G14_80pin,RL78G14_100pin,RL78G14_128pin" Name="P42" AltFunc="" Point="I/O" /&gt;&#13;
+          &lt;P41 Chip="RL78G14_44pin,RL78G14_48pin,RL78G14_49pin,RL78G14_52pin,RL78G14_64pin,RL78G14_80pin,RL78G14_100pin,RL78G14_128pin" Name="P41" AltFunc="P41" Point="I/O" /&gt;&#13;
+          &lt;P42 Chip="RL78G14_64pin,RL78G14_80pin,RL78G14_100pin,RL78G14_128pin" Name="P42" AltFunc="P42" Point="I/O" /&gt;&#13;
           &lt;P43 Chip="RL78G14_80pin,RL78G14_100pin,RL78G14_128pin" Name="P43/_SCK01/SCL01" TTL="true" Nch="true" AltFunc="SCK01" Point="I/O" /&gt;&#13;
           &lt;P44 Chip="RL78G14_80pin,RL78G14_100pin,RL78G14_128pin" Name="P44/SI01/SDA01" TTL="true" Nch="true" AltFunc="SI01" Point="I/O" /&gt;&#13;
           &lt;P45 Chip="RL78G14_80pin,RL78G14_100pin,RL78G14_128pin" Name="P45/SO01" Nch="true" AltFunc="SO01" Point="I/O" /&gt;&#13;
@@ -1985,29 +2010,29 @@
     &lt;TAG&gt;&#13;
       &lt;GlobleUserTag&gt;&#13;
         &lt;clock_option Name="clock_option" Value="F8" /&gt;&#13;
+        &lt;cg_security7 Name="cg_security7" Value="00" /&gt;&#13;
         &lt;cg_security5 Name="cg_security5" Value="00" /&gt;&#13;
         &lt;wdt_option Name="wdt_option" Value="EF" /&gt;&#13;
         &lt;cg_security8 Name="cg_security8" Value="00" /&gt;&#13;
         &lt;cg_security2 Name="cg_security2" Value="00" /&gt;&#13;
         &lt;pior1_value Name="pior1_value" Value="00" /&gt;&#13;
         &lt;cg_security1 Name="cg_security1" Value="00" /&gt;&#13;
-        &lt;gtraceused Name="gtraceused" Value="" /&gt;&#13;
-        &lt;cg_onchip Name="cg_onchip" Value="" /&gt;&#13;
         &lt;cg_security9 Name="cg_security9" Value="00" /&gt;&#13;
-        &lt;rrm Name="rrm" Value="7FE00" /&gt;&#13;
+        &lt;lvi_option Name="lvi_option" Value="FF" /&gt;&#13;
         &lt;cg_security6 Name="cg_security6" Value="00" /&gt;&#13;
         &lt;cg_crc_area Name="cg_crc_area" Value="00" /&gt;&#13;
         &lt;cg_iawctl_value Name="cg_iawctl_value" Value="00" /&gt;&#13;
         &lt;cg_security0 Name="cg_security0" Value="00" /&gt;&#13;
-        &lt;ocdstart Name="ocdstart" Value="7FE00" /&gt;&#13;
-        &lt;cg_pms_value Name="cg_pms_value" Value="00" /&gt;&#13;
         &lt;cg_security3 Name="cg_security3" Value="00" /&gt;&#13;
+        &lt;ocdstart Name="ocdstart" Value="7FE00" /&gt;&#13;
         &lt;cg_security4 Name="cg_security4" Value="00" /&gt;&#13;
+        &lt;cg_pms_value Name="cg_pms_value" Value="00" /&gt;&#13;
+        &lt;rrm Name="rrm" Value="7FE00" /&gt;&#13;
+        &lt;cg_onchip Name="cg_onchip" Value="" /&gt;&#13;
         &lt;pior_value Name="pior_value" Value="00" /&gt;&#13;
         &lt;cg_ocd_ram_size Name="cg_ocd_ram_size" Value="512" /&gt;&#13;
         &lt;cg_option Name="cg_option" Value="84" /&gt;&#13;
-        &lt;cg_security7 Name="cg_security7" Value="00" /&gt;&#13;
-        &lt;lvi_option Name="lvi_option" Value="FF" /&gt;&#13;
+        &lt;gtraceused Name="gtraceused" Value="" /&gt;&#13;
       &lt;/GlobleUserTag&gt;&#13;
     &lt;/TAG&gt;&#13;
   &lt;/DIR&gt;&#13;
@@ -2046,7 +2071,7 @@
     &lt;/DAC&gt;&#13;
     &lt;TAU SetFlag="True" HelpID="timer" NeedRefresh="False"&gt;&#13;
       &lt;TAU0 Accelerate="No" MacroName="TAU" Channel="0" ChannelNum="0,1,2,3" SetFlag="True" TabEnable="True" /&gt;&#13;
-      &lt;TAU1 Chip="RL78G14_80pin,RL78G14_100pin" Accelerate="No" MacroName="TAU" Channel="1" ChannelNum="0,1,2,3" TabEnable="True" SetFlag="False" /&gt;&#13;
+      &lt;TAU1 Chip="RL78G14_80pin,RL78G14_100pin" Accelerate="No" MacroName="TAU" Channel="1" ChannelNum="0,1,2,3" SetFlag="False" TabEnable="True" /&gt;&#13;
       &lt;TMRJ0 SetFlag="False" MacroName="TMRJ" Channel="0" TabEnable="True" /&gt;&#13;
       &lt;TMRD0 SetFlag="False" MacroName="TMRD" Channel="0" TabEnable="True" /&gt;&#13;
       &lt;TMRD1 SetFlag="False" MacroName="TMRD" Channel="1" TabEnable="True" /&gt;&#13;
@@ -2315,7 +2340,7 @@
           &lt;setting name="Output_value" value="0" /&gt;&#13;
         &lt;/P30&gt;&#13;
         &lt;P31&gt;&#13;
-          &lt;setting name="Operation" value="unused" /&gt;&#13;
+          &lt;setting name="Operation" value="input" /&gt;&#13;
           &lt;setting name="Pull_up" value="unused" /&gt;&#13;
           &lt;setting name="TTL_buffer" value="unused" /&gt;&#13;
           &lt;setting name="N-ch_open-drain" value="unused" /&gt;&#13;
@@ -2331,14 +2356,14 @@
           &lt;setting name="Output_value" value="0" /&gt;&#13;
         &lt;/P40&gt;&#13;
         &lt;P41&gt;&#13;
-          &lt;setting name="Operation" value="unused" /&gt;&#13;
+          &lt;setting name="Operation" value="output" /&gt;&#13;
           &lt;setting name="Pull_up" value="unused" /&gt;&#13;
           &lt;setting name="TTL_buffer" value="unused" /&gt;&#13;
           &lt;setting name="N-ch_open-drain" value="unused" /&gt;&#13;
           &lt;setting name="Output_value" value="0" /&gt;&#13;
         &lt;/P41&gt;&#13;
         &lt;P42&gt;&#13;
-          &lt;setting name="Operation" value="unused" /&gt;&#13;
+          &lt;setting name="Operation" value="output" /&gt;&#13;
           &lt;setting name="Pull_up" value="unused" /&gt;&#13;
           &lt;setting name="TTL_buffer" value="unused" /&gt;&#13;
           &lt;setting name="N-ch_open-drain" value="unused" /&gt;&#13;

@@ -13,7 +13,7 @@ eeprom_config e_config = { .csi_flag = &g_csi01_flag, .csi_send_receive =
 		R_CSI01_Send_Receive };
 uint32_t tick;
 struct Number_Setting_s g_numberSetting, clone;
-struct Timer_Setting_s g_timerSetting;
+struct Timer_Setting_s g_T_S;
 const uint8_t timeSettingSize = sizeof(struct Timer_Setting_s) - 1;
 uint8_t my_data[40], read_data[40];
 uint8_t eeprom_count, eeprom_working;

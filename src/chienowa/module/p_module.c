@@ -71,16 +71,16 @@ int p11_startup_draining_water(void) {
 int p111_startup_drain_tank(void){
 	bp111_inital_alkali_tank_drainage_start_process();
 	if(s1_alkali_tank_data_set() && g_ALD > 0){
-		b_sv6_start_process();
+		b_sv6_start();
 		wait(500);
-		b_p2_start_process();
+		b_p2_start();
 		g.flag.alkali_drainning = 1;
 	}
 
 	if(s2_acid_tank_data_set()){
-		b_sv5_start_process();
+		b_sv5_start();
 		wait(500);
-		b_p1_start_process();
+		b_p1_start();
 		g.flag.acid_drainning = 1;
 	}
 	while(g_ALD > 0 || g_ACD > 0){
@@ -104,31 +104,31 @@ int p111_startup_drain_tank(void){
 	return 0;
 }
 int p112_alkali_drain_stop(void){
-	t_p2_stop_process();
-	t_sv6_stop_process();
+	t_p2_stop();
+	t_sv6_stop();
 	return 0;
 }
 int p113_acid_drain_stop(void){
-	t_p1_stop_process();
-	t_sv5_stop_process();
+	t_p1_stop();
+	t_sv5_stop();
 	return 0;
 }
 int p114_alkali_drain_final_stop(void){
-	b_sv6_start_process();
+	b_sv6_start();
 	wait(500);
-	b_p2_start_process();
+	b_p2_start();
 	wait(g_T_S.t1_ms);
-	t_p2_stop_process();
-	t_sv6_stop_process();
+	t_p2_stop();
+	t_sv6_stop();
 	return 0;
 }
 int p115_acid_drain_final_stop(void){
-	b_sv5_start_process();
+	b_sv5_start();
 	wait(500);
-	b_p1_start_process();
+	b_p1_start();
 	wait(g_T_S.t1_ms);
-	t_p1_stop_process();
-	t_sv5_stop_process();
+	t_p1_stop();
+	t_sv5_stop();
 	return 0;
 }
 int p12_startup_water_supply(void) {
@@ -249,7 +249,7 @@ int p21_alkali_water_discharge_mode(void){
 		c1_on_off(C1_ON);
 		if(check_hand_sensor() || SYSTEM_MODE == NORMAL){
 			b_sv4_start();
-			b_p2_start_process();
+			b_p2_start();
 			//TODO: Blink led on Hand sensor
 
 			g.timer.water_discharge = 0;
@@ -263,7 +263,7 @@ int p21_alkali_water_discharge_mode(void){
 					c1_on_off(C1_OFF);
 				}
 			}while(SYSTEM_MODE == WASHING);
-			t_p2_stop_process();
+			t_p2_stop();
 			t_sv4_stop();
 			stop_timer(ALKALI_DISCHARGE_T);
 			//TODO: Turn off blinking LED on hand sensor
@@ -283,7 +283,7 @@ int p22_acid_water_discharge_mode(void){
 		if(check_hand_sensor() && SYSTEM_MODE == NORMAL){
 			SYSTEM_MODE = WASHING;
 			b_sv3_start();
-			b_p1_start_process();
+			b_p1_start();
 			//TODO: Blink LED on hand sensor
 
 			g.timer.water_discharge = g_systemTick;
@@ -297,7 +297,7 @@ int p22_acid_water_discharge_mode(void){
 				}
 				runtime();
 			}while(SYSTEM_MODE == WASHING);
-			t_p1_stop_process();
+			t_p1_stop();
 			t_sv3_stop();
 			stop_timer(ACID_DISCHARGE_T);
 			//TODO: Turn off blinking LED on hand sensor
@@ -367,7 +367,7 @@ int p24_hand_wash_mode(void){
 void p2411(void){
 	bp241();
 	b_sv4_start();
-	b_p2_start_process();
+	b_p2_start();
 	start_timer(&g.timer.water_discharge, ALKALI_DISCHARGE_T);
 }
 
@@ -393,7 +393,7 @@ void p2413(void){
 	stop_timer(ALKALI_DISCHARGE_T);
 	//TODO: Turn off hand sensor LED
 
-	t_p2_stop_process();
+	t_p2_stop();
 	t_sv4_stop();
 	//TODO: アルカリ未吐水タイマ＝0
 
@@ -402,7 +402,7 @@ void p2413(void){
 void p2421(void){
 	bp242();
 	b_sv3_start();
-	b_p1_start_process();
+	b_p1_start();
 	start_timer(&g.timer.water_discharge, ACID_DISCHARGE_T);
 }
 void p2422(void){
@@ -430,7 +430,7 @@ void p2423(void){
 	//TODO: Turn off hand sensor LED
 
 	stop_timer(ACID_DISCHARGE_T);
-	t_p1_stop_process();
+	t_p1_stop();
 	t_sv3_stop();
 	//TODO: 酸未吐水タイマ＝0
 
@@ -461,8 +461,7 @@ void p2433(void){
 }
 
 int p3_individual_mode(void) {
-
-	p8();
+	p8_stop_all_processing();
 	bp3_individual_start();
 	while (SYSTEM_MODE == INDIVIDUAL) {
 		if (g.flag.individual) {
@@ -485,107 +484,132 @@ int p3_individual_mode(void) {
 	return 0;
 }
 int p31_sv1_individual_process(void){
-//	const uint8_t state = g.flag.io.valve.sv1 == 1U ? VALVE_ON : VALVE_OFF;
-//	if(g.flag.io.valve.sv1 != SV1_PIN){
-//		SV1_PIN = state;
-//		return 1;
-//	}
-//	return 0;
 	if(g.flag.io.valve.sv1){
 		b_sv1_start();
 	}else{
 		t_sv2_stop();
 	}
-	return g.flag.io.valve.sv1;
+	return SV1_PIN;
 }
 int p32_sv2_individual_process(void){
-	const uint8_t state = g.flag.io.valve.sv2 == 1U ? VALVE_ON : VALVE_OFF;
-	if(g.flag.io.valve.sv2 != SV2_PIN){
-		SV2_PIN = state;
-		return 1;
+	if(g.flag.io.valve.sv2){
+		b_sv2_start();
+	}else{
+		t_sv2_stop();
 	}
-	return 0;
+	return SV2_PIN;
 }
 int p33_sv3_individual_process(void){
-	const uint8_t state = g.flag.io.valve.sv3 == 1U ? VALVE_ON : VALVE_OFF;
-	if(g.flag.io.valve.sv3 != SV3_PIN){
-		SV3_PIN = state;
-		return 1;
+	if(g.flag.io.valve.sv3){
+		b_sv3_start();
+	}else if (PUMP_1_PIN == PUMP_OFF || SV5_PIN == VALVE_ON){
+		t_sv3_stop();
 	}
-	return 0;
+	return SV3_PIN;
 }
 int p34_sv4_individual_process(void){
-	const uint8_t state = g.flag.io.valve.sv4 == 1U ? VALVE_ON : VALVE_OFF;
-	if(g.flag.io.valve.sv4 != SV4_PIN){
-		SV4_PIN = state;
-		return 1;
+	if(g.flag.io.valve.sv4){
+		b_sv4_start();
+	}else if(PUMP_2_PIN == PUMP_OFF || SV6_PIN == VALVE_ON) {
+		t_sv4_stop();
 	}
-	return 0;
+	return SV4_PIN;
 }
 int p35_sv5_individual_process(void){
-	const uint8_t state = g.flag.io.valve.sv5 == 1U ? VALVE_ON : VALVE_OFF;
-	if(g.flag.io.valve.sv5 != SV5_PIN){
-		SV5_PIN = state;
-		return 1;
+	if(g.flag.io.valve.sv5){
+		b_sv5_start();
+	}else if (PUMP_1_PIN == PUMP_OFF || SV3_PIN == VALVE_ON){
+		t_sv5_stop();
 	}
-	return 0;
+	return SV5_PIN;
 }
 int p36_sv6_individual_process(void){
-	const uint8_t state = g.flag.io.valve.sv6 == 1U ? VALVE_ON : VALVE_OFF;
-	if(g.flag.io.valve.sv6 != SV6_PIN){
-		SV6_PIN = state;
-		return 1;
+	if(g.flag.io.valve.sv6){
+		b_sv6_start();
+	}else if(PUMP_2_PIN == PUMP_OFF || SV4_PIN == VALVE_ON){
+		t_sv6_stop();
 	}
-	return 0;
+	return SV6_PIN;
 }
 int p37_sv7_individual_process(void){
-	const uint8_t state = g.flag.io.valve.sv7 == 1U ? VALVE_ON : VALVE_OFF;
-	if(g.flag.io.valve.sv7 != SV7_PIN){
-		SV7_PIN = state;
-		return 1;
+	if(g.flag.io.valve.sv7){
+		b_sv7_start();
+	}else{
+		t_sv7_stop();
 	}
-	return 0;
+	return SV7_PIN;
 }
 int p38_p1_individual_process(void){
-	const uint8_t state = g.flag.io.pump_1 == 1U ? PUMP_ON : PUMP_OFF;
-	if(state != PUMP_1_PIN){
-		PUMP_1_PIN = state;
-		return 1;
+	if(g.flag.io.pump_1 && (SV3_PIN == VALVE_ON || SV5_PIN == VALVE_ON)){
+		b_p1_start();
+	}else{
+		t_p1_stop();
 	}
-	return 0;
+	return PUMP_1_PIN;
 }
 int p39_p2_individual_process(void){
-	const uint8_t state = g.flag.io.pump_2 == 1U ? PUMP_ON : PUMP_OFF;
-	if(state != PUMP_2_PIN){
-		PUMP_2_PIN = state;
-		return 1;
+	if(g.flag.io.pump_2 && (SV4_PIN == VALVE_ON || SV6_PIN == VALVE_ON)){
+		b_p2_start();
+	}else{
+		t_p2_stop();
 	}
-	return 0;
+	return PUMP_2_PIN;
 }
 int p310_sp_individual_process(void){
-	const uint8_t state = g.flag.io.salt_pump == 1U ? PUMP_ON : PUMP_OFF;
-	if(state != SP_PIN){
-		SP_PIN = state;
-		return 1;
+	if(g.flag.io.salt_pump && g.flag.electrolysis == 0){
+		b_sp_start();
+	}else if(!g.flag.io.salt_pump){
+		t_sp_stop();
 	}
-	return 0;
+	return SP_PIN;
 }
 int p311_electrolysis_equipment_process(void){
-	//TODO: ???
+	if(g.flag.io.cvcc){
+		p131_electrolysis_start();
+	}else{
+		p132_initial_electrolysis_stop();
+	}
+	return CVCC_CONTROL_PIN;
+}
+int p312_alarm_on_off_process(void){
+	if(g.flag.io.cvcc_alarm){
+		CVCC_ALARM_OUT_PIN = 1U;
+	}else{
+		CVCC_ALARM_OUT_PIN = 0U;
+	}
+	return CVCC_ALARM_OUT_PIN;
+}
+int p313_flow_rate_process(void){
+	b_sv1_start();
+	wait(g_T_S.t3_s * 1000);
+	//TODO: Flow rate adjust process by hand
+
 	return 0;
 }
+int p314_salt_tank_drain_process(void){
+	bp314();
+	c19_salt_tank_drain_check();
+	//TODO: How could we check V4 ??
+
+	b_sp_start();
+	//TODO: Wait for how long?
+	t_sp_stop();
+	tp314();
+	return 0;
+}
+
 int p8_stop_all_processing(void){
 	//TODO: C11 Electrolytic service emergency stop processing
-
-	t_p1_stop_process();
-	t_p2_stop_process();
+	c11_electrolysis_status();
+	t_p1_stop();
+	t_p2_stop();
 	t_sp_stop();
 	t_sv1_stop();
 	t_sv2_stop();
 	t_sv3_stop();
 	t_sv4_stop();
-	t_sv5_stop_process();
-	t_sv6_stop_process();
+	t_sv5_stop();
+	t_sv6_stop();
 	t_sv7_stop();
 	return 0;
 }

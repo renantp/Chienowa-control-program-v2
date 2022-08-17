@@ -10,5 +10,6 @@
 
 #include "../r_cg_macrodriver.h"
 
+int check_hand_sensor(void);
 
 #endif /* CHIENOWA_HAND_SENSOR_H_ */

@@ -116,10 +116,19 @@ struct IO_Struct{
 	uint8_t pump_1: 1;
 	uint8_t pump_2: 1;
 	uint8_t salt_pump: 1;
-	uint8_t CVCC_ON: 1;
+	uint8_t cvcc: 1;
 	uint8_t HandSensorON: 1;
 	uint8_t HandSensorOFF: 1;
-	uint8_t RSVD1: 2; // Reserved
+	uint8_t cvcc_alarm : 1;
+	uint8_t RSVD1: 1; // Reserved
+};
+union MODULE_FLAG_s {
+	struct {
+		uint8_t bp1 : 1;
+		uint8_t p111 : 1;
+		uint8_t p112 : 1;
+	};
+	uint8_t raw[10];
 };
 extern struct GLOBAL{
 	struct {
@@ -130,9 +139,9 @@ extern struct GLOBAL{
 		uint8_t hand_sensor;
 		uint8_t alkali_drainning;
 		uint8_t acid_drainning;
-
 		uint8_t individual;
 		struct IO_Struct io;
+		union MODULE_FLAG_s module;
 	}flag;
 	struct{
 		uint32_t c1_on;

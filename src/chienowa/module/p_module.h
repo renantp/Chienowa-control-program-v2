@@ -46,6 +46,22 @@ void p2431(void);
 void p2432(void);
 void p2433(void);
 
+
+int p31_sv1_individual_process(void);
+int p32_sv2_individual_process(void);
+int p33_sv3_individual_process(void);
+int p34_sv4_individual_process(void);
+int p35_sv5_individual_process(void);
+int p36_sv6_individual_process(void);
+int p37_sv7_individual_process(void);
+int p38_p1_individual_process(void);
+int p39_p2_individual_process(void);
+int p310_sp_individual_process(void);
+int p311_electrolysis_equipment_process(void);
+int p312_alarm_on_off_process(void);
+int p313_flow_rate_process(void);
+int p314_salt_tank_drain_process(void);
+
 int p8_stop_all_processing(void);
 
 int p313_flow_rate_adjustment(void);

@@ -173,6 +173,8 @@
         <TMRD0 />
       </Effect>
     </TRDCLKUSE1>
+    <TRDCLKTag Name="TRDCLKTag" Value="-1" />
+    <TRDCLKUSE0 Name="TRDCLKUSE0" Value="0" />
     <CodePath Name="CodePath" Text=".\" />
     <ReportType Name="ReportType" Text="Html" />
     <CreationDateType Name="CreationDateType" Text="OutputDate" />
@@ -198,10 +200,8 @@
     <HasRRMRam Name="HasRRMRam" Text="7FE00" />
     <HasTraceRam Name="HasTraceRam" Text="F4300" />
     <PrjVersion Name="PrjVersion" Text="1.2.0.1" />
-    <ProductVersion Name="ProductVersion" Text="2.18.00.01" />
+    <ProductVersion Name="ProductVersion" Text="2.19.00.01" />
     <LinkFileName Name="LinkFileName" Text="" />
-    <TRDCLKTag Name="TRDCLKTag" Value="-1" />
-    <TRDCLKUSE0 Name="TRDCLKUSE0" Value="0" />
     <TO02_PWM Name="TO02_PWM" Text="false" />
     <TO03_PWM Name="TO03_PWM" Text="false" />
     <INPT0USE0 Name="INPT0USE0" Text="false" />
@@ -254,12 +254,12 @@
         </Port2>
         <Port3 Pullup="true">
           <P30 Chip="RL78G14_30pin,RL78G14_32pin,RL78G14_36pin,RL78G14_40pin,RL78G14_44pin,RL78G14_48pin,RL78G14_49pin,RL78G14_52pin,RL78G14_64pin,RL78G14_80pin,RL78G14_100pin" Name="P30/INTP3/RTC1HZ/_SCK00/SCL00/TRJO0" Nch="true" TTL="true" AltFunc="P30" Point="I/O" />
-          <P31 Chip="RL78G14_48pin,RL78G14_49pin,RL78G14_52pin,RL78G14_64pin,RL78G14_80pin,RL78G14_100pin,RL78G14_128pin" Name="P31/TI03/TO03/INTP4" AltFunc="" Point="I/O" />
+          <P31 Chip="RL78G14_48pin,RL78G14_49pin,RL78G14_52pin,RL78G14_64pin,RL78G14_80pin,RL78G14_100pin,RL78G14_128pin" Name="P31/TI03/TO03/INTP4" AltFunc="P31" Point="I/O" />
         </Port3>
         <Port4 Pullup="true">
           <P40 Name="P40/TOOL0" AltFunc="TOOL0" Point="I/O" />
-          <P41 Chip="RL78G14_44pin,RL78G14_48pin,RL78G14_49pin,RL78G14_52pin,RL78G14_64pin,RL78G14_80pin,RL78G14_100pin,RL78G14_128pin" Name="P41" AltFunc="" Point="I/O" />
-          <P42 Chip="RL78G14_64pin,RL78G14_80pin,RL78G14_100pin,RL78G14_128pin" Name="P42" AltFunc="" Point="I/O" />
+          <P41 Chip="RL78G14_44pin,RL78G14_48pin,RL78G14_49pin,RL78G14_52pin,RL78G14_64pin,RL78G14_80pin,RL78G14_100pin,RL78G14_128pin" Name="P41" AltFunc="P41" Point="I/O" />
+          <P42 Chip="RL78G14_64pin,RL78G14_80pin,RL78G14_100pin,RL78G14_128pin" Name="P42" AltFunc="P42" Point="I/O" />
           <P43 Chip="RL78G14_80pin,RL78G14_100pin,RL78G14_128pin" Name="P43/_SCK01/SCL01" TTL="true" Nch="true" AltFunc="SCK01" Point="I/O" />
           <P44 Chip="RL78G14_80pin,RL78G14_100pin,RL78G14_128pin" Name="P44/SI01/SDA01" TTL="true" Nch="true" AltFunc="SI01" Point="I/O" />
           <P45 Chip="RL78G14_80pin,RL78G14_100pin,RL78G14_128pin" Name="P45/SO01" Nch="true" AltFunc="SO01" Point="I/O" />
@@ -1693,29 +1693,29 @@
     <TAG>
       <GlobleUserTag>
         <clock_option Name="clock_option" Value="F8" />
+        <cg_security7 Name="cg_security7" Value="00" />
         <cg_security5 Name="cg_security5" Value="00" />
         <wdt_option Name="wdt_option" Value="EF" />
         <cg_security8 Name="cg_security8" Value="00" />
         <cg_security2 Name="cg_security2" Value="00" />
         <pior1_value Name="pior1_value" Value="00" />
         <cg_security1 Name="cg_security1" Value="00" />
-        <gtraceused Name="gtraceused" Value="" />
-        <cg_onchip Name="cg_onchip" Value="" />
         <cg_security9 Name="cg_security9" Value="00" />
-        <rrm Name="rrm" Value="7FE00" />
+        <lvi_option Name="lvi_option" Value="FF" />
         <cg_security6 Name="cg_security6" Value="00" />
         <cg_crc_area Name="cg_crc_area" Value="00" />
         <cg_iawctl_value Name="cg_iawctl_value" Value="00" />
         <cg_security0 Name="cg_security0" Value="00" />
-        <ocdstart Name="ocdstart" Value="7FE00" />
-        <cg_pms_value Name="cg_pms_value" Value="00" />
         <cg_security3 Name="cg_security3" Value="00" />
+        <ocdstart Name="ocdstart" Value="7FE00" />
         <cg_security4 Name="cg_security4" Value="00" />
+        <cg_pms_value Name="cg_pms_value" Value="00" />
+        <rrm Name="rrm" Value="7FE00" />
+        <cg_onchip Name="cg_onchip" Value="" />
         <pior_value Name="pior_value" Value="00" />
         <cg_ocd_ram_size Name="cg_ocd_ram_size" Value="512" />
         <cg_option Name="cg_option" Value="84" />
-        <cg_security7 Name="cg_security7" Value="00" />
-        <lvi_option Name="lvi_option" Value="FF" />
+        <gtraceused Name="gtraceused" Value="" />
       </GlobleUserTag>
     </TAG>
   </DIR>
@@ -1754,7 +1754,7 @@
     </DAC>
     <TAU SetFlag="True" HelpID="timer" NeedRefresh="False">
       <TAU0 Accelerate="No" MacroName="TAU" Channel="0" ChannelNum="0,1,2,3" SetFlag="True" TabEnable="True" />
-      <TAU1 Chip="RL78G14_80pin,RL78G14_100pin" Accelerate="No" MacroName="TAU" Channel="1" ChannelNum="0,1,2,3" TabEnable="True" SetFlag="False" />
+      <TAU1 Chip="RL78G14_80pin,RL78G14_100pin" Accelerate="No" MacroName="TAU" Channel="1" ChannelNum="0,1,2,3" SetFlag="False" TabEnable="True" />
       <TMRJ0 SetFlag="False" MacroName="TMRJ" Channel="0" TabEnable="True" />
       <TMRD0 SetFlag="False" MacroName="TMRD" Channel="0" TabEnable="True" />
       <TMRD1 SetFlag="False" MacroName="TMRD" Channel="1" TabEnable="True" />
@@ -2023,7 +2023,7 @@
           <setting name="Output_value" value="0" />
         </P30>
         <P31>
-          <setting name="Operation" value="unused" />
+          <setting name="Operation" value="input" />
           <setting name="Pull_up" value="unused" />
           <setting name="TTL_buffer" value="unused" />
           <setting name="N-ch_open-drain" value="unused" />
@@ -2039,14 +2039,14 @@
           <setting name="Output_value" value="0" />
         </P40>
         <P41>
-          <setting name="Operation" value="unused" />
+          <setting name="Operation" value="output" />
           <setting name="Pull_up" value="unused" />
           <setting name="TTL_buffer" value="unused" />
           <setting name="N-ch_open-drain" value="unused" />
           <setting name="Output_value" value="0" />
         </P41>
         <P42>
-          <setting name="Operation" value="unused" />
+          <setting name="Operation" value="output" />
           <setting name="Pull_up" value="unused" />
           <setting name="TTL_buffer" value="unused" />
           <setting name="N-ch_open-drain" value="unused" />
