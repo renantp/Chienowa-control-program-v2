@@ -32,6 +32,8 @@ Includes
 #include "r_cg_macrodriver.h"
 #include "r_cg_timer.h"
 /* Start user code for include. Do not edit comment generated here */
+#include "chienowa/hand_sensor.h"
+#include "chienowa/pin_define.h"
 /* End user code. Do not edit comment generated here */
 #include "r_cg_userdefine.h"
 
@@ -58,7 +60,11 @@ Global variables and functions
 static void __near r_tau0_channel0_interrupt(void)
 {
     /* Start user code. Do not edit comment generated here */
-	g_systemTick += 1;
+	g_systemTick += 1; //millis
+	if(g_systemTick % 1000 == 0){
+		g_sec += 1; //seconds
+	}
+	hand_sensor_runtime();
 	/* End user code. Do not edit comment generated here */
 }
 

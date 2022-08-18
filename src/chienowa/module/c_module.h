@@ -17,5 +17,6 @@ int c1_on_off(uint8_t on_off);
 int c3_acid_tank_level_check(void);
 int c5_electrolysis_CVCC_status(void);
 int c19_salt_tank_drain_check(void);
+int c11_electrolysis_status(void);
 
 #endif /* CHIENOWA_MODULE_C_MODULE_H_ */

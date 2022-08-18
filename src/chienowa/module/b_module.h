@@ -48,6 +48,22 @@ int bc531(void);
 int bc54(void);
 int bc55(void);
 int bc56(void);
+int bc6(void);
+int bc7(void);
+int bc8(void);
+int bc9(void);
+int bc_10(void);
+int bc_11(void);
+int bc_12(void);
+int bc_13(void);
+int bc_14(void);
+int bc_15(void);
+int bc_16(void);
+int bc_17(void);
+int bc_18(void);
+int bc_19(void);
+int be1(void);
+
 
 int b_p1_start(void);
 int b_p2_start(void);

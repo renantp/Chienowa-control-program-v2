@@ -155,10 +155,11 @@ int p13_startup_electrolysis_operation(void) {
 }
 
 int neutralized_timer_on(void) {
-	return start_timer(&g.timer.c1_on, C_1_ON_T3);
+	g.timer.c1_on = timer_start_ms();
+	return g.timer.c1_on;
 }
 int neutralized_timer_off(void) {
-	return stop_timer(C_1_ON_T3);
+	return elapsed_time_ms(g.timer.c1_on);
 }
 
 int p131_electrolysis_start(void) {
@@ -167,7 +168,7 @@ int p131_electrolysis_start(void) {
 	wait(g_T_S.t16_s * 1000);
 	bp13_initial_electrolysis_start_process();
 	neutralized_timer_on();
-	start_timer(&g.timer.faucet_off, FAUCET_OFF_T);
+	g.timer.faucet_off = timer_start_ms();
 	return 0;
 }
 
@@ -252,12 +253,10 @@ int p21_alkali_water_discharge_mode(void){
 			b_p2_start();
 			//TODO: Blink led on Hand sensor
 
-			g.timer.water_discharge = 0;
-			start_timer(&g.timer.water_discharge, ALKALI_DISCHARGE_T);
-
+			g.timer.alkali_discharge = timer_start_ms();
 			// Small loop
 			do {
-				if(check_hand_sensor() || calculate_timer_eslapse(ALKALI_DISCHARGE_T) >= g_T_S.t35_s * 1000){
+				if(check_hand_sensor() || elapsed_time_ms(g.timer.alkali_discharge) >= g_T_S.t35_s * 1000){
 					SYSTEM_MODE = NORMAL;
 				}else{
 					c1_on_off(C1_OFF);
@@ -265,7 +264,6 @@ int p21_alkali_water_discharge_mode(void){
 			}while(SYSTEM_MODE == WASHING);
 			t_p2_stop();
 			t_sv4_stop();
-			stop_timer(ALKALI_DISCHARGE_T);
 			//TODO: Turn off blinking LED on hand sensor
 
 		}
@@ -286,11 +284,10 @@ int p22_acid_water_discharge_mode(void){
 			b_p1_start();
 			//TODO: Blink LED on hand sensor
 
-			g.timer.water_discharge = g_systemTick;
-			start_timer(&g.timer.water_discharge, ACID_DISCHARGE_T);
+			g.timer.acid_discharge = timer_start_ms();
 			//Small loop
 			do{
-				if (check_hand_sensor() || calculate_timer_eslapse(ACID_DISCHARGE_T) >= g_T_S.t34_s * 1000 ){
+				if (check_hand_sensor() || elapsed_time_ms(g.timer.acid_discharge) >= g_T_S.t34_s * 1000 ){
 					SYSTEM_MODE = NORMAL;
 				}else{
 					c1_on_off(C1_ON);
@@ -299,7 +296,6 @@ int p22_acid_water_discharge_mode(void){
 			}while(SYSTEM_MODE == WASHING);
 			t_p1_stop();
 			t_sv3_stop();
-			stop_timer(ACID_DISCHARGE_T);
 			//TODO: Turn off blinking LED on hand sensor
 
 		}
@@ -318,11 +314,10 @@ int p23_water_discharge_mode(void){
 			b_sv2_start();
 			//TODO: Blink LED on hand sensor
 
-			g.timer.water_discharge = g_systemTick;
-			start_timer(&g.timer.water_discharge, WATER_DISCHARGE_T);
+			g.timer.water_discharge = timer_start_ms();
 			// Small loop
 			do {
-				if (check_hand_sensor() || calculate_timer_eslapse(WATER_DISCHARGE_T) >= g_T_S.t34_s * 1000 ){
+				if (check_hand_sensor() || elapsed_time_ms(g.timer.water_discharge) >= g_T_S.t34_s * 1000 ){
 					SYSTEM_MODE = NORMAL;
 				}else{
 					c1_on_off(C1_ON);
@@ -330,7 +325,6 @@ int p23_water_discharge_mode(void){
 				runtime();
 			}while(SYSTEM_MODE == WASHING);
 			t_sv2_stop();
-			stop_timer(WATER_DISCHARGE_T);
 			//TODO: Turn off blinking LED on hand sensor
 
 		}
@@ -368,29 +362,28 @@ void p2411(void){
 	bp241();
 	b_sv4_start();
 	b_p2_start();
-	start_timer(&g.timer.water_discharge, ALKALI_DISCHARGE_T);
+	g.timer.alkali_discharge = timer_start_ms();
 }
 
 void p2412(void){
 	//TODO: Turn ON hand sensor LED (Blue)
-	while (g_T_S.t29_s * 1000 - calculate_timer_eslapse(ALKALI_DISCHARGE_T) > 2 * 1000 ){
+	while (g_T_S.t29_s * 1000 - elapsed_time_ms(g.timer.alkali_discharge) > 2 * 1000 ){
 		c1_on_off(C1_ON);
 		runtime();
 	}
 	//TODO: Blink hand sensor LED (Blue)
 
-	while (calculate_timer_eslapse(ALKALI_DISCHARGE_T) <= g_T_S.t29_s * 1000 &&
-			g_T_S.t29_s * 1000 - calculate_timer_eslapse(ALKALI_DISCHARGE_T) <= g_T_S.t32_ms){
+	while (elapsed_time_ms(g.timer.alkali_discharge) <= g_T_S.t29_s * 1000 &&
+			g_T_S.t29_s * 1000 - elapsed_time_ms(g.timer.alkali_discharge) <= g_T_S.t32_ms){
 		runtime();
 		c1_on_off(C1_ON);
 	}
 }
 void p2413(void){
-	while (calculate_timer_eslapse(ALKALI_DISCHARGE_T) <= g_T_S.t29_s * 1000){
+	while (elapsed_time_ms(g.timer.alkali_discharge) <= g_T_S.t29_s * 1000){
 		c1_on_off(C1_ON);
 		runtime();
 	}
-	stop_timer(ALKALI_DISCHARGE_T);
 	//TODO: Turn off hand sensor LED
 
 	t_p2_stop();
@@ -403,33 +396,32 @@ void p2421(void){
 	bp242();
 	b_sv3_start();
 	b_p1_start();
-	start_timer(&g.timer.water_discharge, ACID_DISCHARGE_T);
+	g.timer.acid_discharge = timer_start_ms();
 }
 void p2422(void){
 	//TODO: Turn ON hand sensor LED (Red)
 
 	//酸吐水減算タイマが２秒か?
-	while(g_T_S.t30_s * 1000 - calculate_timer_eslapse(ACID_DISCHARGE_T) > 2 * 1000 ){
+	while(g_T_S.t30_s * 1000 - elapsed_time_ms(g.timer.acid_discharge) > 2 * 1000 ){
 		c1_on_off(C1_ON);
 		runtime();
 	}
 	//TODO: Blink hand sensor LED (Red)
 
-	while (calculate_timer_eslapse(ACID_DISCHARGE_T) <= g_T_S.t30_s * 1000 &&
-			g_T_S.t30_s * 1000 - calculate_timer_eslapse(ACID_DISCHARGE_T) <= g_T_S.t32_ms){
+	while (elapsed_time_ms(g.timer.acid_discharge) <= g_T_S.t30_s * 1000 &&
+			g_T_S.t30_s * 1000 - elapsed_time_ms(g.timer.acid_discharge) <= g_T_S.t32_ms){
 		runtime();
 		c1_on_off(C1_ON);
 	}
 }
 
 void p2423(void){
-	while (calculate_timer_eslapse(ACID_DISCHARGE_T) <= g_T_S.t30_s * 1000){
+	while (elapsed_time_ms(g.timer.acid_discharge) <= g_T_S.t30_s * 1000){
 		c1_on_off(C1_ON);
 		runtime();
 	}
 	//TODO: Turn off hand sensor LED
 
-	stop_timer(ACID_DISCHARGE_T);
 	t_p1_stop();
 	t_sv3_stop();
 	//TODO: 酸未吐水タイマ＝0
@@ -440,20 +432,19 @@ void p2423(void){
 void p2431(void){
 	bp243();
 	b_sv2_start();
-	start_timer(&g.timer.water_discharge, WATER_DISCHARGE_T);
+	g.timer.water_discharge = timer_start_ms();
 }
 void p2432(void){
 	//TODO: Turn ON hand sensor (WHITE)
 
 }
 void p2433(void){
-	while (calculate_timer_eslapse(WATER_DISCHARGE_T) <= g_T_S.t31_s * 1000){
+	while (elapsed_time_ms(g.timer.water_discharge) <= g_T_S.t31_s * 1000){
 		c1_on_off(C1_ON);
 		runtime();
 	}
 	//TODO: Turn off hand sensor LED
 
-	stop_timer(WATER_DISCHARGE_T);
 	t_sv2_stop();
 	//TODO: 水未吐水タイマ＝0
 
@@ -564,7 +555,7 @@ int p310_sp_individual_process(void){
 	return SP_PIN;
 }
 int p311_electrolysis_equipment_process(void){
-	if(g.flag.io.cvcc){
+	if(g.flag.io.cvcc_control){
 		p131_electrolysis_start();
 	}else{
 		p132_initial_electrolysis_stop();
@@ -572,7 +563,7 @@ int p311_electrolysis_equipment_process(void){
 	return CVCC_CONTROL_PIN;
 }
 int p312_alarm_on_off_process(void){
-	if(g.flag.io.cvcc_alarm){
+	if(g.flag.io.cvcc_alarm_out){
 		CVCC_ALARM_OUT_PIN = 1U;
 	}else{
 		CVCC_ALARM_OUT_PIN = 0U;

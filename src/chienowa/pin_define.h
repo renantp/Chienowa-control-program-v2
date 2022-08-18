@@ -40,5 +40,9 @@
 #define FL7		(P5_bit.no4)
 #define FL8		(P3_bit.no3)
 
+#define O_HS_IDA_PIN	(P1_bit.no5)
+#define O_HS_ICL_PIN	(P1_bit.no6)
+#define I_HS_OCL_PIN	(P7_bit.no4)
+#define I_HS_ODA_PIN	(P7_bit.no5)
 
 #endif /* CHIENOWA_PIN_DEFINE_H_ */

@@ -15,9 +15,9 @@
 
 int c1_on_off(uint8_t on_off){
 	if(on_off){
-		g.flag.c1 = 1;
+		g.flag.module.c1 = 1;
 	}else{
-		g.flag.c1 = 0;
+		g.flag.module.c1 = 0;
 	}
 	return 0;
 }
