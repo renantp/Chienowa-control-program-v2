@@ -59,7 +59,7 @@ void f(void){
 unsigned long timer_start_ms(void){
 	return millis(); //Return currently milli-second
 }
-unsigned long elapsed_time(unsigned long start_time){
+unsigned long elapsed_time_ms(unsigned long start_time){
 	unsigned long elaps_time = 0;
 	if(millis() >= start_time)
 		elaps_time = millis() - start_time;	//return elapsed time
