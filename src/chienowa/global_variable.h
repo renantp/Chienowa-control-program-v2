@@ -121,7 +121,7 @@ struct IO_Struct{
 	uint8_t cvcc_alarm_in: 1;
 	uint8_t RSVD1: 2; // Reserved
 };
-union MODULE_FLAG_s {
+union B_MODULE_F {
 	struct {
 		uint8_t bp0 : 1;
 		uint8_t bp1 : 1;
@@ -153,14 +153,34 @@ union MODULE_FLAG_s {
 		uint8_t bc3 : 1;
 		uint8_t bc4 : 1;
 		uint8_t bc5 : 1;
+		uint8_t bc6 : 1;
+		uint8_t bc7 : 1;
+		uint8_t bc8 : 1;
+		uint8_t bc9 : 1;
+		uint8_t bc10 : 1;
+		uint8_t bc11 : 1;
+		uint8_t bc12 : 1;
+		uint8_t bc13 : 1;
+		uint8_t bc14 : 1;
+		uint8_t bc15 : 1;
+		uint8_t bc16 : 1;
+		uint8_t bc17 : 1;
+		uint8_t bc18 : 1;
+		uint8_t bc19 : 1;
 
 		uint8_t bc51 : 1;
 		uint8_t bc52 : 1;
 		uint8_t bc53 : 1;
 		uint8_t bc54 : 1;
 		uint8_t bc55 : 1;
+		uint8_t bc56 : 1;
 
 		uint8_t bc531 : 1;
+
+		uint8_t be1 : 1;
+
+		uint8_t c1 : 1;
+		uint8_t c2 : 1;
 	};
 	uint8_t raw[32];
 };
@@ -196,14 +216,31 @@ struct Module_Timer{
 	uint32_t c3[2];
 	uint32_t c4[2];
 	uint32_t c5[2];
+	uint32_t c6[2];
+	uint32_t c7[2];
+	uint32_t c8[2];
+	uint32_t c9[2];
+	uint32_t c10[2];
+	uint32_t c11[2];
+	uint32_t c12[2];
+	uint32_t c13[2];
+	uint32_t c14[2];
+	uint32_t c15[2];
+	uint32_t c16[2];
+	uint32_t c17[2];
+	uint32_t c18[2];
+	uint32_t c19[2];
 
 	uint32_t c51[2];
 	uint32_t c52[2];
 	uint32_t c53[2];
 	uint32_t c54[2];
 	uint32_t c55[2];
+	uint32_t c56[2];
 
 	uint32_t c531[2];
+
+	uint32_t e1[2];
 	struct{
 		uint32_t sv1[2];
 		uint32_t sv2[2];
@@ -236,7 +273,7 @@ extern struct GLOBAL{
 		uint8_t acid_drainning;
 		uint8_t individual;
 		struct IO_Struct io;
-		union MODULE_FLAG_s module;
+		union B_MODULE_F module;
 	}flag;
 	struct{
 		uint32_t c1_on;
