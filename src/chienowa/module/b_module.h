@@ -36,6 +36,18 @@ int bp243(void);
 int bp314(void);
 
 int bp3_individual_start(void);
+int bc1(void);
+int bc2(void);
+int bc3(void);
+int bc4(void);
+int bc5(void);
+int bc51(void);
+int bc52(void);
+int bc53(void);
+int bc531(void);
+int bc54(void);
+int bc55(void);
+int bc56(void);
 
 int b_p1_start(void);
 int b_p2_start(void);
@@ -47,5 +59,5 @@ int b_sv4_start(void);
 int b_sv5_start(void);
 int b_sv6_start(void);
 int b_sv7_start(void);
-
+int bc1(void);
 #endif /* CHIENOWA_MODULE_B_MODULE_H_ */
