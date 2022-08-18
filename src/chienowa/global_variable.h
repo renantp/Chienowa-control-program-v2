@@ -116,25 +116,120 @@ struct IO_Struct{
 	uint8_t pump_1: 1;
 	uint8_t pump_2: 1;
 	uint8_t salt_pump: 1;
-	uint8_t cvcc: 1;
-	uint8_t HandSensorON: 1;
-	uint8_t HandSensorOFF: 1;
-	uint8_t cvcc_alarm : 1;
-	uint8_t RSVD1: 1; // Reserved
+	uint8_t cvcc_control: 1;
+	uint8_t cvcc_alarm_out : 1;
+	uint8_t cvcc_alarm_in: 1;
+	uint8_t RSVD1: 2; // Reserved
 };
 union MODULE_FLAG_s {
 	struct {
+		uint8_t bp0 : 1;
 		uint8_t bp1 : 1;
-		uint8_t p111 : 1;
-		uint8_t p112 : 1;
+		uint8_t bp2	: 1;
+		uint8_t bp3 : 1;
+		uint8_t bp8 : 1;
+
+		uint8_t bp11 : 1;
+		uint8_t bp12 : 1;
+		uint8_t bp13 : 1;
+		uint8_t bp14 : 1;
+		uint8_t bp15 : 1;
+		uint8_t bp21 : 1;
+		uint8_t bp22 : 1;
+		uint8_t bp23 : 1;
+		uint8_t bp24 : 1;
+		uint8_t bp314 : 1;
+
+		uint8_t bp111 : 1;
+		uint8_t bp112 : 1;
+		uint8_t bp141 : 1;
+		uint8_t bp142 : 1;
+		uint8_t bp241 : 1;
+		uint8_t bp242 : 1;
+		uint8_t bp243 : 1;
+
+		uint8_t bc1 : 1;
+		uint8_t bc2 : 1;
+		uint8_t bc3 : 1;
+		uint8_t bc4 : 1;
+		uint8_t bc5 : 1;
+
+		uint8_t bc51 : 1;
+		uint8_t bc52 : 1;
+		uint8_t bc53 : 1;
+		uint8_t bc54 : 1;
+		uint8_t bc55 : 1;
+
+		uint8_t bc531 : 1;
 	};
-	uint8_t raw[10];
+	uint8_t raw[32];
 };
+
+struct Module_Timer{
+	uint32_t p0[2];
+	uint32_t p1[2];
+	uint32_t p2[2];
+	uint32_t p3[2];
+	uint32_t p8[2];
+
+	uint32_t p11[2];
+	uint32_t p12[2];
+	uint32_t p13[2];
+	uint32_t p14[2];
+	uint32_t p15[2];
+	uint32_t p21[2];
+	uint32_t p22[2];
+	uint32_t p23[2];
+	uint32_t p24[2];
+	uint32_t p314[2];
+
+	uint32_t p111[2];
+	uint32_t p112[2];
+	uint32_t p141[2];
+	uint32_t p142[2];
+	uint32_t p241[2];
+	uint32_t p242[2];
+	uint32_t p243[2];
+
+	uint32_t c1[2];
+	uint32_t c2[2];
+	uint32_t c3[2];
+	uint32_t c4[2];
+	uint32_t c5[2];
+
+	uint32_t c51[2];
+	uint32_t c52[2];
+	uint32_t c53[2];
+	uint32_t c54[2];
+	uint32_t c55[2];
+
+	uint32_t c531[2];
+	struct{
+		uint32_t sv1[2];
+		uint32_t sv2[2];
+		uint32_t sv3[2];
+		uint32_t sv4[2];
+		uint32_t sv5[2];
+		uint32_t sv6[2];
+		uint32_t sv7[2];
+
+		uint32_t p1[2];
+		uint32_t p2[2];
+		uint32_t sp[2];
+	}io;
+};
+
+struct Timer {
+	struct Module_Timer work; //Total working time (0) and lasted working time (1)
+	struct Module_Timer not_work;
+	struct Module_Timer on;
+	struct Module_Timer off;
+};
+
 extern struct GLOBAL{
 	struct {
 		uint8_t electrolysis;
 		uint8_t cvcc_run;
-		uint8_t c1;
 		uint8_t c22_start;
 		uint8_t hand_sensor;
 		uint8_t alkali_drainning;
@@ -147,6 +242,9 @@ extern struct GLOBAL{
 		uint32_t c1_on;
 		uint32_t faucet_off;
 		uint32_t water_discharge;
+		uint32_t alkali_discharge;
+		uint32_t acid_discharge;
+		struct Timer module;
 	}timer;
 	struct IO_Struct io;
 //	struct {
