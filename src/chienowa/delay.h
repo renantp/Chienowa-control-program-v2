@@ -20,11 +20,18 @@ extern "C" {
 #define ALKALI_DISCHARGE_T	(4)
 
 extern volatile uint32_t g_systemTick;
+extern volatile uint32_t g_sec;
+
 int ns_delay_ms(uint32_t *stamp, uint32_t ms);
 int wait(uint32_t ms);
-uint32_t calculate_timer_eslapse(uint8_t timer);
-int start_timer(uint32_t *const counter, uint8_t timer);
-int stop_timer(uint8_t timer);
+unsigned long timer_start_ms(void);
+unsigned long elapsed_time(unsigned long start_time);
+unsigned long timer_stop(unsigned long start_time);
+
+unsigned long timer_start_s(void);
+unsigned long elapsed_time_s(unsigned long start_time);
+unsigned long timer_restart_s(unsigned long elapsed_time);
+unsigned long timer_stop_s(unsigned long start_time);
 
 #ifdef __cplusplus
 }
