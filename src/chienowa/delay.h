@@ -26,7 +26,7 @@ int ns_delay_ms(uint32_t *stamp, uint32_t ms);
 int wait(uint32_t ms);
 unsigned long timer_start_ms(void);
 unsigned long elapsed_time_ms(unsigned long start_time);
-unsigned long timer_stop(unsigned long start_time);
+unsigned long timer_stop_ms(unsigned long start_time);
 
 unsigned long timer_start_s(void);
 unsigned long elapsed_time_s(unsigned long start_time);

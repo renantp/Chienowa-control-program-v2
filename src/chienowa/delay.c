@@ -49,13 +49,14 @@ void f(void){
 	unsigned long start = timer_start_ms();
 	//...do something take 5 second
 
-	unsigned long working_time = timer_stop(start); // working_time will be 5s
+	unsigned long working_time = timer_stop_ms(start); // working_time will be 5s
 
 	start = timer_restart_s(working_time); // start = current time - working time
 	//..do something else 3s
 
-	working_time = timer_stop(start);// working_time will be 8s
+	working_time = timer_stop_ms(start);// working_time will be 8s
 }
+
 unsigned long timer_start_ms(void){
 	return millis(); //Return currently milli-second
 }
@@ -67,7 +68,7 @@ unsigned long elapsed_time_ms(unsigned long start_time){
 		elaps_time = 0xffffffff - start_time + millis();
 	return elaps_time;
 }
-unsigned long timer_restart(unsigned long elapsed_time){
+unsigned long timer_restart_ms(unsigned long elapsed_time){
 	unsigned long reset_start_time;
 	if(millis() >= elapsed_time)
 		reset_start_time = millis() - elapsed_time;
@@ -76,7 +77,7 @@ unsigned long timer_restart(unsigned long elapsed_time){
 	}
 	return reset_start_time;
 }
-unsigned long timer_stop(unsigned long start_time){
+unsigned long timer_stop_ms(unsigned long start_time){
 	unsigned long elaps_time;
 	if(millis() >= start_time)
 		elaps_time = millis() - start_time;	//return elapsed time
