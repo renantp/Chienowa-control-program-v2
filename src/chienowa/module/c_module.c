@@ -17,16 +17,28 @@
 
 int c1_on_off(uint8_t on_off){
 	if(on_off){
-		g.flag.module.c1 = 0;
+		if(g.flag.module.c1 == 0){
+			c5_electrolysis_check_process();
+			//TODO: c23()
+
+			return 0;
+		}
 		SP_PIN = PUMP_OFF; //SP_F=0?
 		b_sv1_start(); //SV１（給水） ON処理
 		b_sp_start(); //SP（塩ポンプ） ON処理
 		if(elapsed_time_s(SP_ON_T2)/1000 >= g_T_S.t17_s){
+			//BC-1 電解業務起動処理
 			bc1();
+			C_1_ON_T3 = timer_restart_s(C_1_ON_T3);
+			return 0;
+		}else{
+			return -1;
 		}
 	}else{
 		//C_1_F=1
-		g.flag.module.c1 = 1;
+		if(g.flag.module.c1){
+			return 0;
+		}
 		//SP_F=1
 		SP_PIN = PUMP_ON;
 		//T-SP   SP（塩ポンプ）Stop処理
@@ -43,280 +55,377 @@ int c1_on_off(uint8_t on_off){
 	}
 	return 0;
 }
-
-struct C_5_3 {
-	uint8_t state;
-	uint8_t rsvd;
-	uint32_t tick;
-}c5_3;
-uint8_t size = sizeof(c5_3);
-int c53_over_voltage_3_check(float *voltage){
-	uint8_t *state = &c5_3.state;
-	uint32_t *tick = &c5_3.tick;
-	switch (*state) {
-		case 0:
-			if(g.flag.electrolysis == 1){
-				if(ns_delay_ms(tick, g_T_S.t13_s * 1000)){
-					*state = 1;
-				}else{
-					*tick = g_systemTick;
-				}
-			}
-			break;
-		case 1:
-			//TODO: Call C531
-
-			break;
-		default:
-			break;
-	}
-	return 0;
+int c11(void) {
+	tc1();
+	t_sp_stop();
+	wait(g_T_S.t15_s * 1000);
+	t_sv1_stop();
+	//中和タイマー停止処理
+	C_1_ON_T3 = timer_start_s();
+	return 1;
 }
-struct C_5_2{
-	uint8_t state;
-	uint8_t rsvd;
-	uint32_t tick;
-}c5_2;
-/**
- * Check over voltage 1 and call error module
- * @param voltage - float pointer to over voltage 1
- * @return int [-1:0]
- * -1: Error occur
- * 0: No error
- */
-int c52_over_voltage_2_check(float *voltage){
-	uint8_t *state = &c5_2.state;
-	uint32_t *tick = &c5_2.tick;
-	switch (*state) {
-		case 0:
-			if(g.flag.electrolysis == 1){
-				if(ns_delay_ms(tick, g_T_S.t12_s * 1000))
-					*state = 1;
-			}else{
-				*tick = g_systemTick;
-			}
-			break;
-		case 1:
-			if (g.flag.electrolysis == 1) {
-				//TODO: Check for over voltage 2
-				if(g_adc.voltage > *voltage){
-					if(g_error_status.over_voltage_2 == 0){
-						//TODO: Call E-1003
-						g_error_status.over_voltage_2 = 1;
-					}
-					return -1;
-				}
-
-			} else {
-				*state = 0;
-			}
-			break;
-		default:
-			break;
-	}
-	return 0;
-}
-
-struct C_5_1{
-	uint8_t state;
-	uint8_t rsvd;
-	uint32_t tick;
-}c5_1;
-/**
- * Check over voltage 1 and call error module
- * @param voltage - float pointer to over voltage 1
- * @return int [-1:0]
- * -1: Error occur
- * 0: No error
- */
-int c51_over_voltage_1_check(float *voltage){
-	uint8_t *state = &c5_1.state;
-	uint32_t *tick = &c5_1.tick;
-	switch (*state) {
-		case 0:
-			if(g.flag.electrolysis == 1){
-				if(ns_delay_ms(tick, g_T_S.t11_s * 1000))
-					*state = 1;
-			}else{
-				*tick = g_systemTick;
-			}
-			break;
-		case 1:
-			if(g.flag.electrolysis == 1){
-				//TODO: Check for over voltage 1
-				if (g_adc.voltage > *voltage) {
-					if(g_error_status.over_voltage_1 == 0){
-						//TODO: Call E-1002
-						g_error_status.over_voltage_1 = 1;
-					}
-					return -1;
-				}
-			}else{
-				*state = 0;
-			}
-			break;
-		default:
-			break;
-	}
-	return 0;
-}
-
-int c5_electrolysis_check_process(void){
-	int errors = 0;
-	if(c51_over_voltage_1_check(&g_numberSetting.upperVoltage1))
-		errors++;
-	if(c52_over_voltage_2_check(&g_numberSetting.upperVoltage2))
-		errors++;
-	return errors;
-}
-
-/**
- * TODO: C4 - inital start flag? when call salt tank full error E-1020
- * Check acid level data (SAD) and call error module
- * @return int [-2:0]
- * 0: SAD not changed
- * 1: SAD go back to normal (from error state)
- * -1, -2: SAD have error
- */
-int c4_salt_tank_sensor_value_check_process(void){
-	if (s3_salt_tank_data_set()) {
-		if (g_SAD < 0){
-			//TODO: Call E-1023
-			return -2;
-		}else if (g_SAD == 0){
-			//TODO: Call E-1021
-			return -1;
-		}else{
-			return 1;
-		}
-	}
-	return 0;
-}
-
-/**
- * Check acid level data (ACD) and call error module
- * @return int [-2:0]
- * 0: ACD not changed
- * 1: ACD go back to normal (from error state)
- * -1, -2: ACD have error
- */
-int c3_acid_tank_level_check(void){
-	if (s2_acid_tank_data_set()){
-		if(g_ACD < 0){
-			//TODO: Call E-1024
-			return -2;
-		}else if(g_ACD == 0){
-			//TODO: call E-1028
-			return -1;
-		}else{
-			return 1;
-		}
-	}
-	return 0;
-}
-
-/**
- * Check alkali level data (ALD) and call error module
- * @return int [-2:0]
- * 0: ALD not change
- * 1: ALD go back to normal (from error state)
- * -1, -2: ALD have error
- */
 int c2_alkali_tank_level_check(void) {
-	if (s1_alkali_tank_data_set()) {
-		if (g_ALD < 0) {
-			//TODO: Call E-1025
-			return -2;
-		} else if (g_ALD == 0) {
-			//TODO: Call E-1029
+	bc3();
+	const int status = s1_alkali_tank_data_set();
+	if(status < -1){
+		//TODO: E1025
+
+		return -255;
+	}else if(status == 0){
+		//TODO: E1029
+
+		return g_ALD;
+	}else {
+		return g_ALD;
+	}
+	return 0;
+}
+int c3_acid_tank_level_check(void){
+	bc3();
+	const int status = s2_acid_tank_data_set();
+	if(status <= -1){
+		//TODO: E1024
+
+		return -255;
+	}else if(status == 0){
+		//TODO: E1028
+
+		return g_ACD;
+	}else{
+		return g_ACD;
+	}
+	return 0;
+}
+int c4_salt_tank_sensor_value_check_process(void){
+	bc4();
+	//塩タンク状況（SAD）取得
+	const int status = s3_salt_tank_data_set();
+	if(status == -1){
+		//TODO: E1023
+	}else if(status == 0){
+		//TODO: E1021
+	}else if(status == 1){
+		return g_SAD;
+	}else if(status == 2){
+		return g_SAD;
+	}
+	return 0;
+}
+int c5_electrolysis_check_process(void){
+	bc5();
+	//過電圧1チェック処理
+	c51_over_voltage_1_check(&g_V_S.v1_V);
+	c52_over_voltage_2_check(&g_V_S.v2_V);
+	c53_over_voltage_3_check(&g_V_S.v3_V);
+	//TODO: Ask
+	return 0;
+}
+int c51_over_voltage_1_check(float *voltage){
+	if(elapsed_time_ms(C_1_ON_T2)/1000 > g_T_S.t11_s){
+		//CVCC_VOLT= CVCC出力電圧
+		const float cvcc_voltage = g_adc.voltage;
+		//過電圧1チェック起動処理
+		bc51();
+		//CVCC_VOLT>OVER_V1_ALARM_VALUE
+		if(cvcc_voltage > g_V_S.v1_V){
+			//TODO: E1002
+
+			return -255;
+		}
+		return 1;
+	}
+	return 0;
+}
+int c52_over_voltage_2_check(float *voltage){
+	//CVCC_VOLT= CVCC出力電圧
+	const float cvcc_voltage = g_adc.voltage;
+	//CVCC_VOLT>OVER_V2_ALARM_VALUE
+	if(cvcc_voltage > g_V_S.v2_V){
+		//C_5_2_F=0
+		if(g.flag.module.bc52 == 0){
+			//過電圧2チェック起動処理
+			bc52();
+			C_5_2_ON_T3 = timer_start_ms();
+		}
+		if(elapsed_time_ms(C_5_2_ON_T3)/1000 > g_T_S.t41_s){
+			//TODO: E1003
+
+			return -255;
+		}else{
 			return -1;
-		} else {
+		}
+
+	}else{
+		tc52();
+		return 0;
+	}
+	return 1;
+}
+int c53_over_voltage_3_check(float *voltage){
+	if(elapsed_time_ms(C_1_ON_T2)/1000 > g_T_S.t41_s){
+		//CVCC_VOLT= CVCC出力電圧
+		const float cvcc_voltage = g_adc.voltage;
+		//CVCC_VOLT>OVER_V3_ALARM_VALUE
+		if(cvcc_voltage > g_V_S.v3_V){
+			if(g.flag.module.bc53 == 0){
+				bc53();
+				C_5_2_ON_T3 = timer_start_ms();
+			}
+			c531();
+			return -1;
+		}else{
+			return 1;
+		}
+	}
+	return 0;
+}
+int c531(void){
+	bc531();
+	//TODO: Alarm
+	const float cvcc_voltage = g_adc.voltage;
+	if(cvcc_voltage > g_V_S.v3_V){
+		if(elapsed_time_ms(C_5_2_ON_T3)/1000 > g_T_S.t13_s){
+			//TODO: E1004
+
+			return -1;
+		}else
+			return 1;
+	}else{
+		//TODO: タッチパネルエラー削除
+
+		tc531();
+		return 0;
+	}
+}
+int c54(void){
+	if(elapsed_time_ms(C_1_ON_T2)/1000 > g_T_S.t14_s){
+		const float cvcc_current = g_adc.current;
+		if(cvcc_current < g_V_S.v6_A){
+			if(g.flag.module.bc54 == 0){
+				bc54();
+				//経過時間タイマ＝0　C_5_4_T3=time_start()
+				C_5_4_ON_T3 = timer_start_ms();
+			}
+			//C_5_4_F2＝1
+			if(g.flag.module.c54 != 1){
+				//TODO: Alarm
+
+				g.flag.module.c54 = 1;
+
+			}
+			if(elapsed_time_ms(C_5_4_ON_T3)/1000 > g_T_S.t15_s){
+				//TODO: E1005
+
+				return -255;
+			}else
+				return 1;
+
+		}else {
+			if(g.flag.module.c54 == 1){
+				//TODO: タッチパネルエラー削除
+
+				//C_5_4_F2＝0
+				g.flag.module.c54 = 0;
+			}
+			tc54();
+			return 1;
+		}
+	}
+	return 0;
+}
+int c55(void){
+	if(elapsed_time_ms(C_1_ON_T2)/1000 > g_T_S.t16_s){
+		bc55();
+		c551();
+		return 1;
+	}
+	return 0;
+}
+int c551(void){
+	const int ret = c552();
+	switch (ret) {
+		case 1:
+			if(g.flag.c55_10 == 1){
+				//TODO: E1006
+
+				return -255;
+			}
+			g.flag.c55_10 = 0;
+			g.flag.c55_20 = 0;
+			g.timer.c55_20 = 0;
+			return 0;
+		case -1:
+			if(g.flag.c55_10 == 0){
+				g.flag.c55_10 = 1;
+				//TODO: E1006
+
+				return -255;
+			}
+			break;
+		case -2:
+			if(g.flag.c55_20 == 0){
+				g.flag.c55_20 = 1;
+				C_5_5_20T = timer_start_ms();
+			}
+			//elapsed_time(C_5_5_ON_20T)/1000>1分
+			if(elapsed_time_ms(C_5_5_20T)/1000 > 60){
+				//TODO: E1007 電流範囲20％エラー処理
+
+				return -255;
+			}else
+				return -1;
+			break;
+		default:
+			break;
+	}
+	return -255;
+}
+int c552(void){
+	//CVCC_CURRENT= CVCC電解電流値取得
+	const float cvcc_current = g_adc.current;
+	//設定値⑨：規定値　1A
+	if(g_V_S.v9_A * 1.1f < cvcc_current){
+		if(g_V_S.v9_A * 1.2f < cvcc_current){
+			return -2;
+		}
+		return -1;
+	}else if(g_V_S.v9_A * 0.9f > cvcc_current){ ////⑨-（⑨ ×0.1）>CVCC_CURRENT
+		if(g_V_S.v9_A * 0.8f > cvcc_current){
+			return -2;
+		}
+		return -1;
+	}
+	return 1;
+}
+/**
+ * Control PCB doesn't have CVCC power supply monitor pin
+ * @return
+ */
+int c56(void){
+	bc56();
+
+	return 0;
+}
+int c6(void){
+	bc6();
+	//FAUCET_OFF_T＞8ｈ
+	if(elapsed_time_s(FAUCET_OFF_T) > 8 * 60 * 60){
+		FAUCET_OFF_T = 0;
+		e1_faucet_refresh_process();
+		return 1;
+	}
+	return 0;
+}
+int c7(void){
+	bc7();
+	if(elapsed_time_ms(C_1_OFF_T2) / 1000 > (uint32_t)168 * 60 * 60){
+		//TODO: E5003
+
+		return -255;
+	}
+	return 0;
+}
+int c8(void){
+	if(elapsed_time_ms(SV1_ON_T2)/1000 > g_T_S.t2_s){
+		if(g.flag.module.c8 == 0){
+			bc8();
+			C_8_T3 = timer_start_ms();
+		}
+		if(g_V_S.v7_L_m < g.flow_rate){
+			if(g.flow_rate < g_V_S.v7_L_m){
+				tc8();
+				return 1;
+			}else if(elapsed_time_ms(C_8_T3)/1000 > g_T_S.t3_s){
+				tc8();
+				//TODO: E1000
+
+				return -255;
+			}
+			return -2;
+		}else if(elapsed_time_ms(C_8_T3)/1000 > g_T_S.t13_s){
+			tc8();
+			//TODO: E1001
+
+			return -255;
+		}
+		return -1;
+	}
+	return 0;
+}
+int c9(void){
+	bc9();
+	if(elapsed_time_ms(C_1_ON_T3)/1000 > (uint32_t)g_T_S.t27_h * 60 * 60){
+		//TODO: E2
+
+		return -255;
+	}
+	return 0;
+}
+int c_10(void){
+	if(SV1_PIN == VALVE_OFF){
+		if(SV2_PIN == VALVE_OFF){
+			if(g.flow_rate >= 0.1f){
+				if(C_10_F == 0){
+					bc_10();
+					C_10_ON_T3 = timer_start_ms();
+				}
+				if(elapsed_time_ms(C_10_ON_T3)/1000 > g_T_S.t17_s){
+					//TODO: E1008
+
+					return -255;
+				}
+				return -1;
+			}
 			return 1;
 		}
 	}
 	return 0;
 }
 
-struct C_1_3 {
-	uint8_t state;
-	uint8_t rsvd;
-	uint32_t tick;
-} c1_3;
-//TODO: C13 - Electrolysis stop process
-int c13_electrolysis_stop_process(void) {
-	uint8_t *state = &c1_3.state;
-	uint32_t *tick = &c1_3.tick;
-	switch (*state) {
-	case 0:
-		//TODO: TC1 - CVCC（ER＝電解装置）OFF
-		SP_PIN = PUMP_OFF;
-		*tick = g_systemTick;
-		*state = 1;
-		break;
-	case 1:
-		if (ns_delay_ms(tick, g_T_S.t5_s * 1000)) {
-			SV1_PIN = VALVE_OFF;
-			//TODO: Neutralized timer stop
-			*state = 0;
-		}
-		break;
-	default:
-		break;
-	}
-	if (*state != 0)
-		return 1;
+
+
+int c_11(void){
 	return 0;
 }
-
-struct C_1_2 {
-	uint8_t state;
-	uint8_t rsvd;
-	uint32_t tick;
-} c1_2;
-//TODO: C12 - Electrolysis start
-int c12_electrolysis_start(void) {
-	uint8_t *state = &c1_2.state;
-	uint32_t *tick = &c1_2.tick;
-	switch (*state) {
-	case 0:
-		SV1_PIN = VALVE_ON;
-		SP_PIN = PUMP_ON;
-		*tick = g_systemTick;
-		*state = 1;
-		break;
-	case 1:
-		if (ns_delay_ms(tick, g_T_S.t4_2_s * 1000)) {
-			//TODO: C1 - Insert BC1 here?? CVCC（ER＝電解装置）ON
-			*state = 0;
-		}
-		break;
-	default:
-		break;
-	}
-	if (*state == 0)
-		return 1;
+int c_12(void){
 	return 0;
 }
-
-//TODO: C11 - Electrolysis status
-int c11_electrolysis_status(void) {
-	if (g.flag.electrolysis == 1) {
-		if (g_ALD != 3 && g_ACD != 3) {
-			//TODO: C11 Condition?
-			return 1;
-		}
-	}
+int c_13(void){
 	return 0;
 }
-
-int c1_electrolysis_service_start(void) {
-
+int c_131(void){
 	return 0;
 }
-
+int c_14(void){
+	return 0;
+}
+int c_15(void){
+	return 0;
+}
+int c_16(void){
+	return 0;
+}
+int c_17(void){
+	return 0;
+}
+int c_18(void){
+	return 0;
+}
 int c19_salt_tank_drain_check(void){
-
 	return 0;
 }
-
-int c5_electrolysis_CVCC_status(void) { return 0; }
+int c_20(void){
+	return 0;
+}
+int c_21(void){
+	return 0;
+}
+int c_22(void){
+	return 0;
+}
+int c_23(void){
+	return 0;
+}
+int c_24(void){
+	return 0;
+}
