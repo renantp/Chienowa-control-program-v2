@@ -7,6 +7,8 @@
 
 #include "c_module.h"
 #include "s_module.h"
+#include "b_module.h"
+#include "t_module.h"
 #include "../pin_define.h"
 #include "../global_variable.h"
 #include "../delay.h"
@@ -15,13 +17,32 @@
 
 int c1_on_off(uint8_t on_off){
 	if(on_off){
-		g.flag.module.c1 = 1;
-	}else{
 		g.flag.module.c1 = 0;
+		SP_PIN = PUMP_OFF; //SP_F=0?
+		b_sv1_start(); //SV１（給水） ON処理
+		b_sp_start(); //SP（塩ポンプ） ON処理
+		if(elapsed_time_s(SP_ON_T2)/1000 >= g_T_S.t17_s){
+			bc1();
+		}
+	}else{
+		//C_1_F=1
+		g.flag.module.c1 = 1;
+		//SP_F=1
+		SP_PIN = PUMP_ON;
+		//T-SP   SP（塩ポンプ）Stop処理
+		t_sp_stop();
+		if(elapsed_time_ms(SP_OFF_T2)/1000 >= g_T_S.t5_s){
+			t_sv1_stop();
+			//TODO: tc1() flow chart is missing
+
+			C_1_ON_T3 = timer_stop_s(C_1_ON_T3);
+			return -1;
+		}else{
+			return -2;
+		}
 	}
 	return 0;
 }
-
 
 struct C_5_3 {
 	uint8_t state;

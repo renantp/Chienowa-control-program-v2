@@ -90,7 +90,7 @@ void main(void)
     /* Start user code. Do not edit comment generated here */
 	init();
 	while (1U) {
-//		loop();
+		loop();
 
 		blink_led_1();
 		blink_led_2();

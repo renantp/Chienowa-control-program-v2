@@ -16,6 +16,15 @@
 #define SYSTEM_MODE (g.system_mode)
 #define WASH_MODE	(g.mode)
 
+#define P_1_5_F			g.flag.module.bp15
+#define P_1_5_ON_T1		g.timer.module.work.p15[0]
+#define P_1_5_ON_T2		g.timer.module.work.p15[1]
+#define C_1_ON_T3		g.timer.module.on.c1[2]
+#define C_1_OFF_T1		g.timer.module.off.c1[0]
+#define C_1_OFF_T2		g.timer.module.off.c1[1]
+#define SP_OFF_T2		g.timer.off.salt_pump[0]
+#define SP_ON_T2		g.timer.on.salt_pump[1]
+
 extern uint8_t g_uart2_rx_data[UART_MAX_LEN], g_uart2_tx_data[UART_MAX_LEN];
 extern circular_buffer g_rx_data;
 extern volatile int8_t g_uart2_recieve_end, g_uart2_send_end;
@@ -127,6 +136,7 @@ union B_MODULE_F {
 		uint8_t bp1 : 1;
 		uint8_t bp2	: 1;
 		uint8_t bp3 : 1;
+//		uint8_t bp4 : 1;
 		uint8_t bp8 : 1;
 
 		uint8_t bp11 : 1;
@@ -178,9 +188,17 @@ union B_MODULE_F {
 		uint8_t bc531 : 1;
 
 		uint8_t be1 : 1;
+		uint8_t b_b_led_l : 1;
+		uint8_t b_b_led_b : 1;
+		uint8_t b_r_led_l : 1;
+		uint8_t b_r_led_b : 1;
+		uint8_t b_w_led_l : 1;
+		uint8_t b_w_led_b : 1;
 
 		uint8_t c1 : 1;
 		uint8_t c2 : 1;
+
+		uint8_t e1 : 1;
 	};
 	uint8_t raw[32];
 };
@@ -190,6 +208,7 @@ struct Module_Timer{
 	uint32_t p1[2];
 	uint32_t p2[2];
 	uint32_t p3[2];
+//	uint32_t p4[2];
 	uint32_t p8[2];
 
 	uint32_t p11[2];
@@ -211,7 +230,7 @@ struct Module_Timer{
 	uint32_t p242[2];
 	uint32_t p243[2];
 
-	uint32_t c1[2];
+	uint32_t c1[3];
 	uint32_t c2[2];
 	uint32_t c3[2];
 	uint32_t c4[2];
@@ -241,6 +260,13 @@ struct Module_Timer{
 	uint32_t c531[2];
 
 	uint32_t e1[2];
+
+	uint32_t b_led_l[2];
+	uint32_t b_led_b[2];
+	uint32_t r_led_l[2];
+	uint32_t r_led_b[2];
+	uint32_t w_led_l[2];
+	uint32_t w_led_b[2];
 	struct{
 		uint32_t sv1[2];
 		uint32_t sv2[2];
@@ -275,6 +301,7 @@ extern struct GLOBAL{
 		struct IO_Struct io;
 		union B_MODULE_F module;
 	}flag;
+
 	struct{
 		uint32_t c1_on;
 		uint32_t faucet_off;
@@ -282,7 +309,11 @@ extern struct GLOBAL{
 		uint32_t alkali_discharge;
 		uint32_t acid_discharge;
 		struct Timer module;
+		struct{
+			uint32_t salt_pump[2];
+		}on, off;
 	}timer;
+
 	struct IO_Struct io;
 //	struct {
 //		union{

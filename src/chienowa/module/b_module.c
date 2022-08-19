@@ -1,5 +1,5 @@
 /*
- * module.c
+ * b_module.c
  *
  *  Created on: Aug 3, 2022
  *      Author: Renan
@@ -9,11 +9,12 @@
 #include "../pin_define.h"
 #include "../delay.h"
 #include "../global_variable.h"
+#include "../hand_sensor.h"
 
 int bp0_system_main_start(void){
 	if(!g.flag.module.bp0){
 		g.flag.module.bp0 = 1;
-		//g.timer.module.work.p0[0] is total working time
+		//g.timer.module.work.p0[0] is total working time (no reset)
 		g.timer.module.on.p0[0] = timer_restart_s(g.timer.module.work.p0[0]);
 		g.timer.module.on.p0[1] = timer_start_ms();
 	}
@@ -73,7 +74,7 @@ int bp14_initial_2nd_draining_start_process(void){
 		g.flag.module.bp14 = 1;
 		g.timer.module.on.p14[0] = timer_restart_s(g.timer.module.work.p14[0]);
 		g.timer.module.on.p14[1] = timer_start_ms();
-//		CVCC_CONTROL_PIN = 1U;
+		CVCC_CONTROL_PIN = 1U;
 	}
 	return 0;
 }
@@ -99,7 +100,6 @@ int bp15_electrolysis_start_process(void){
 		g.timer.module.on.p15[0] = timer_restart_s(g.timer.module.work.p15[0]);
 		g.timer.module.on.p15[1] = timer_start_ms();
 		CVCC_CONTROL_PIN = 1;
-		//TODO: CVCC error
 		//TODO: C_1_OFF_T2 = 0
 
 	}
@@ -159,8 +159,8 @@ int bp241(void){
 		g.flag.module.bp241 = 1;
 		g.timer.module.on.p241[0] = timer_restart_s(g.timer.module.work.p241[0]);
 		g.timer.module.on.p241[1] = timer_start_ms();
-		//TODO: P_2_4_1_OFF_T1 stop
-		//TODO: P_2_4_1_OFF_T2 stop
+		g.timer.module.work.p241[0] = timer_stop_s(g.timer.module.off.p241[0]);
+		g.timer.module.work.p241[1] = timer_stop_ms(g.timer.module.off.p241[1]);
 	}
 	return 0;
 }
@@ -169,6 +169,13 @@ int bp241(void){
  * @return
  */
 int bp242(void){
+	if(g.flag.module.bp242 == 0){
+		g.flag.module.bp242 = 1;
+		g.timer.module.on.p242[0] = timer_restart_s(g.timer.module.work.p242[0]);
+		g.timer.module.on.p242[1] = timer_start_ms();
+		g.timer.module.work.p242[0] = timer_stop_s(g.timer.module.off.p242[0]);
+		g.timer.module.work.p242[1] = timer_stop_ms(g.timer.module.off.p242[1]);
+	}
 	return 0;
 }
 int bp243(void){
@@ -202,15 +209,6 @@ int bp8(void){
 		g.timer.module.on.p8[0] = timer_restart_s(g.timer.module.work.p8[0]);
 		g.timer.module.on.p8[1] = timer_start_ms();
 	}
-	return 0;
-}
-
-int b_inital_acid_tank_drainage_start_process(void){
-
-	return 0;
-}
-
-int bp112_p1_start_process(void){
 	return 0;
 }
 
@@ -519,6 +517,60 @@ int be1(void){
 		g.timer.module.on.e1[0] = timer_restart_s(g.timer.module.work.e1[0]);
 		g.timer.module.on.e1[1] = timer_start_ms();
 		g.flag.module.be1 = 1;
+	}
+	return 0;
+}
+int b_b_led_l(void){
+	if(g.flag.module.b_b_led_l == 0){
+		g.timer.module.on.b_led_l[0] = timer_restart_s(g.timer.module.work.b_led_l[0]);
+		g.timer.module.on.b_led_l[1] = timer_start_ms();
+		hand_sensor_light(BLUE);
+		g.flag.module.b_b_led_l = 1;
+	}
+	return 0;
+}
+int b_b_led_b(void){
+	if(g.flag.module.b_b_led_b == 0){
+		g.timer.module.on.b_led_b[0] = timer_restart_s(g.timer.module.work.b_led_b[0]);
+		g.timer.module.on.b_led_b[1] = timer_start_ms();
+		hand_sensor_blink(BLUE, 300);
+		g.flag.module.b_b_led_b = 1;
+	}
+	return 0;
+}
+int b_r_led_l(void){
+	if(g.flag.module.b_r_led_l == 0){
+		g.timer.module.on.r_led_l[0] = timer_restart_s(g.timer.module.work.r_led_l[0]);
+		g.timer.module.on.r_led_l[1] = timer_start_ms();
+		hand_sensor_light(RED);
+		g.flag.module.b_r_led_l = 1;
+	}
+	return 0;
+}
+int b_r_led_b(void){
+	if(g.flag.module.b_r_led_b == 0){
+		g.timer.module.on.r_led_b[0] = timer_restart_s(g.timer.module.work.r_led_b[0]);
+		g.timer.module.on.r_led_b[1] = timer_start_ms();
+		hand_sensor_blink(RED, 300);
+		g.flag.module.b_r_led_b = 1;
+	}
+	return 0;
+}
+int b_w_led_l(void){
+	if(g.flag.module.b_w_led_l == 0){
+		g.timer.module.on.w_led_l[0] = timer_restart_s(g.timer.module.work.w_led_l[0]);
+		g.timer.module.on.w_led_l[1] = timer_start_ms();
+		hand_sensor_light(WHITE);
+		g.flag.module.b_w_led_l = 1;
+	}
+	return 0;
+}
+int b_w_led_b(void){
+	if(g.flag.module.b_w_led_b == 0){
+		g.timer.module.on.w_led_b[0] = timer_restart_s(g.timer.module.work.w_led_b[0]);
+		g.timer.module.on.w_led_b[1] = timer_start_ms();
+		hand_sensor_blink(WHITE, 300);
+		g.flag.module.b_w_led_b = 1;
 	}
 	return 0;
 }

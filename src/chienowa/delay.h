@@ -13,7 +13,6 @@ extern "C" {
 
 #include "../r_cg_macrodriver.h"
 
-#define C_1_ON_T3			(0)
 #define FAUCET_OFF_T		(1)
 #define WATER_DISCHARGE_T	(2)
 #define ACID_DISCHARGE_T	(3)

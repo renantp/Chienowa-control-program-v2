@@ -10,16 +10,19 @@
 
 int g_ALD, g_ACD, g_SAD;
 
-//TODO: S5 - Filter change formula
-int s5_filter_change_formula(void) {
-	return -128;
+float s5_filter_change_formula(long SV1_T3, long SV2_T3, long g_V_S_v11_mg_L,long g_V_S_v12_L) {
+	float A,B,C;
+	C= 0.067f*(float)SV1_T3;
+	B= 0.034f*(float)SV2_T3;
+	A= ((float)g_V_S_v11_mg_L*650)/(55/(float)g_V_S_v12_L);
+	return A/(B+C);
 }
 
-//TODO: S4 - Water softener input data
-int s4_water_softener_input_data(void) {
-
-	return -128;
-}
+////TODO: S4 - Water softener input data
+//int s4_water_softener_input_data(void) {
+//
+//	return -128;
+//}
 
 /**
  * Check level sensor Salt tank and return result
@@ -28,24 +31,30 @@ int s4_water_softener_input_data(void) {
  * 0, 1, 2: OK
  * -128: Crash
  */
-int s31_salt_tank_data_check(void) {
+int s3_salt_tank_data_set(void) {
 	union {
 		struct {
-			uint8_t fl7 :1;
-			uint8_t fl8 :1;
-			uint8_t rsvd :6;
+			uint8_t bit1 :1;
+			uint8_t bit0 :1;
 		};
-		uint8_t raw;
-	} data = { .fl7 = FL7 == LEVEL_ON ? 1U : 0U, .fl8 =
-			FL8 == LEVEL_ON ? 1U : 0U, .rsvd = 0b000000 };
-	switch (data.raw) {
-	case 0:
+		uint8_t bit;
+	} data;
+
+
+	data.bit1=FL7;
+	data.bit0=FL8;
+
+	//data.bit = 2^2 = 4bit
+	//FL7.FL8 ---> bit1.bit0
+
+	switch (data.bit) {
+	case 0://00
 		return 0;
-	case 1:
+	case 1://01
 		return 1;
-	case 2:
+	case 2://10
 		return -1;
-	case 3:
+	case 3: //11
 		return 2;
 	default:
 		break;
@@ -59,13 +68,13 @@ int s31_salt_tank_data_check(void) {
  * 1 - if ACD changed
  * 0 - if ACD not changed
  */
-int s3_salt_tank_data_set(void) {
-	int pre_SAD = g_SAD;
-	g_SAD = s31_salt_tank_data_check();
-	if (pre_SAD != g_SAD)
-		return 1;
-	return 0;
-}
+//int s3_salt_tank_data_set(void) {
+//	int pre_SAD = g_SAD;
+//	g_SAD = s31_salt_tank_data_check();
+//	if (pre_SAD != g_SAD)
+//		return 1;
+//	return 0;
+//}
 
 /**
  * Check level sensor of Acid tank and return result
@@ -73,34 +82,40 @@ int s3_salt_tank_data_set(void) {
  * -4, -3, -2, -1: NG
  * 0, 1, 2, 3: OK
  */
-int s21_acid_tank_data_check(void) {
+int s2_acid_tank_data_set(void) {
 	union {
 		struct {
-			uint8_t fl1 :1;
-			uint8_t fl2 :1;
-			uint8_t fl3 :1;
-			uint8_t rsvd :5;
+			uint8_t bit2 :1;
+			uint8_t bit1 :1;
+			uint8_t bit0 :1;
 		};
-		uint8_t raw;
-	} data = { .fl1 = FL1 == LEVEL_ON ? 1U : 0U, .fl2 =
-			FL2 == LEVEL_ON ? 1U : 0U, .fl3 = FL3 == LEVEL_ON ? 1U : 0U, .rsvd =
-			0b00000 };
-	switch (data.raw) {
-	case 0: //0b0000 0000
+		uint8_t bit;
+	} data;
+
+
+	data.bit2=FL1;
+	data.bit1=FL2;
+	data.bit0=FL3;
+
+	//data.bit = 2^3 = 8bit
+	//FL1.FL2.FL3 ---> bit2.bit1.bit0
+
+	switch (data.bit) {
+	case 0: //000
 		return 0;
-	case 1: //0b0000 0001
+	case 1: //001
 		return 1;
-	case 2: //0b0000 0010
+	case 2: //010
 		return -4;
-	case 3: //0b0000 0011
+	case 3: //011
 		return 2;
-	case 4: //0b0000 0100
+	case 4: //100
 		return -2;
-	case 5: //0b0000 0101
+	case 5: //101
 		return -1;
-	case 6: //0b0000 0110
+	case 6: //110
 		return -3;
-	case 7: //0b0000 0111
+	case 7: //111
 		return 3;
 	}
 	return -128;
@@ -112,13 +127,13 @@ int s21_acid_tank_data_check(void) {
  * 1 - if ACD changed
  * 0 - if ACD not changed
  */
-int s2_acid_tank_data_set(void) {
-	int pre_ACD = g_ACD;
-	g_ACD = s21_acid_tank_data_check();
-	if (pre_ACD != g_ACD)
-		return 1;
-	return 0;
-}
+//int s2_acid_tank_data_set(void) {
+//	int pre_ACD = g_ACD;
+//	g_ACD = s21_acid_tank_data_check();
+//	if (pre_ACD != g_ACD)
+//		return 1;
+//	return 0;
+//}
 
 /**
  * Check level sensor Alkali tank and return result
@@ -126,34 +141,41 @@ int s2_acid_tank_data_set(void) {
  * -4, -3, -2, -1: NG
  * 0, 1, 2, 3: OK
  */
-int s11_alkali_tank_data_check(void) {
+int s1_alkali_tank_data_set(void) {
+
 	union {
 		struct {
-			uint8_t fl4 :1;
-			uint8_t fl5 :1;
-			uint8_t fl6 :1;
-			uint8_t rsvd :5;
+			uint8_t bit2 :1;
+			uint8_t bit1 :1;
+			uint8_t bit0 :1;
 		};
-		uint8_t raw;
-	} data = { .fl4 = FL4 == LEVEL_ON ? 1U : 0U, .fl5 =
-			FL5 == LEVEL_ON ? 1U : 0U, .fl6 = FL6 == LEVEL_ON ? 1U : 0U, .rsvd =
-			0b00000 };
-	switch (data.raw) {
-	case 0: //0b0000 0000
+		uint8_t bit;
+	} data;
+
+
+	data.bit2=FL4;
+	data.bit1=FL5;
+	data.bit0=FL6;
+
+	//data.bit = 2^3 = 8bit
+	//FL4.FL5.FL6 ---> bit2.bit1.bit0
+
+	switch (data.bit) {
+	case 0: //000
 		return 0;
-	case 1: //0b0000 0001
+	case 1: //001
 		return 1;
-	case 2: //0b0000 0010
+	case 2: //010
 		return -4;
-	case 3: //0b0000 0011
+	case 3: //011
 		return 2;
-	case 4: //0b0000 0100
+	case 4: //100
 		return -2;
-	case 5: //0b0000 0101
+	case 5: //101
 		return -1;
-	case 6: //0b0000 0110
+	case 6: //110
 		return -3;
-	case 7: //0b0000 0111
+	case 7: //111
 		return 3;
 	}
 	return -128;
@@ -165,10 +187,10 @@ int s11_alkali_tank_data_check(void) {
  * 1 - if ALD changed
  * 0 - if ALD not changed
  */
-int s1_alkali_tank_data_set(void) {
-	int pre_ALD = g_ALD;
-	g_ALD = s11_alkali_tank_data_check();
-	if (pre_ALD != g_ALD)
-		return 1;
-	return 0;
-}
+//int s1_alkali_tank_data_set(void) {
+//	int pre_ALD = g_ALD;
+//	g_ALD = s11_alkali_tank_data_check();
+//	if (pre_ALD != g_ALD)
+//		return 1;
+//
+//}

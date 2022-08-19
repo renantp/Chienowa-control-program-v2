@@ -38,7 +38,7 @@
 #define FL5		(P0_bit.no6)
 #define FL6		(P7_bit.no0)
 #define FL7		(P5_bit.no4)
-#define FL8		(P3_bit.no3)
+#define FL8		(P5_bit.no3)
 
 #define O_HS_IDA_PIN	(P1_bit.no5)
 #define O_HS_ICL_PIN	(P1_bit.no6)

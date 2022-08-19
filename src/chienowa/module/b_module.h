@@ -10,13 +10,10 @@
 
 #include "../../r_cg_macrodriver.h"
 
-int b_inital_acid_tank_drainage_start_process(void);
-
 int bp0_system_main_start(void);
 
 int bp111_inital_alkali_tank_drainage_start_process(void);
 int bp112_inital_acid_tank_drainage_start_process(void);
-int bp112_p1_start_process(void);
 int bp141_2nd_alkali_tank_drain_startup_process(void);
 int bp142_2nd_acid_tank_drain_startup_process(void);
 int bp11_initial_drainage_start_process(void);
@@ -63,7 +60,12 @@ int bc_17(void);
 int bc_18(void);
 int bc_19(void);
 int be1(void);
-
+int b_b_led_l(void);
+int b_b_led_b(void);
+int b_r_led_l(void);
+int b_r_led_b(void);
+int b_w_led_l(void);
+int b_w_led_b(void);
 
 int b_p1_start(void);
 int b_p2_start(void);
