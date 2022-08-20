@@ -70,6 +70,7 @@ int tc16(void);
 int tc17(void);
 int tc18(void);
 int tc19(void);
+int tc_23(void);
 
 int te1(void);
 int t_b_led_l(void);
@@ -79,4 +80,5 @@ int t_r_led_b(void);
 int t_r_led_l(void);
 int t_w_led_b(void);
 int t_w_led_b(void);
+int te11(void);
 #endif /* CHIENOWA_MODULE_T_MODULE_H_ */

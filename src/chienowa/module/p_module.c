@@ -579,7 +579,7 @@ int p313_flow_rate_process(void){
 }
 int p314_salt_tank_drain_process(void){
 	bp314();
-	c19();
+	c_19();
 	//TODO: How could we check V4 ??
 
 	b_sp_start();

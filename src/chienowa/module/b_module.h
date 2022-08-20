@@ -79,4 +79,6 @@ int b_sv5_start(void);
 int b_sv6_start(void);
 int b_sv7_start(void);
 int bc1(void);
+
+int be11(void);
 #endif /* CHIENOWA_MODULE_B_MODULE_H_ */

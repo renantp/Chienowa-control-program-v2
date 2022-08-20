@@ -583,3 +583,10 @@ int b_w_led_b(void){
 	}
 	return 0;
 }
+/**
+ * TODO: Not have flow chart yet
+ * @return
+ */
+int be11(void){
+	return 0;
+}

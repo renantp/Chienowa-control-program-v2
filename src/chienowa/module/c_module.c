@@ -14,18 +14,21 @@
 #include "../delay.h"
 #include "../adc.h"
 #include "e_module.h"
+#include "../runtime.h"
 
 int c1_on_off(uint8_t on_off){
 	if(on_off){
-		if(g.flag.module.c1 == 0){
+		if(g.flag.module.c1 != 0){
 			c5_electrolysis_check_process();
 			//TODO: c23()
 
 			return 0;
 		}
-		SP_PIN = PUMP_OFF; //SP_F=0?
-		b_sv1_start(); //SV１（給水） ON処理
-		b_sp_start(); //SP（塩ポンプ） ON処理
+		if(SP_PIN == PUMP_OFF){
+//		SP_PIN = PUMP_OFF; //SP_F=0?
+			b_sv1_start(); //SV１（給水） ON処理
+			b_sp_start(); //SP（塩ポンプ） ON処理
+		}
 		if(elapsed_time_s(SP_ON_T2)/1000 >= g_T_S.t17_s){
 			//BC-1 電解業務起動処理
 			bc1();
@@ -53,7 +56,7 @@ int c1_on_off(uint8_t on_off){
 			return -2;
 		}
 	}
-	return 0;
+//	return 0;
 }
 int c11(void) {
 	tc1();
@@ -61,24 +64,55 @@ int c11(void) {
 	wait(g_T_S.t15_s * 1000);
 	t_sv1_stop();
 	//中和タイマー停止処理
-	C_1_ON_T3 = timer_start_s();
+	// C_1_ON_T3 = timer_start_s();
+	C_1_ON_T3 = timer_stop_s(C_1_ON_T3);
 	return 1;
 }
-int c2_alkali_tank_level_check(void) {
+// int c2_alkali_tank_level_check(void) {
+// 	bc3();
+// 	const int status = s1_alkali_tank_data_set();
+// 	if(status < -1){
+// 		//TODO: E1025
+
+// 		return -255;
+// 	}else if(status == 0){
+// 		//TODO: E1029
+
+// 		return g_ALD;
+// 	}else {
+// 		return g_ALD;
+// 	}
+// 	return 0;
+// }
+int c2_alkali_tank_level_check(void) { 						//new_plan
 	bc3();
-	const int status = s1_alkali_tank_data_set();
-	if(status < -1){
-		//TODO: E1025
-
-		return -255;
-	}else if(status == 0){
-		//TODO: E1029
-
-		return g_ALD;
-	}else {
-		return g_ALD;
+	s1_alkali_tank_data_set();
+	switch(g_ALD){
+		case -3:
+//			E_1025();
+			break;
+		case -2:	
+//			E_1025();
+			break;
+		case -1:
+//			E_1025();
+			break;
+		case 0:
+//			E_1029();
+			break;
+		case 1:
+			return g_ALD;
+//			break;
+		case 2:
+			return g_ALD;
+//			break;
+		case 3:
+			return g_ALD;
+//			break;
+		default:
+			break;
 	}
-	return 0;
+	return g_ALD;
 }
 int c3_acid_tank_level_check(void){
 	bc3();
@@ -94,7 +128,7 @@ int c3_acid_tank_level_check(void){
 	}else{
 		return g_ACD;
 	}
-	return 0;
+//	return 0;
 }
 int c4_salt_tank_sensor_value_check_process(void){
 	bc4();
@@ -159,7 +193,7 @@ int c52_over_voltage_2_check(float *voltage){
 		tc52();
 		return 0;
 	}
-	return 1;
+//	return 1;
 }
 int c53_over_voltage_3_check(float *voltage){
 	if(elapsed_time_ms(C_1_ON_T2)/1000 > g_T_S.t41_s){
@@ -274,7 +308,7 @@ int c551(void){
 				return -255;
 			}else
 				return -1;
-			break;
+//			break;
 		default:
 			break;
 	}
@@ -405,8 +439,8 @@ int c_11(void){
 int c_12(void){
 	bc_12();
 	const float fc = s5_filter_change_formula(
-			SV1_ON_T3,
-			SV2_ON_T3,
+			SV1_ON_T1,
+			SV2_ON_T1,
 			g_V_S.v11_mg_L,
 			g_V_S.v12_L);
 	if(fc < g_T_S.t19_h){
@@ -524,7 +558,7 @@ int c_18(void){
 	}
 	return 0;
 }
-int c19(void){
+int c_19(void){
 	while(g.flag.electrolysis != 0){
 		runtime();
 	}

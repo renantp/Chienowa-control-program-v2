@@ -28,6 +28,8 @@
 #define SP_OFF_T2		g.timer.module.off.io.sp[1]
 #define SP_ON_T2		g.timer.module.on.io.sp[1]
 #define C_5_5_20T		g.timer.c55_20
+#define SV1_ON_T1		g.timer.module.on.io.sv1[0]
+#define SV2_ON_T1		g.timer.module.on.io.sv2[0]
 #define SV1_ON_T2		g.timer.module.on.io.sv1[1]
 #define SV1_ON_T3		g.timer.module.on.io.sv1[2]
 #define SV2_ON_T3		g.timer.module.on.io.sv2[2]
@@ -36,6 +38,11 @@
 #define C_21_T2			g.timer.module.on.c21[1]
 
 #define C_10_F			g.flag.module.c10
+#define E_1008_CVCC_STOP_F	g.flag.e_1008_cvcc_stop
+#define E_1020_CVCC_STOP_F	g.flag.e_1020_cvcc_stop
+#define E_1022_CVCC_STOP_F	g.flag.e_1022_cvcc_stop
+#define E_1026_CVCC_STOP_F	g.flag.e_1026_cvcc_stop
+
 #define FAUCET_OFF_T		g.timer.faucet_off
 #define WATER_DISCHARGE_T	(2)
 #define ACID_DISCHARGE_T	(3)
@@ -334,6 +341,10 @@ extern struct GLOBAL{
 		uint8_t c55_20;
 		uint8_t c55_10;
 		uint8_t leak_sensor;
+		uint8_t e_1008_cvcc_stop;
+		uint8_t e_1020_cvcc_stop;
+		uint8_t e_1022_cvcc_stop;
+		uint8_t e_1026_cvcc_stop;
 	}flag;
 
 	struct{
