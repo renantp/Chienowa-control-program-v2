@@ -23,6 +23,6 @@ int c51_over_voltage_1_check(float *voltage);
 int c52_over_voltage_2_check(float *voltage);
 int c53_over_voltage_3_check(float *voltage);
 int c531(void);
-int c19_salt_tank_drain_check(void);
+int c19(void);
 
 #endif /* CHIENOWA_MODULE_C_MODULE_H_ */

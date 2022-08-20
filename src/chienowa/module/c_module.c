@@ -382,50 +382,208 @@ int c_10(void){
 	return 0;
 }
 
-
-
 int c_11(void){
+	//漏水センサーON
+	if(g.flag.leak_sensor == 1){
+		bc_11();
+		t_sv2_stop();
+		t_sv3_stop();
+		t_sv4_stop();
+		t_sv5_stop();
+		t_sv6_stop();
+		if(g.flag.leak_sensor == 1){
+			if(elapsed_time_ms(C_21_T2)/1000 > g_T_S.t37_s){
+				//TODO: E1051
+
+			}
+			return 1;
+		}
+		return 1;
+	}
 	return 0;
 }
 int c_12(void){
-	return 0;
+	bc_12();
+	const float fc = s5_filter_change_formula(
+			SV1_ON_T3,
+			SV2_ON_T3,
+			g_V_S.v11_mg_L,
+			g_V_S.v12_L);
+	if(fc < g_T_S.t19_h){
+		if(fc < g_T_S.t20_h){
+			//TODO: E1030
+
+			return -1;
+		}else{
+			//TODO: E1031
+
+			return -2;
+		}
+	}else
+		return 0;
 }
 int c_13(void){
-	return 0;
+	if(g.flag.module.c1){
+		const int r = c_131();
+		if(r == 1){
+			bc_13();
+			//TODO: E1026
+
+			return -255;
+		}
+		return 1;
+	}
+	return -0;
 }
 int c_131(void){
+	if(elapsed_time_ms(g.timer.module.off.io.p2[1])/1000 > 20 * 60){
+		if(elapsed_time_ms(g.timer.module.off.io.p1[1])/1000 > 20 * 60){
+			return 1;
+		}
+	}
 	return 0;
 }
 int c_14(void){
-	return 0;
+	bc_14();
+	//C_14_TF_F=両タンク満水フラグ
+	g.flag.module.c14 = 0;
+	if(g_ALD == 3 && g_ACD == 3){
+		if(g.flag.module.c14 == 0){
+			g.flag.module.c14 = 1;
+			//TODO: E5001
+
+			return -1;
+		}
+		return 1;
+	}
+	if(g.flag.module.c14 == 1){
+		g.flag.module.c14 = 0;
+		//TODO: E5002
+
+		return 0;
+	}
+	return 1;
 }
 int c_15(void){
-	return 0;
+	bc_15();
+	const int c_15_d = SALT_LID_PIN;
+	if(c_15_d == 0){
+		tc15();
+		//TODO: E1022
+
+		return -1;
+	}
+	return 1;
 }
 int c_16(void){
-	return 0;
+	if(elapsed_time_s(g.timer.module.on.p0[0]) > (uint32_t)g_T_S.t36_h * 60 * 60){
+		bc_16();
+		if(g.flag.module.e1032 == 0){
+			//TODO: E1032
+
+			return -1;
+		}
+		return 0;
+	}
+	return 1;
 }
 int c_17(void){
-	return 0;
+	/**
+	 * 電解運転起算タイマが（[37]時間）
+		超えた場合
+		C_1_ON_T1> [42]
+	 */
+	if(elapsed_time_s(g.timer.module.on.c1[0]) > (uint32_t)g_T_S.t42_h * 60 * 60){
+		bc_17();
+		if(g.flag.module.e1033 == 0){
+			//TODO: E1033
+
+			return -1;
+		}
+		return 0;
+	}
+	return 1;
 }
 int c_18(void){
+	if(g.flag.electrolysis){
+		bc_18();
+		/** TODO:
+		 * 塩水路循環希望の場合で
+		 * V4弁が循環側になっていない場合
+		 */
+
+		if(g.flag.module.e1034 == 0){
+			//TODO: E1034
+
+			tc18();
+			return 0;
+		}else{
+			tc18();
+			return 0;
+		}
+	}
 	return 0;
 }
-int c19_salt_tank_drain_check(void){
+int c19(void){
+	while(g.flag.electrolysis != 0){
+		runtime();
+	}
+	bc_19();
+	//TODO: V4弁が排水側になっている場合
+
+	//TODO: E-1035
+
+	tc19();
 	return 0;
 }
+/**
+ * Need more information
+ * @return
+ */
 int c_20(void){
+	while(g.flag.module.c20 != 1){
+		runtime();
+	}
+	//TODO: システム設定モードデータ来たか
+
 	return 0;
 }
+/**
+ * Need more information
+ * @return
+ */
 int c_21(void){
 	return 0;
 }
+/**
+ * Need more information
+ * @return
+ */
 int c_22(void){
 	return 0;
 }
 int c_23(void){
+	bc_23();
+	c2_alkali_tank_level_check();
+	c3_acid_tank_level_check();
+	c4_salt_tank_sensor_value_check_process();
+	c8();
+	c9();
+	c_10();
+	c_11();
+	c_13();
+	c_14();
+	c_15();
+	tc_23();
 	return 0;
 }
 int c_24(void){
+	bc_23();
+	c6();
+	c7();
+	c_12();
+	c_16();
+	c_17();
+	tc_23();
 	return 0;
 }

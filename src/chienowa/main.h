@@ -55,23 +55,23 @@ void loop(void);
 /***********************************************************************************************************************
  Error
  ***********************************************************************************************************************/
-void e1_faucet_refresh_alarm(void);
-void e11_faucet_refresh(void);
-void e2_available(void);
-void e3_water_leak_alarm(void);
-void e4_alkali_acid_tank_overflow_alarm(void);
-void e5_alkaline_tank_skip_alarm(void);
-void e6_acid_tank_skip_alarm(void);
-void e7_salt_water_tank_alarm(void);
-void e8_alkali_tank_empty_alarm(void);
-void e9_acid_tank_empty_alarm(void);
-void e10_salt_water_tank_alarm(void);
-void e11_alkali_acid_tank_full_log(void);
-void e12_alkali_tank_drain_alarm(void);
-void e13_acid_tank_drain_alarm(void);
-void e14_flow_sensor_alarm(void);
-void e15_current_range_20_over(void);
-void e16_current_range_10_over(void);
+//void e1_faucet_refresh_alarm(void);
+//void e11_faucet_refresh(void);
+//void e2_available(void);
+//void e3_water_leak_alarm(void);
+//void e4_alkali_acid_tank_overflow_alarm(void);
+//void e5_alkaline_tank_skip_alarm(void);
+//void e6_acid_tank_skip_alarm(void);
+//void e7_salt_water_tank_alarm(void);
+//void e8_alkali_tank_empty_alarm(void);
+//void e9_acid_tank_empty_alarm(void);
+//void e10_salt_water_tank_alarm(void);
+//void e11_alkali_acid_tank_full_log(void);
+//void e12_alkali_tank_drain_alarm(void);
+//void e13_acid_tank_drain_alarm(void);
+//void e14_flow_sensor_alarm(void);
+//void e15_current_range_20_over(void);
+//void e16_current_range_10_over(void);
 
 /***********************************************************************************************************************
  Common

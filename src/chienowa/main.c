@@ -12,7 +12,7 @@ struct GLOBAL g;
 eeprom_config e_config = { .csi_flag = &g_csi01_flag, .csi_send_receive =
 		R_CSI01_Send_Receive };
 uint32_t tick;
-struct Number_Setting_s g_numberSetting, clone;
+struct Number_Setting_s g_V_S, clone;
 struct Timer_Setting_s g_T_S;
 const uint8_t timeSettingSize = sizeof(struct Timer_Setting_s) - 1;
 uint8_t my_data[40], read_data[40];
@@ -26,8 +26,8 @@ void init(void) {
 
 	if (eeprom_init(&e_config) == 0) {
 		eeprom_set_block(NONE_BLOCK);
-		eeprom_read((uint8_t*) &g_numberSetting, 0x0000, 41);
-		eeprom_write((uint8_t*) &g_numberSetting, 0x0000, 41);
+		eeprom_read((uint8_t*) &g_V_S, 0x0000, 41);
+		eeprom_write((uint8_t*) &g_V_S, 0x0000, 41);
 		eeprom_read((uint8_t*) &clone, 0x0000, 41);
 	}
 }

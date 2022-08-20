@@ -370,6 +370,13 @@ int tc2(void){
 	}
 	return 0;
 }
+/**
+ * Do not have information yet
+ * @return
+ */
+int tc_23(void){
+	return 0;
+}
 int tc3(void){
 	if(g.flag.module.bc3){
 		//C_3_ON_T1 STOP
@@ -651,12 +658,12 @@ int te1(void){
  */
 int t_b_led_l(void){
 	if(g.flag.module.b_b_led_l){
-		//B_LED_B_ON_T1 STOP
+		//B_LED_L_ON_T1 STOP
 		g.timer.module.work.b_led_l[0] = timer_stop_s(g.timer.module.on.b_led_l[0]);
-		//B_LED_B_ON_T2 STOP
+		//B_LED_L_ON_T2 STOP
 		g.timer.module.work.b_led_l[1] = timer_stop_ms(g.timer.module.on.b_led_l[1]);
 		hand_sensor_light(HS_OFF);
-		//B_LED_B_F = 0
+		//B_LED_L_F = 0
 		g.flag.module.b_b_led_l = 0;
 	}
 	return 0;
@@ -667,13 +674,77 @@ int t_b_led_l(void){
  */
 int t_b_led_b(void){
 	if(g.flag.module.b_b_led_b){
-		//E_1_ON_T1 STOP
+		//B_LED_B_ON_T1 STOP
 		g.timer.module.work.b_led_b[0] = timer_stop_s(g.timer.module.on.b_led_b[0]);
-		//E_1_ON_T2 STOP
+		//B_LED_B_ON_T2 STOP
 		g.timer.module.work.b_led_b[1] = timer_stop_ms(g.timer.module.on.b_led_b[1]);
 		hand_sensor_blink(HS_OFF, 300);
 		//B_LED_B_F = 0
 		g.flag.module.b_b_led_b = 0;
+	}
+	return 0;
+}
+/**
+ * Red LED light
+ * @return
+ */
+int t_r_led_l(void){
+	if(g.flag.module.b_r_led_l){
+		//R_LED_L_ON_T1 STOP
+		g.timer.module.work.r_led_l[0] = timer_stop_s(g.timer.module.on.r_led_l[0]);
+		//R_LED_L_ON_T2 STOP
+		g.timer.module.work.r_led_l[1] = timer_stop_ms(g.timer.module.on.r_led_l[1]);
+		hand_sensor_light(HS_OFF);
+		//R_LED_L_F = 0
+		g.flag.module.b_r_led_l = 0;
+	}
+	return 0;
+}
+/**
+ * Red LED blink
+ * @return
+ */
+int t_r_led_b(void){
+	if(g.flag.module.b_r_led_b){
+		//R_LED_B_ON_T1 STOP
+		g.timer.module.work.r_led_b[0] = timer_stop_s(g.timer.module.on.r_led_b[0]);
+		//R_LED_B_ON_T2 STOP
+		g.timer.module.work.r_led_b[1] = timer_stop_ms(g.timer.module.on.r_led_b[1]);
+		hand_sensor_blink(HS_OFF, 300);
+		//R_LED_B_F = 0
+		g.flag.module.b_r_led_b = 0;
+	}
+	return 0;
+}
+/**
+ * White LED light
+ * @return
+ */
+int t_w_led_l(void){
+	if(g.flag.module.b_w_led_l){
+		//W_LED_L_ON_T1 STOP
+		g.timer.module.work.r_led_l[0] = timer_stop_s(g.timer.module.on.r_led_l[0]);
+		//W_LED_L_ON_T2 STOP
+		g.timer.module.work.r_led_l[1] = timer_stop_ms(g.timer.module.on.r_led_l[1]);
+		hand_sensor_light(HS_OFF);
+		//W_LED_L_F = 0
+		g.flag.module.b_w_led_l = 0;
+	}
+	return 0;
+}
+/**
+ * White LED blink
+ * @return
+ */
+int t_w_led_b(void){
+	if(g.flag.module.b_w_led_b){
+		//W_LED_B_ON_T1 STOP
+		g.timer.module.work.w_led_b[0] = timer_stop_s(g.timer.module.on.w_led_b[0]);
+		//W_LED_B_ON_T2 STOP
+		g.timer.module.work.w_led_b[1] = timer_stop_ms(g.timer.module.on.w_led_b[1]);
+		hand_sensor_blink(HS_OFF, 300);
+		//W_LED_B_F = 0
+		g.flag.module.b_w_led_b = 0;
 	}
 	return 0;
 }

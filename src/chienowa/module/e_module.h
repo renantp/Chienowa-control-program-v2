@@ -21,4 +21,6 @@ extern union Error_status {
 	uint32_t data;
 }g_error_status;
 
+
+int e1_faucet_refresh_process(void);
 #endif /* CHIENOWA_MODULE_E_MODULE_H_ */

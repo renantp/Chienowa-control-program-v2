@@ -19,11 +19,27 @@
 #define P_1_5_F			g.flag.module.bp15
 #define P_1_5_ON_T1		g.timer.module.work.p15[0]
 #define P_1_5_ON_T2		g.timer.module.work.p15[1]
+#define C_1_ON_T2		g.timer.module.on.c1[1]
 #define C_1_ON_T3		g.timer.module.on.c1[2]
 #define C_1_OFF_T1		g.timer.module.off.c1[0]
 #define C_1_OFF_T2		g.timer.module.off.c1[1]
-#define SP_OFF_T2		g.timer.off.salt_pump[0]
-#define SP_ON_T2		g.timer.on.salt_pump[1]
+#define C_5_2_ON_T3		g.timer.module.on.c52[2]
+#define C_5_4_ON_T3		g.timer.module.on.c54[2]
+#define SP_OFF_T2		g.timer.module.off.io.sp[1]
+#define SP_ON_T2		g.timer.module.on.io.sp[1]
+#define C_5_5_20T		g.timer.c55_20
+#define SV1_ON_T2		g.timer.module.on.io.sv1[1]
+#define SV1_ON_T3		g.timer.module.on.io.sv1[2]
+#define SV2_ON_T3		g.timer.module.on.io.sv2[2]
+#define C_8_T3			g.timer.module.on.c8[2]
+#define C_10_ON_T3		g.timer.module.on.c10[2]
+#define C_21_T2			g.timer.module.on.c21[1]
+
+#define C_10_F			g.flag.module.c10
+#define FAUCET_OFF_T		g.timer.faucet_off
+#define WATER_DISCHARGE_T	(2)
+#define ACID_DISCHARGE_T	(3)
+#define ALKALI_DISCHARGE_T	(4)
 
 extern uint8_t g_uart2_rx_data[UART_MAX_LEN], g_uart2_tx_data[UART_MAX_LEN];
 extern circular_buffer g_rx_data;
@@ -67,26 +83,30 @@ extern struct Timer_Setting_s{
 	uint16_t t33_s;
 	uint16_t t34_s;
 	uint16_t t35_s;
-	uint16_t t36;
-	uint16_t t37;
+	uint16_t t36_h;
+	uint16_t t37_s;
 	uint16_t t38_s;
 	uint16_t t39_h;
 	uint16_t t40_s;
+	uint16_t t41_s;
+	uint16_t t42_h;
 	char crc;
 }g_T_S;
 extern struct Number_Setting_s {
-	float upperVoltage1;
-	float upperVoltage2;
-	float upperVoltage3;
-	float lowerVoltage;
-	float upperCurrent;
-	float lowerCurrent;
-	float upperFlow;
-	float lowerFlow;
-	float cvccCurrent;
-	float saltPumpVoltage;
+	float v1_V;
+	float v2_V;
+	float v3_V;
+	float v4_V;
+	float v5_A;
+	float v6_A;
+	float v7_L_m;
+	float v8_L_m;
+	float v9_A;
+	float v10_V;
+	float v11_mg_L;
+	float v12_L;
 	char crc;
-} g_numberSetting;
+} g_V_S;
 
 enum WASH_MODE_E {
 	HAND_WASHING_MODE,
@@ -177,6 +197,7 @@ union B_MODULE_F {
 		uint8_t bc17 : 1;
 		uint8_t bc18 : 1;
 		uint8_t bc19 : 1;
+		uint8_t bc23 : 1;
 
 		uint8_t bc51 : 1;
 		uint8_t bc52 : 1;
@@ -197,8 +218,17 @@ union B_MODULE_F {
 
 		uint8_t c1 : 1;
 		uint8_t c2 : 1;
+		uint8_t c52: 1;
+		uint8_t c54 : 1;
+		uint8_t c8 : 1;
+		uint8_t c10 : 1;
+		uint8_t c14 : 1;
+		uint8_t c20 : 1;
 
 		uint8_t e1 : 1;
+		uint8_t e1032 : 1;
+		uint8_t e1033 : 1;
+		uint8_t e1034 : 1;
 	};
 	uint8_t raw[32];
 };
@@ -237,9 +267,9 @@ struct Module_Timer{
 	uint32_t c5[2];
 	uint32_t c6[2];
 	uint32_t c7[2];
-	uint32_t c8[2];
+	uint32_t c8[3];
 	uint32_t c9[2];
-	uint32_t c10[2];
+	uint32_t c10[3];
 	uint32_t c11[2];
 	uint32_t c12[2];
 	uint32_t c13[2];
@@ -249,11 +279,12 @@ struct Module_Timer{
 	uint32_t c17[2];
 	uint32_t c18[2];
 	uint32_t c19[2];
+	uint32_t c21[2];
 
 	uint32_t c51[2];
-	uint32_t c52[2];
+	uint32_t c52[3];
 	uint32_t c53[2];
-	uint32_t c54[2];
+	uint32_t c54[3];
 	uint32_t c55[2];
 	uint32_t c56[2];
 
@@ -268,8 +299,8 @@ struct Module_Timer{
 	uint32_t w_led_l[2];
 	uint32_t w_led_b[2];
 	struct{
-		uint32_t sv1[2];
-		uint32_t sv2[2];
+		uint32_t sv1[3];
+		uint32_t sv2[3];
 		uint32_t sv3[2];
 		uint32_t sv4[2];
 		uint32_t sv5[2];
@@ -300,6 +331,9 @@ extern struct GLOBAL{
 		uint8_t individual;
 		struct IO_Struct io;
 		union B_MODULE_F module;
+		uint8_t c55_20;
+		uint8_t c55_10;
+		uint8_t leak_sensor;
 	}flag;
 
 	struct{
@@ -309,11 +343,10 @@ extern struct GLOBAL{
 		uint32_t alkali_discharge;
 		uint32_t acid_discharge;
 		struct Timer module;
-		struct{
-			uint32_t salt_pump[2];
-		}on, off;
+		uint32_t c55_20;
 	}timer;
 
+	float flow_rate;
 	struct IO_Struct io;
 //	struct {
 //		union{

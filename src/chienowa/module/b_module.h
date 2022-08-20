@@ -59,6 +59,7 @@ int bc_16(void);
 int bc_17(void);
 int bc_18(void);
 int bc_19(void);
+int bc_23(void);
 int be1(void);
 int b_b_led_l(void);
 int b_b_led_b(void);

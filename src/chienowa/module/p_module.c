@@ -52,7 +52,7 @@ int p1_initial_working_mode_start_process(void) {
 	p11_startup_draining_water();
 	p12_startup_water_supply();
 	c3_acid_tank_level_check();
-	c5_electrolysis_CVCC_status();
+	c5_electrolysis_check_process();
 	p13_startup_electrolysis_operation();
 	p14_initial_2nd_draining_water();
 //	p15_2nd_electrolysis_water_generation_process();
@@ -579,7 +579,7 @@ int p313_flow_rate_process(void){
 }
 int p314_salt_tank_drain_process(void){
 	bp314();
-	c19_salt_tank_drain_check();
+	c19();
 	//TODO: How could we check V4 ??
 
 	b_sp_start();
@@ -591,7 +591,7 @@ int p314_salt_tank_drain_process(void){
 
 int p8_stop_all_processing(void){
 	//TODO: C11 Electrolytic service emergency stop processing
-	c11_electrolysis_status();
+	c11();
 	t_p1_stop();
 	t_p2_stop();
 	t_sp_stop();

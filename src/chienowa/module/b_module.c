@@ -100,7 +100,7 @@ int bp15_electrolysis_start_process(void){
 		g.timer.module.on.p15[0] = timer_restart_s(g.timer.module.work.p15[0]);
 		g.timer.module.on.p15[1] = timer_start_ms();
 		CVCC_CONTROL_PIN = 1;
-		//TODO: C_1_OFF_T2 = 0
+		C_1_OFF_T2 = 0;
 
 	}
 	return 0;
@@ -432,6 +432,9 @@ int bc8(void){
 	}
 	return 0;
 }
+int bc9(void){
+	return 0;
+}
 int bc_10(void){
 	if(g.flag.module.bc10 == 0){
 		g.timer.module.on.c10[0] = timer_restart_s(g.timer.module.work.c10[0]);
@@ -509,6 +512,12 @@ int bc_19(void){
 		g.timer.module.on.c19[0] = timer_restart_s(g.timer.module.work.c19[0]);
 		g.timer.module.on.c19[1] = timer_start_ms();
 		g.flag.module.bc19 = 1;
+	}
+	return 0;
+}
+int bc_23(void){
+	if(g.flag.module.bc23 == 0){
+		g.flag.module.bc23 = 1;
 	}
 	return 0;
 }

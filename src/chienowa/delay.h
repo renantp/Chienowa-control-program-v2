@@ -13,11 +13,6 @@ extern "C" {
 
 #include "../r_cg_macrodriver.h"
 
-#define FAUCET_OFF_T		(1)
-#define WATER_DISCHARGE_T	(2)
-#define ACID_DISCHARGE_T	(3)
-#define ALKALI_DISCHARGE_T	(4)
-
 extern volatile uint32_t g_systemTick;
 extern volatile uint32_t g_sec;
 
