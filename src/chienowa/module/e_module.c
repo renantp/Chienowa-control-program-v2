@@ -9,9 +9,11 @@
 #include "t_module.h"
 #include "b_module.h"
 #include "p_module.h"
+#include "c_module.h"
+#include "s_module.h"
 #include "../global_variable.h"
-
-union Error_status g_error_status;
+#include "../runtime.h"
+#include "../delay.h"
 
 enum{
 	NO_ERROR,
@@ -47,19 +49,45 @@ enum{
 	M1038,
 	M1039,
 	M1051,
-}current_error;
 
+	//Add by Mr.Goto
+	M5001,
+	M5002,
+	M5003,
+	M5005,
+}current_error;
+/**
+ *	Wait until the reset button on Raspberry was pressed.
+ * @param clear_error: 1 to reset current_error flag to NO_ERROR, 0 to keep current error.
+ */
+void wait_for_reset_button(uint8_t clear_error){
+	while(RESET_ERROR_FLAG == 0U){
+		runtime();
+	}
+	RESET_ERROR_FLAG = 0;
+	if (clear_error)
+		current_error = NO_ERROR;
+}
+
+/**
+ * カラン清掃処理 Water-faucet Refresh Process
+ * Version: 0.7 - 20220821
+ * @return
+ */
 int e1_faucet_refresh_process(void){
-	be1();
+	be_1();
 	e11();
-	//ログ書き込み処理 (log error)
-	//TODO: タッチパネルエラー表示
 	current_error = E1;
-	te1();
+	te_1();
 	return 0;
 }
+/**
+ * カラン清掃実施処理 Do Refresh
+ * Version: 0.7 - 20220821
+ * @return
+ */
 int e11(void){
-	be11();
+	be_1_1();
 	b_sv1_start();
 	b_sv2_start();
 	b_b_led_b();
@@ -70,426 +98,393 @@ int e11(void){
 	te11();
 	return 0;
 }
+/**
+ * 中和処理（SV7起動） Neutralized process(SV7 ON)
+ * Version: 0.7 - 20220821
+ * @return
+ */
 int e2(void){
 	b_sv7_start();
-	//B_SV7_ont2>（[28]sec Naturalizing） ON?
-	if(elapsed_time_ms(g.timer.module.on.io.sv7[1])/1000 > g_T_S.t28_s){
+	//B_SV7_ont2>（[28]s Neutralized） ON?
+	if(elapsed_time_ms(SV7_ON_T2)/1000 > g_T_S.t28_s){
+		C_1_ON_T3 = 0;
 		t_sv7_stop();
 	}
 	return 0;
 }
+/**
+ * 電源OFF依頼処理 Power OFF request processing
+ * Version: 0.7 - 20220821
+ * @return
+ */
+int e3(void){
+	current_error = M5005;  //タッチパネルに電源OFF依頼表示 Power off request display on touch panel
+	while(1){
+		runtime();
+	}
+//	return 0;
+}
+/**
+ * 流量センサ上限エラー処理 Flow Sensor Over Range
+ * Version: 0.7 - 20220821
+ * @return
+ */
 int e1000(void){
-	//TODO: Show alarm
-
-	c11();
-	//ログ書き込み処理 (log error)
-	//TODO: タッチパネルエラー表示
+	c_1_1();
 	current_error = M1000;
-	//All Stop P_9??
-	p8_stop_all_processing();
-	//TODO: P-3-13 Flow adjustment （Individual mode）
-	//TODO: Wait reset
-
+	p9_stop();
+	p_3_13_flow_rate_process();
+	e3();
 	return 0;
 }
+/**
+ * 流量センサ下限エラー処理 Low Flow rate Error
+ * Version: 0.7 - 20220821
+ * @return
+ */
 int e1001(void){
-	//TODO: Show alarm
-
-	c11();
-	//ログ書き込み処理 (log error)
-	//TODO: タッチパネルエラー表示
+	c_1_1();
 	current_error = M1001;
-	//All Stop P_9??
-	p8_stop_all_processing();
-	//TODO: P-3-13 Flow adjustment （Individual mode）
-	//TODO: Wait reset
-
+	p9_stop();
+	p_3_13_flow_rate_process();
+	e3();
 	return 0;
 }
+/**
+ * 過電圧1エラー処理 Over Voltage 1
+ * Version: 0.7 - 20220821
+ * @return
+ */
 int e1002(void){
-	//TODO: Show alarm
-
-	c11();
-	//ログ書き込み処理 (log error)
-	//TODO: タッチパネルエラー表示
+	c_1_1();
 	current_error = M1002;
-	//All Stop P_9??
-	p8_stop_all_processing();
-	//TODO: Wait reset
-
+	p9_stop();
+	wait_for_reset_button(1);
 	return 0;
 }
+/**
+ * 過電圧2エラー処理 Over Voltage 2
+ * Version: 0.7 - 20220821
+ * @return
+ */
 int e1003(void){
-	//TODO: Show alarm
-
-	c11();
-	//ログ書き込み処理 (log error)
-	//TODO: タッチパネルエラー表示
+	c_1_1();
 	current_error = M1003;
-	//All Stop P_9??
-	p8_stop_all_processing();
-	//TODO: Wait until choose return
-
+	p9_stop();
+	wait_for_reset_button(1);
 	return 0;
 }
+/**
+ * 過電圧3エラー処理 Over Voltage 3
+ * Version: 0.7 - 20220821
+ * @return
+ */
 int e1004(void){
-	//TODO: Show alarm
-
-	c11();
-	//ログ書き込み処理 (log error)
-	//TODO: タッチパネルエラー表示
+	c_1_1();
 	current_error = M1004;
+	wait_for_reset_button(1);
 	return 0;
 }
+/**
+ * 低電圧エラー処理 Low Voltage Error
+ * Version: 0.7 - 20220821
+ * @return
+ */
 int e1005(void){
-	//TODO: Show alarm
-
-	c11();
-	//ログ書き込み処理 (log error)
-	//TODO: タッチパネルエラー表示
+	c_1_1();
 	current_error = M1005;
-	//All Stop P_9??
-	p8_stop_all_processing();
-	//TODO: Wait until choose return
-
+	p9_stop();
+	wait_for_reset_button(1);
 	return 0;
 }
+/**
+ * 電流範囲10％エラー処理 Current 10% Error
+ * Version: 0.7 - 20220821
+ * @return
+ */
 int e1006(void){
-
-	//ログ書き込み処理 (log error)
-	//TODO: タッチパネルエラー表示
 	current_error = M1006;
 	return 0;
 }
-int e1007(void){
-	c11();
-	//ログ書き込み処理 (log error)
-	//TODO: タッチパネルエラー表示
-	current_error = M1007;
-	//TODO: Show power reset
-
-	return 0;
-}
-int e1008(void){
-	E_1008_CVCC_STOP_F = 1;
-	//ログ書き込み処理 (log error)
-	//TODO: タッチパネルエラー表示
-	current_error = M1008;
-	//TODO: Show power reset
-
-	return 0;
-}
-int e1009(void){
-	c11();
-	//ログ書き込み処理 (log error)
-	//TODO: タッチパネルエラー表示
-	current_error = M1009;
-	//TODO: Show power reset
-
-	return 0;
-}
-int e1020(void){
-	E_1020_CVCC_STOP_F = 0;
-	//ログ書き込み処理 (log error)
-	//TODO: タッチパネルエラー表示
-	current_error = M1020;
-	//TODO: Wait （Drain by Human）
-
-	current_error = NO_ERROR;
-	E_1020_CVCC_STOP_F = 0;
-
-	return 0;
-}
-int e1021(void){
-	//TODO: Show alarm
-
-	c11();
-	//ログ書き込み処理 (log error)
-	//TODO: タッチパネルエラー表示
-	current_error = M1021;
-	//All Stop P_9??
-	p8_stop_all_processing();
-	//TODO: Reset
-
-	return 0;
-}
-int e1022(void){
-	E_1022_CVCC_STOP_F = 1;
-	//ログ書き込み処理 (log error)
-	//TODO: タッチパネルエラー表示
-	current_error = M1022;
-	//TODO: Wait （Close cap by human）
-
-	//Delete Error on Screen
-	current_error = NO_ERROR;
-//	E_1022_CVCC_STOP_F = 1;
-	return 0;
-}
-int e1023(void){
-	//TODO: Show alarm
-
-	c11();
-	//ログ書き込み処理 (log error)
-	//TODO: タッチパネルエラー表示
-	current_error = M1023;
-	//All Stop P_9??
-	p8_stop_all_processing();
-	//TODO: Wait power reset
-
-	return 0;
-}
-int e1025(void){
-	//TODO: Show alarm
-
-	c11();
-	//ログ書き込み処理 (log error)
-	//TODO: タッチパネルエラー表示
-	current_error = M1025;
-	//All Stop P_9??
-	p8_stop_all_processing();
-	//TODO: Wait power reset
-
-	return 0;
-}
-int e1024(void){
-	//TODO: Show alarm
-
-	//ログ書き込み処理 (log error)
-	//TODO: タッチパネルエラー表示
-	current_error = M1024;
-	//All Stop P_9??
-	p8_stop_all_processing();
-	//TODO: Wait power reset
-
-	return 0;
-}
-int e1025(void){
-	//TODO: Show alarm
-
-	c11();
-	//ログ書き込み処理 (log error)
-	//TODO: タッチパネルエラー表示
-	current_error = M1025;
-	//All Stop P_9??
-	p8_stop_all_processing();
-	//TODO: Wait power reset
-
-	return 0;
-}
-int e1026(void){
-	E_1026_CVCC_STOP_F = 1;
-	//ログ書き込み処理 (log error)
-	//TODO: タッチパネルエラー表示
-	current_error = M1026;
-	//All Stop P_9??
-	p8_stop_all_processing();
-//	E_1022_CVCC_STOP_F = 1;
-	return 0;
-}
-
 /**
- * Under consider
+ * 電流範囲20％エラー処理 Current 20% Error
+ * Version: 0.7 - 20220821
+ * @return
+ */
+int e1007(void){
+	c_1_1();
+	current_error = M1007;
+	p9_stop();
+	e3();
+	return 0;
+}
+/**
+ * 給水電磁弁エラー処理 SV1 Error
+ * Version: 0.7 - 20220821
+ * @return
+ */
+int e1008(void){
+	c_1_1();
+	current_error = M1008;
+	p9_stop();
+	e3();
+	return 0;
+}
+/**
+ * CVCC電源エラー処理 CVCC Error
+ * Version: 0.7 - 20220821
+ * @return
+ */
+int e1009(void){
+	c_1_1();
+	current_error = M1009;
+	p9_stop();
+	e3();
+	return 0;
+}
+/**
+ * 塩タンク満杯エラー処理 Salt Tank Full
+ * Version: 0.7 - 20220821
+ * @return
+ */
+int e1020(void){
+	c_1_1();
+	current_error = M1020;
+//	Wait （Drain by Human）
+	wait_for_reset_button(1);
+	return 0;
+}
+/**
+ * 塩タンク空エラー処理 Empty Salt Tank
+ * Version: 0.7 - 20220821
+ * @return
+ */
+int e1021(void){
+	c_1_1();
+	current_error = M1021;
+	p9_stop();
+	wait_for_reset_button(1);
+	return 0;
+}
+/**
+ * 塩タンク蓋開異常エラー処理 Salt Tank Cap Error
+ * Version: 0.7 - 20220821
+ * @return
+ */
+int e1022(void){
+	c_1_1();
+	current_error = M1022;
+//	Wait （Close cap by human）
+	wait_for_reset_button(1);
+	return 0;
+}
+/**
+ * 塩タンクセンサエラー処理 Salt tank level sensor Error
+ * Version: 0.7 - 20220821
+ * @return
+ */
+int e1023(void){
+	c_1_1();
+	current_error = M1023;
+	p9_stop();
+	e3();
+	return 0;
+}
+/**
+ * 酸タンクセンサエラー処理 Acid Tank Level Sensor Error
+ * Version: 0.7 - 20220821
+ * @return
+ */
+int e1024(void){
+	c_1_1();
+	current_error = M1024;
+	p9_stop();
+	e3();
+	return 0;
+}
+/**
+ * アルカリタンクセンサエラー処理 Alkali tank level sensor Error
+ * Version: 0.7 - 20220821
+ * @return
+ */
+int e1025(void){
+	c_1_1();
+	current_error = M1025;
+	p9_stop();
+	e3();
+	return 0;
+}
+/**
+ * 酸アルカリタンク溢れエラー処理 Acid and Alkali Tank overflow Error
+ * Version: 0.7 - 20220821
+ * @return
+ */
+int e1026(void){
+	c_1_1();
+	current_error = M1026;
+	p9_stop();
+	e3();
+	return 0;
+}
+/**
+ * 酸タンク空エラー処理 Acid Tank Empty Error
+ * Version: 0.7 - 20220821
  * @return
  */
 int e1028(void){
+	while(s2_acid_tank_data_set() == 0){
+		if(g.flag.module.e1028 == 0){
+			t_p1_stop();
+			t_sv3_stop();
+			current_error = M1028;
+			b_r_led_b();
+			g.flag.module.e1028 = 1;
+		}
+	}
+	if(g.flag.module.e1028 == 1){
+		g.flag.module.e1028 = 0;
+		current_error = NO_ERROR;
+		t_r_led_b();
+	}
 	return 0;
 }
 /**
- * Under consider
+ * アルカリタンク空エラー処理 Alkali tank Empty
+ * Version: 0.7 - 20220821
  * @return
  */
 int e1029(void){
+    while(s1_alkali_tank_data_set() == 0){
+        if(g.flag.module.e1029 == 0){
+            t_p2_stop();
+            t_sv4_stop();
+			current_error = M1029;
+            b_b_led_b();
+            g.flag.module.e1029 = 1;
+        }
+    }
+    if(g.flag.module.e1029 == 1){
+    	g.flag.module.e1029 = 0;
+        current_error = NO_ERROR;
+        t_b_led_b();
+    }
 	return 0;
 }
+/**
+ * フィルタ交換警報処理 Filter Replace Alarm
+ * Version: 0.7 - 20220821
+ * @return
+ */
 int e1030(void){
-	//ログ書き込み処理 (log error)
-	//TODO: タッチパネルエラー表示
+	M1030_F++;
 	current_error = M1030;
 	return 0;
 }
 int e1031(void){
-	c11();
-	//Delete Error on Screen
-	current_error = NO_ERROR;
-	//ログ書き込み処理 (log error)
-	//TODO: タッチパネルエラー表示
+	c_1_1();
 	current_error = M1031;
-	//TODO: Wait filter changed （Replace by human）
-
-	//Delete Error on Screen
-	current_error = NO_ERROR;
+//	Wait filter changed （Replace by human）
+	wait_for_reset_button(1);
 	return 0;
 }
 /**
- * Under consider
+ * フィルター交換 Filter Replace
+ * Version: 0.7 - 20220821
  * @return
  */
 int e1031_1(void){
+	wait_for_reset_button(0);
+	p9_stop();
+//	Filter changing by human
+	while(FILTER_COMPLETE_FLAG == 0){
+		runtime();
+	}
+	g.flag.m1030 = 0;
+	SV1_ON_T3 = 0; //Reset SV1 timer3
 	return 0;
 }
+/**
+ * 運転積算時間エラー警報処理 Total power on time
+ * Version: 0.7 - 20220821
+ * @return
+ */
 int e1032(void){
-	//TODO: Log Memory
-	//Show Time up on screen
-	//E_1032_F = 1;
 	current_error = M1032;
+	g.flag.module.e1032 = 1;
 	return 0;
 }
+/**
+ * 電解積算時間エラー警報処理 Total Electrolyte time Error
+ * Version: 0.7 - 20220821
+ * @return
+ */
 int e1033(void){
-	//TODO: Log Memory
-	//Show error on screen
-	//E_1033_F = 1;
 	current_error = M1033;
+	g.flag.module.e1033 = 1;
 	return 0;
 }
+/**
+ * 塩水経路３方向弁循環OFF警報処理 Salt-water Drain direction Error
+ * Version: 0.7 - 20220821
+ * @return
+ */
 int e1034(void){
-	c11();
-	//TODO: Log Memory
-	//Show error on screen
-	//E_1034_F = 1;
+	c_1_1();
 	current_error = M1034;
+	g.flag.module.e1034 = 1;
 	return 0;
 }
+/**
+ * 塩水排水経路V4弁方向不良警報処理 Salt Tank Drain Valve Direction Error
+ * Version: 0.7 - 20220821
+ * @return
+ */
 int e1035(void){
-	c11();
-	//TODO: Log Memory
-	//Show error on screen
+	c_1_1();
 	current_error = M1035;
+	g.flag.module.e1035 = 1;
 	return 0;
 }
+/**
+ * 漏水エラー処理 Water Leak Error
+ * Version: 0.7 - 20220821
+ * @return
+ */
 int e1051(void){
-	//TODO: Alarm
-
-	c11();
-	//TODO: Log Memory
-	//Show error on screen
+	c_1_1();
 	current_error = M1051;
-	//P_9 stop??
-	p8_stop_all_processing();
-	//TODO: Wait power reset
-
+	p9_stop();
+	e3();
 	return 0;
 }
+/**
+ * 貯水タンク満水エラー処理 Tank Full Check Log process
+ * Version: 0.7 - 20220821
+ * @return
+ */
 int e5001(void){
-	c11();
-
+	c_1_1();
+	current_error = M5001;
 	return 0;
 }
-//int e1051_water_leak_error(void){
-//	return 0;
-//}
-//
-//int e1035_salt_tank_drain_valve_direction_error(void){
-//	return 0;
-//}
-//
-//int e1034_saltwater_drain_direction_error(void){
-//	return 0;
-//}
-//
-//int e1033_total_electrolysis_time_error(void){
-//	return 0;
-//}
-//
-//int e1032_total_power_on_time(void){
-//	return 0;
-//}
-//
-//int e10311_filter_replace(void){
-//	return 0;
-//}
-//
-//int e1031_continue_filter_alarm(void){
-//	return 0;
-//}
-//
-//int e1030_filter_replace_alarm(void){
-//	return 0;
-//}
-//
-//int e1029_alkali_tank_empty(void){
-//	return 0;
-//}
-//
-//int e1028_acid_tank_error(void){
-//	return 0;
-//}
-//
-//int e1026_acid_and_alkali_tank_over_flow_error(void){
-//	return 0;
-//}
-//
-//int e1025_alkali_tank_level_sensor_error(void){
-//	return 0;
-//}
-//
-//int e1024_acid_tank_level_sensor_error(void){
-//	return 0;
-//}
-//
-//int e1023_salt_tank_level_sensor_error(void){
-//	return 0;
-//}
-//
-//int e1022_salt_tank_cap_error(void){
-//	return 0;
-//}
-//
-//int e1021_empty_salt_tank(void){
-//	return 0;
-//}
-//
-//int e1020_salt_tank_error(void){
-//	return 0;
-//}
-//
-//int e1009_cvcc_error(void){
-//	return 0;
-//}
-//
-//int e1008_sv1_error(void){
-//	return 0;
-//}
-//
-//int e1007_current_20_error(void){
-//	return 0;
-//}
-//
-//int e1006_current_10_error(void){
-//	return 0;
-//}
-//
-//int e1005_low_voltage_error(void){
-//	return 0;
-//}
-//
-//int e1004_over_voltage_3(void){
-//	return 0;
-//}
-//
-//int e1003_over_voltage_2(void){
-//	return 0;
-//}
-//
-//int e1002_over_voltage_1(void){
-//	return 0;
-//}
-//
-//int e1001_low_flow_rate_error(void){
-//	return 0;
-//}
-//
-//int e1000_flow_sensor_over_range(void){
-//	return 0;
-//}
-//
-//int e2_naturalizing_process(void){
-//	return 0;
-//}
-//
-//int e11_do_refresh(void){
-//	return 0;
-//}
-//
-//int e1_faucet_refresh_process(void){
-//	return 0;
-//}
+/**
+ * 貯水タンク満水エラー解除処理 Tank Full Check Log reset process
+ * Version: 0.7 - 20220821
+ * @return
+ */
+int e5002(void){
+	current_error = M5002;
+	return 0;
+}
+/**
+ * 電解未処理対応実施処理 Not Electrolyte Time Report
+ * Version: 0.7 - 20220821
+ * @return
+ */
+int e5003(void){
+	c_1_1();
+	current_error = M5003;
+	p8_stop_all_processing();
+	p1_initial_working_mode_start_process();
+	return 0;
+}

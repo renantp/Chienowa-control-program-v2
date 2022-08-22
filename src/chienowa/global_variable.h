@@ -16,18 +16,218 @@
 #define SYSTEM_MODE (g.system_mode)
 #define WASH_MODE	(g.mode)
 
-#define P_1_5_F			g.flag.module.bp15
-#define P_1_5_ON_T1		g.timer.module.work.p15[0]
-#define P_1_5_ON_T2		g.timer.module.work.p15[1]
+#define RESET_ERROR_FLAG		g.flag.reset_button
+#define FILTER_COMPLETE_FLAG	g.flag.completion_button
+
+/*************************************************
+ * Total working timers & last working timers
+ *************************************************/
+#define g_P_0_ON_T1		g.timer.module.work.p0[0]
+#define g_P_0_ON_T2		g.timer.module.work.p0[1]
+#define g_P_1_ON_T1		g.timer.module.work.p1[0]
+#define g_P_1_ON_T2		g.timer.module.work.p1[1]
+#define g_P_1_1_ON_T1	g.timer.module.work.p11[0]
+#define g_P_1_1_ON_T2	g.timer.module.work.p11[1]
+#define g_P_1_1_1_ON_T1	g.timer.module.work.p111[0]
+#define g_P_1_1_1_ON_T2	g.timer.module.work.p111[1]
+#define g_P_1_1_2_ON_T1	g.timer.module.work.p112[0]
+#define g_P_1_1_2_ON_T2	g.timer.module.work.p112[1]
+#define g_P_1_2_ON_T1	g.timer.module.work.p12[0]
+#define g_P_1_2_ON_T2	g.timer.module.work.p12[1]
+#define g_P_1_3_ON_T1	g.timer.module.work.p13[0]
+#define g_P_1_3_ON_T2	g.timer.module.work.p13[1]
+#define g_P_1_4_ON_T1	g.timer.module.work.p14[0]
+#define g_P_1_4_ON_T2	g.timer.module.work.p14[1]
+#define g_P_1_4_1_ON_T1		g.timer.module.work.p141[0]
+#define g_P_1_4_1_ON_T2		g.timer.module.work.p141[1]
+#define g_P_1_4_2_ON_T1		g.timer.module.work.p142[0]
+#define g_P_1_4_2_ON_T2		g.timer.module.work.p142[1]
+#define g_P_1_5_ON_T1	g.timer.module.work.p15[0]
+#define g_P_1_5_ON_T2	g.timer.module.work.p15[1]
+#define g_P_2_ON_T1		g.timer.module.work.p2[0]
+#define g_P_2_ON_T2		g.timer.module.work.p2[1]
+#define g_P_2_1_ON_T1	g.timer.module.work.p21[0]
+#define g_P_2_1_ON_T2	g.timer.module.work.p21[1]
+#define g_P_2_2_ON_T1	g.timer.module.work.p22[0]
+#define g_P_2_2_ON_T2	g.timer.module.work.p22[1]
+#define g_P_2_3_ON_T1	g.timer.module.work.p23[0]
+#define g_P_2_3_ON_T2	g.timer.module.work.p23[1]
+#define g_P_2_4_ON_T1	g.timer.module.work.p24[0]
+#define g_P_2_4_ON_T2	g.timer.module.work.p24[1]
+#define g_P_2_4_1_ON_T1	g.timer.module.work.p241[0]
+#define g_P_2_4_1_ON_T2	g.timer.module.work.p241[1]
+#define g_P_2_4_1_OFF_T1	g.timer.module.not_work.p241[0]
+#define g_P_2_4_1_OFF_T2	g.timer.module.not_work.p241[1]
+#define g_P_2_4_2_ON_T1		g.timer.module.work.p242[0]
+#define g_P_2_4_2_ON_T2		g.timer.module.work.p242[1]
+#define g_P_2_4_2_OFF_T1	g.timer.module.not_work.p242[0]
+#define g_P_2_4_2_OFF_T2	g.timer.module.not_work.p242[1]
+#define g_P_2_4_3_ON_T1		g.timer.module.work.p243[0]
+#define g_P_2_4_3_ON_T2		g.timer.module.work.p243[1]
+#define g_P_3_ON_T1		g.timer.module.work.p3[0]
+#define g_P_3_ON_T2		g.timer.module.work.p3[1]
+#define g_P_3_1_4_ON_T1		g.timer.module.work.p243[0]
+#define g_P_3_1_4_ON_T2		g.timer.module.work.p243[1]
+#define g_P_8_ON_T1		g.timer.module.work.p8[0]
+#define g_P_8_ON_T2		g.timer.module.work.p8[1]
+
+#define g_C_1_ON_T1			g.timer.module.work.c1[0]
+#define g_C_1_ON_T2			g.timer.module.work.c1[1]
+#define g_C_1_OFF_T2		g.timer.module.not_work.c1[1]
+#define g_C_2_ON_T1			g.timer.module.work.c2[0]
+#define g_C_2_ON_T2			g.timer.module.work.c2[1]
+#define g_C_3_ON_T1			g.timer.module.work.c3[0]
+#define g_C_3_ON_T2			g.timer.module.work.c3[1]
+#define g_C_4_ON_T1			g.timer.module.work.c4[0]
+#define g_C_4_ON_T2			g.timer.module.work.c4[1]
+#define g_C_5_ON_T1			g.timer.module.work.c5[0]
+#define g_C_5_ON_T2			g.timer.module.work.c5[1]
+#define g_C_5_1_ON_T1		g.timer.module.work.c51[0]
+#define g_C_5_1_ON_T2		g.timer.module.work.c51[1]
+#define g_C_5_2_ON_T1		g.timer.module.work.c52[0]
+#define g_C_5_2_ON_T2		g.timer.module.work.c52[1]
+#define g_C_5_3_ON_T1		g.timer.module.work.c53[0]
+#define g_C_5_3_ON_T2		g.timer.module.work.c53[1]
+#define g_C_5_3_1_ON_T1		g.timer.module.work.c531[0]
+#define g_C_5_3_1_ON_T2		g.timer.module.work.c531[1]
+#define g_C_5_4_ON_T1		g.timer.module.work.c54[0]
+#define g_C_5_4_ON_T2		g.timer.module.work.c54[1]
+#define g_C_5_5_ON_T1		g.timer.module.work.c55[0]
+#define g_C_5_5_ON_T2		g.timer.module.work.c55[1]
+#define g_C_5_6_ON_T1		g.timer.module.work.c56[0]
+#define g_C_5_6_ON_T2		g.timer.module.work.c56[1]
+#define g_C_6_ON_T1			g.timer.module.work.c6[0]
+#define g_C_6_ON_T2			g.timer.module.work.c6[1]
+#define g_C_7_ON_T1			g.timer.module.work.c7[0]
+#define g_C_7_ON_T2			g.timer.module.work.c7[1]
+#define g_C_8_ON_T1			g.timer.module.work.c8[0]
+#define g_C_8_ON_T2			g.timer.module.work.c8[1]
+#define g_C_9_ON_T1			g.timer.module.work.c9[0]
+#define g_C_9_ON_T2			g.timer.module.work.c9[1]
+#define g_C_10_ON_T1			g.timer.module.work.c10[0]
+#define g_C_10_ON_T2			g.timer.module.work.c10[1]
+#define g_C_11_ON_T1			g.timer.module.work.c11[0]
+#define g_C_11_ON_T2			g.timer.module.work.c11[1]
+#define g_C_12_ON_T1			g.timer.module.work.c12[0]
+#define g_C_12_ON_T2			g.timer.module.work.c12[1]
+#define g_C_13_ON_T1			g.timer.module.work.c13[0]
+#define g_C_13_ON_T2			g.timer.module.work.c13[1]
+#define g_C_14_ON_T1			g.timer.module.work.c14[0]
+#define g_C_14_ON_T2			g.timer.module.work.c14[1]
+#define g_C_15_ON_T1			g.timer.module.work.c15[0]
+#define g_C_15_ON_T2			g.timer.module.work.c15[1]
+#define g_C_16_ON_T1			g.timer.module.work.c16[0]
+#define g_C_16_ON_T2			g.timer.module.work.c16[1]
+#define g_C_17_ON_T1			g.timer.module.work.c17[0]
+#define g_C_17_ON_T2			g.timer.module.work.c17[1]
+#define g_C_18_ON_T1			g.timer.module.work.c18[0]
+#define g_C_18_ON_T2			g.timer.module.work.c18[1]
+#define g_C_19_ON_T1			g.timer.module.work.c19[0]
+#define g_C_19_ON_T2			g.timer.module.work.c19[1]
+
+#define g_E_1_ON_T1			g.timer.module.work.e1[0]
+#define g_E_1_ON_T2			g.timer.module.work.e1[1]
+
+#define g_SV1_ON_T1			g.timer.module.work.io.sv1[0]
+#define g_SV1_ON_T2			g.timer.module.work.io.sv1[1]
+#define g_SV1_ON_T3			g.timer.module.work.io.sv1[2]
+#define g_SV2_ON_T1			g.timer.module.work.io.sv2[0]
+#define g_SV2_ON_T2			g.timer.module.work.io.sv2[1]
+#define g_SV2_ON_T3			g.timer.module.work.io.sv2[2]
+#define g_SV3_ON_T1			g.timer.module.work.io.sv3[0]
+#define g_SV3_ON_T2			g.timer.module.work.io.sv3[1]
+#define g_SV3_ON_T3			g.timer.module.work.io.sv3[2]
+#define g_SV4_ON_T1			g.timer.module.work.io.sv4[0]
+#define g_SV4_ON_T2			g.timer.module.work.io.sv4[1]
+#define g_SV4_ON_T3			g.timer.module.work.io.sv4[2]
+#define g_SV5_ON_T1			g.timer.module.work.io.sv5[0]
+#define g_SV5_ON_T2			g.timer.module.work.io.sv5[1]
+#define g_SV5_ON_T3			g.timer.module.work.io.sv5[2]
+#define g_SV6_ON_T1			g.timer.module.work.io.sv6[0]
+#define g_SV6_ON_T2			g.timer.module.work.io.sv6[1]
+#define g_SV6_ON_T3			g.timer.module.work.io.sv6[2]
+#define g_SV7_ON_T1			g.timer.module.work.io.sv7[0]
+#define g_SV7_ON_T2			g.timer.module.work.io.sv7[1]
+#define g_SV7_ON_T3			g.timer.module.work.io.sv7[2]
+#define g_P1_ON_T1			g.timer.module.work.io.p1[0]
+#define g_P1_ON_T2			g.timer.module.work.io.p1[1]
+#define g_P1_ON_T3			g.timer.module.work.io.p1[2]
+#define g_P2_ON_T1			g.timer.module.work.io.p2[0]
+#define g_P2_ON_T2			g.timer.module.work.io.p2[1]
+#define g_P2_ON_T3			g.timer.module.work.io.p2[2]
+#define g_SP_ON_T1			g.timer.module.work.io.sp[0]
+#define g_SP_ON_T2			g.timer.module.work.io.sp[1]
+#define g_SP_ON_T3			g.timer.module.work.io.sp[2]
+
+/*************************************************
+ * B module flags
+ *************************************************/
+#define g_P_0_F			g.flag.module.bp0
+#define g_P_1_F			g.flag.module.bp1
+#define g_P_1_1_F		g.flag.module.bp11
+#define g_P_1_1_1_F		g.flag.module.bp111
+#define g_P_1_1_2_F		g.flag.module.bp112
+#define g_P_1_2_F		g.flag.module.bp12
+#define g_P_1_3_F		g.flag.module.bp13
+#define g_P_1_4_F		g.flag.module.bp14
+#define g_P_1_4_1_F		g.flag.module.bp141
+#define g_P_1_4_2_F		g.flag.module.bp142
+#define g_P_1_5_F		g.flag.module.bp15
+#define g_P_2_F			g.flag.module.bp2
+#define g_P_2_1_F		g.flag.module.bp21
+#define g_P_2_2_F		g.flag.module.bp22
+#define g_P_2_3_F		g.flag.module.bp23
+#define g_P_2_4_F		g.flag.module.bp24
+#define g_P_2_4_1_F		g.flag.module.bp241
+#define g_P_2_4_2_F		g.flag.module.bp242
+#define g_P_2_4_3_F		g.flag.module.bp243
+#define g_P_3_F			g.flag.module.bp3
+#define g_P_3_1_4_F			g.flag.module.bp314
+#define g_P_8_F			g.flag.module.bp8
+
+#define g_C_1_F			g.flag.module.bc1
+#define g_C_2_F			g.flag.module.bc2
+#define g_C_3_F			g.flag.module.bc3
+#define g_C_4_F			g.flag.module.bc4
+#define g_C_5_F			g.flag.module.bc5
+#define g_C_5_1_F			g.flag.module.bc51
+#define g_C_5_2_F			g.flag.module.bc52
+#define g_C_5_3_F			g.flag.module.bc53
+#define g_C_5_3_1_F			g.flag.module.bc531
+#define g_C_5_4_F			g.flag.module.bc54
+#define g_C_5_5_F			g.flag.module.bc55
+#define g_C_5_6_F			g.flag.module.bc56
+#define g_C_6_F			g.flag.module.bc6
+#define g_C_7_F			g.flag.module.bc7
+#define g_C_8_F			g.flag.module.bc8
+#define g_C_9_F			g.flag.module.bc9
+#define g_C_10_F			g.flag.module.bc10
+#define g_C_11_F			g.flag.module.bc11
+#define g_C_12_F			g.flag.module.bc12
+#define g_C_13_F			g.flag.module.bc13
+#define g_C_14_F			g.flag.module.bc14
+#define g_C_15_F			g.flag.module.bc15
+#define g_C_16_F			g.flag.module.bc16
+#define g_C_17_F			g.flag.module.bc17
+#define g_C_18_F			g.flag.module.bc18
+#define g_C_19_F			g.flag.module.bc19
+#define g_C_23_F			g.flag.module.bc23
+
+#define g_E_1_F			g.flag.module.e1
+#define g_E_2_F			g.flag.module.e2
+
+/*************************************************
+ *
+ *************************************************/
 #define C_1_ON_T2		g.timer.module.on.c1[1]
 #define C_1_ON_T3		g.timer.module.on.c1[2]
 #define C_1_OFF_T1		g.timer.module.off.c1[0]
-#define C_1_OFF_T2		g.timer.module.off.c1[1]
 #define C_5_2_ON_T3		g.timer.module.on.c52[2]
 #define C_5_4_ON_T3		g.timer.module.on.c54[2]
 #define SP_OFF_T2		g.timer.module.off.io.sp[1]
 #define SP_ON_T2		g.timer.module.on.io.sp[1]
 #define C_5_5_20T		g.timer.c55_20
+#define SV7_ON_T2		g.timer.module.on.io.sv7[1]
 #define SV1_ON_T1		g.timer.module.on.io.sv1[0]
 #define SV2_ON_T1		g.timer.module.on.io.sv2[0]
 #define SV1_ON_T2		g.timer.module.on.io.sv1[1]
@@ -42,6 +242,7 @@
 #define E_1020_CVCC_STOP_F	g.flag.e_1020_cvcc_stop
 #define E_1022_CVCC_STOP_F	g.flag.e_1022_cvcc_stop
 #define E_1026_CVCC_STOP_F	g.flag.e_1026_cvcc_stop
+#define M1030_F				g.flag.m1030
 
 #define FAUCET_OFF_T		g.timer.faucet_off
 #define WATER_DISCHARGE_T	(2)
@@ -233,9 +434,12 @@ union B_MODULE_F {
 		uint8_t c20 : 1;
 
 		uint8_t e1 : 1;
+		uint8_t e1028 : 1;
+		uint8_t e1029 : 1;
 		uint8_t e1032 : 1;
 		uint8_t e1033 : 1;
 		uint8_t e1034 : 1;
+		uint8_t e1035 : 1;
 	};
 	uint8_t raw[32];
 };
@@ -308,15 +512,15 @@ struct Module_Timer{
 	struct{
 		uint32_t sv1[3];
 		uint32_t sv2[3];
-		uint32_t sv3[2];
-		uint32_t sv4[2];
-		uint32_t sv5[2];
-		uint32_t sv6[2];
-		uint32_t sv7[2];
+		uint32_t sv3[3];
+		uint32_t sv4[3];
+		uint32_t sv5[3];
+		uint32_t sv6[3];
+		uint32_t sv7[3];
 
-		uint32_t p1[2];
-		uint32_t p2[2];
-		uint32_t sp[2];
+		uint32_t p1[3];
+		uint32_t p2[3];
+		uint32_t sp[3];
 	}io;
 };
 
@@ -345,6 +549,8 @@ extern struct GLOBAL{
 		uint8_t e_1020_cvcc_stop;
 		uint8_t e_1022_cvcc_stop;
 		uint8_t e_1026_cvcc_stop;
+		uint8_t m1030;
+		uint8_t reset_button, completion_button; //For error button handle
 	}flag;
 
 	struct{

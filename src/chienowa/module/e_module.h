@@ -10,17 +10,39 @@
 
 #include "../../r_cg_macrodriver.h"
 
-extern union Error_status {
-	struct{
-		int over_voltage_1: 1;
-		int over_voltage_2: 1;
-		int over_voltage_3: 1;
-
-		uint32_t rsvd: 29;
-	};
-	uint32_t data;
-}g_error_status;
-
-
 int e1_faucet_refresh_process(void);
+int e11(void);
+int e2(void);
+int e3(void);
+int e1000(void);
+int e1001(void);
+int e1002(void);
+int e1003(void);
+int e1004(void);
+int e1005(void);
+int e1006(void);
+int e1007(void);
+int e1008(void);
+int e1009(void);
+int e1020(void);
+int e1021(void);
+int e1022(void);
+int e1023(void);
+int e1024(void);
+int e1025(void);
+int e1026(void);
+int e1028(void);
+int e1029(void);
+int e1030(void);
+int e1031(void);
+int e1031_1(void);
+int e1032(void);
+int e1033(void);
+int e1034(void);
+int e1035(void);
+int e1051(void);
+int e5001(void);
+int e5002(void);
+int e5003(void);
+
 #endif /* CHIENOWA_MODULE_E_MODULE_H_ */

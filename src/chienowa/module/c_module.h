@@ -14,7 +14,7 @@
 #define C1_OFF	(0)
 
 int c1_on_off(uint8_t on_off);
-int c11(void);
+int c_1_1(void);
 int c2_alkali_tank_level_check(void);
 int c3_acid_tank_level_check(void);
 int c4_salt_tank_sensor_value_check_process(void);

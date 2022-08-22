@@ -59,12 +59,12 @@ int p39_p2_individual_process(void);
 int p310_sp_individual_process(void);
 int p311_electrolysis_equipment_process(void);
 int p312_alarm_on_off_process(void);
-int p313_flow_rate_process(void);
+int p_3_13_flow_rate_process(void);
 int p314_salt_tank_drain_process(void);
 
 int p8_stop_all_processing(void);
+int p9_stop(void);
 
-int p313_flow_rate_adjustment(void);
 //int p_main(void);
 //int p1_initial_startup_operation(void);
 //int p11_startup_draining_water(void);

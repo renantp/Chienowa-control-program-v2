@@ -31,7 +31,7 @@ int c1_on_off(uint8_t on_off){
 		}
 		if(elapsed_time_s(SP_ON_T2)/1000 >= g_T_S.t17_s){
 			//BC-1 電解業務起動処理
-			bc1();
+			bc_1();
 			C_1_ON_T3 = timer_restart_s(C_1_ON_T3);
 			return 0;
 		}else{
@@ -58,8 +58,8 @@ int c1_on_off(uint8_t on_off){
 	}
 //	return 0;
 }
-int c11(void) {
-	tc1();
+int c_1_1(void) {
+	tc_1();
 	t_sp_stop();
 	wait(g_T_S.t15_s * 1000);
 	t_sv1_stop();
@@ -85,7 +85,7 @@ int c11(void) {
 // 	return 0;
 // }
 int c2_alkali_tank_level_check(void) { 						//new_plan
-	bc3();
+	bc_3();
 	s1_alkali_tank_data_set();
 	switch(g_ALD){
 		case -3:
@@ -115,7 +115,7 @@ int c2_alkali_tank_level_check(void) { 						//new_plan
 	return g_ALD;
 }
 int c3_acid_tank_level_check(void){
-	bc3();
+	bc_3();
 	const int status = s2_acid_tank_data_set();
 	if(status <= -1){
 		//TODO: E1024
@@ -131,7 +131,7 @@ int c3_acid_tank_level_check(void){
 //	return 0;
 }
 int c4_salt_tank_sensor_value_check_process(void){
-	bc4();
+	bc_4();
 	//塩タンク状況（SAD）取得
 	const int status = s3_salt_tank_data_set();
 	if(status == -1){
@@ -146,7 +146,7 @@ int c4_salt_tank_sensor_value_check_process(void){
 	return 0;
 }
 int c5_electrolysis_check_process(void){
-	bc5();
+	bc_5();
 	//過電圧1チェック処理
 	c51_over_voltage_1_check(&g_V_S.v1_V);
 	c52_over_voltage_2_check(&g_V_S.v2_V);
@@ -159,7 +159,7 @@ int c51_over_voltage_1_check(float *voltage){
 		//CVCC_VOLT= CVCC出力電圧
 		const float cvcc_voltage = g_adc.voltage;
 		//過電圧1チェック起動処理
-		bc51();
+		bc_5_1();
 		//CVCC_VOLT>OVER_V1_ALARM_VALUE
 		if(cvcc_voltage > g_V_S.v1_V){
 			//TODO: E1002
@@ -178,7 +178,7 @@ int c52_over_voltage_2_check(float *voltage){
 		//C_5_2_F=0
 		if(g.flag.module.bc52 == 0){
 			//過電圧2チェック起動処理
-			bc52();
+			bc_5_2();
 			C_5_2_ON_T3 = timer_start_ms();
 		}
 		if(elapsed_time_ms(C_5_2_ON_T3)/1000 > g_T_S.t41_s){
@@ -190,7 +190,7 @@ int c52_over_voltage_2_check(float *voltage){
 		}
 
 	}else{
-		tc52();
+		tc_5_2();
 		return 0;
 	}
 //	return 1;
@@ -202,7 +202,7 @@ int c53_over_voltage_3_check(float *voltage){
 		//CVCC_VOLT>OVER_V3_ALARM_VALUE
 		if(cvcc_voltage > g_V_S.v3_V){
 			if(g.flag.module.bc53 == 0){
-				bc53();
+				bc_5_3();
 				C_5_2_ON_T3 = timer_start_ms();
 			}
 			c531();
@@ -214,7 +214,7 @@ int c53_over_voltage_3_check(float *voltage){
 	return 0;
 }
 int c531(void){
-	bc531();
+	bc_5_3_1();
 	//TODO: Alarm
 	const float cvcc_voltage = g_adc.voltage;
 	if(cvcc_voltage > g_V_S.v3_V){
@@ -227,7 +227,7 @@ int c531(void){
 	}else{
 		//TODO: タッチパネルエラー削除
 
-		tc531();
+		tc_5_3_1();
 		return 0;
 	}
 }
@@ -236,7 +236,7 @@ int c54(void){
 		const float cvcc_current = g_adc.current;
 		if(cvcc_current < g_V_S.v6_A){
 			if(g.flag.module.bc54 == 0){
-				bc54();
+				bc_5_4();
 				//経過時間タイマ＝0　C_5_4_T3=time_start()
 				C_5_4_ON_T3 = timer_start_ms();
 			}
@@ -261,7 +261,7 @@ int c54(void){
 				//C_5_4_F2＝0
 				g.flag.module.c54 = 0;
 			}
-			tc54();
+			tc_5_4();
 			return 1;
 		}
 	}
@@ -269,7 +269,7 @@ int c54(void){
 }
 int c55(void){
 	if(elapsed_time_ms(C_1_ON_T2)/1000 > g_T_S.t16_s){
-		bc55();
+		bc_5_5();
 		c551();
 		return 1;
 	}
@@ -336,12 +336,12 @@ int c552(void){
  * @return
  */
 int c56(void){
-	bc56();
+	bc_5_6();
 
 	return 0;
 }
 int c6(void){
-	bc6();
+	bc_6();
 	//FAUCET_OFF_T＞8ｈ
 	if(elapsed_time_s(FAUCET_OFF_T) > 8 * 60 * 60){
 		FAUCET_OFF_T = 0;
@@ -351,8 +351,10 @@ int c6(void){
 	return 0;
 }
 int c7(void){
-	bc7();
-	if(elapsed_time_ms(C_1_OFF_T2) / 1000 > (uint32_t)168 * 60 * 60){
+	bc_7();
+//	g.timer.module.not_work.c1;
+	g_C_1_OFF_T2 = elapsed_time_ms(g.timer.module.off.c1[1]);
+	if(g_C_1_OFF_T2 / 1000 > (uint32_t)168 * 60 * 60){
 		//TODO: E5003
 
 		return -255;
@@ -362,22 +364,22 @@ int c7(void){
 int c8(void){
 	if(elapsed_time_ms(SV1_ON_T2)/1000 > g_T_S.t2_s){
 		if(g.flag.module.c8 == 0){
-			bc8();
+			bc_8();
 			C_8_T3 = timer_start_ms();
 		}
 		if(g_V_S.v7_L_m < g.flow_rate){
 			if(g.flow_rate < g_V_S.v7_L_m){
-				tc8();
+				tc_8();
 				return 1;
 			}else if(elapsed_time_ms(C_8_T3)/1000 > g_T_S.t3_s){
-				tc8();
+				tc_8();
 				//TODO: E1000
 
 				return -255;
 			}
 			return -2;
 		}else if(elapsed_time_ms(C_8_T3)/1000 > g_T_S.t13_s){
-			tc8();
+			tc_8();
 			//TODO: E1001
 
 			return -255;
@@ -387,7 +389,7 @@ int c8(void){
 	return 0;
 }
 int c9(void){
-	bc9();
+	bc_9();
 	if(elapsed_time_ms(C_1_ON_T3)/1000 > (uint32_t)g_T_S.t27_h * 60 * 60){
 		//TODO: E2
 
@@ -502,7 +504,7 @@ int c_15(void){
 	bc_15();
 	const int c_15_d = SALT_LID_PIN;
 	if(c_15_d == 0){
-		tc15();
+		tc_15();
 		//TODO: E1022
 
 		return -1;
@@ -549,10 +551,10 @@ int c_18(void){
 		if(g.flag.module.e1034 == 0){
 			//TODO: E1034
 
-			tc18();
+			tc_18();
 			return 0;
 		}else{
-			tc18();
+			tc_18();
 			return 0;
 		}
 	}
@@ -567,7 +569,7 @@ int c_19(void){
 
 	//TODO: E-1035
 
-	tc19();
+	tc_19();
 	return 0;
 }
 /**
@@ -608,7 +610,7 @@ int c_23(void){
 	c_13();
 	c_14();
 	c_15();
-	tc_23();
+	tc_2_3();
 	return 0;
 }
 int c_24(void){
@@ -618,6 +620,6 @@ int c_24(void){
 	c_12();
 	c_16();
 	c_17();
-	tc_23();
+	tc_2_3();
 	return 0;
 }

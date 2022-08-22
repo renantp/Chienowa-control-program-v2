@@ -32,7 +32,7 @@ int p01_system_main_sub_system(void) {
 }
 
 int p0_system_main_prpocess(void){
-	bp0_system_main_start();
+	bp_0();
 	p1_initial_working_mode_start_process();
 	switch (SYSTEM_MODE) {
 		case 0:
@@ -48,7 +48,7 @@ int p0_system_main_prpocess(void){
 	return 0;
 }
 int p1_initial_working_mode_start_process(void) {
-	bp1_initial_working_mode_start_process();
+	bp_1();
 	p11_startup_draining_water();
 	p12_startup_water_supply();
 	c3_acid_tank_level_check();
@@ -57,19 +57,19 @@ int p1_initial_working_mode_start_process(void) {
 	p14_initial_2nd_draining_water();
 //	p15_2nd_electrolysis_water_generation_process();
 	p11_startup_draining_water(); //replace p15 by this p11
-	tp1_stop_process_initial_working_mode_stop_process();
+	tp_1();
 	return 0;
 }
 
 int p11_startup_draining_water(void) {
-	bp11_initial_drainage_start_process();
+	bp_1_1();
 	p111_startup_drain_tank();
-	tp11_initial_draining_stop_process();
+	tp_1_1();
 	return 0;
 }
 
 int p111_startup_drain_tank(void){
-	bp111_inital_alkali_tank_drainage_start_process();
+	bp_1_1_1();
 	if(s1_alkali_tank_data_set() && g_ALD > 0){
 		b_sv6_start();
 		wait(500);
@@ -100,7 +100,7 @@ int p111_startup_drain_tank(void){
 	}
 	p114_alkali_drain_final_stop();
 	p115_acid_drain_final_stop();
-	tp111_initial_alkali_tank_drainage_stop_process();
+	tp_1_1_1();
 	return 0;
 }
 int p112_alkali_drain_stop(void){
@@ -132,7 +132,7 @@ int p115_acid_drain_final_stop(void){
 	return 0;
 }
 int p12_startup_water_supply(void) {
-	bp12_initial_water_supply_start_process();
+	bp_1_2();
 	wait(500);
 	b_sv2_start();
 	wait(30 * 1000);
@@ -140,7 +140,7 @@ int p12_startup_water_supply(void) {
 	wait(g_T_S.t2_s * 1000);
 	//TODO: P313
 
-	tp12_inital_water_supply_stop_process();
+	tp_1_2();
 	return 0;
 }
 int p13_startup_electrolysis_operation(void) {
@@ -166,14 +166,14 @@ int p131_electrolysis_start(void) {
 	b_sv1_start();
 	b_sp_start();
 	wait(g_T_S.t16_s * 1000);
-	bp13_initial_electrolysis_start_process();
+	bp_1_3();
 	neutralized_timer_on();
 	g.timer.faucet_off = timer_start_ms();
 	return 0;
 }
 
 int p132_initial_electrolysis_stop(void) {
-	tp13_initial_electrolysis_stop_process();
+	tp_1_3();
 	t_sp_stop();
 	wait(g_T_S.t5_s * 1000);
 	t_sv1_stop();
@@ -182,9 +182,9 @@ int p132_initial_electrolysis_stop(void) {
 }
 
 int p14_initial_2nd_draining_water(void) {
-	bp14_initial_2nd_draining_start_process();
+	bp_1_4();
 	p111_startup_drain_tank();
-	tp14_initial_2nd_draining_stop_process();
+	tp_1_4();
 	return 0;
 }
 int p15_2nd_electrolysis_water_generation_process(void) {
@@ -206,7 +206,7 @@ int p151_2nd_electrolysis_start_process(void) {
 	b_sv1_start();
 	b_sp_start();
 	wait(g_T_S.t17_s * 1000);
-	bp15_electrolysis_start_process();
+	bp_1_5();
 	neutralized_timer_on();
 	return 0;
 }
@@ -218,7 +218,7 @@ int p152_2nd_initial_electrolysis_stop_process(void) {
 	return 0;
 }
 int p2_water_discharge_mode(void){
-	bp2_water_discharge_start_process();
+	bp_2();
 	do{
 		c1_on_off(C1_ON);				//電解業務開始処理
 		switch ((enum WASH_MODE_E) WASH_MODE) {
@@ -240,11 +240,11 @@ int p2_water_discharge_mode(void){
 		}
 	}while(SYSTEM_MODE != 2);
 	c1_on_off(C1_OFF);
-	tp2_wash_mode_stop_process();
+	tp_2();
 	return 0;
 }
 int p21_alkali_water_discharge_mode(void){
-	bp21_alkali_discharge_start();
+	bp_2_1();
 	// Large loop
 	do {
 		c1_on_off(C1_ON);
@@ -274,7 +274,7 @@ int p21_alkali_water_discharge_mode(void){
 }
 
 int p22_acid_water_discharge_mode(void){
-	bp22_acid_discharge_start();
+	bp_2_2();
 	//Large loop
 	do{
 		c1_on_off(C1_ON);
@@ -306,7 +306,7 @@ int p22_acid_water_discharge_mode(void){
 }
 
 int p23_water_discharge_mode(void){
-	bp23_water_discharge_start();
+	bp_2_3();
 	// Large loop
 	do{
 		c1_on_off(C1_ON);
@@ -331,12 +331,12 @@ int p23_water_discharge_mode(void){
 		runtime();
 	}while(SYSTEM_MODE != INDIVIDUAL);
 
-	tp23_water_discharge_stop();
+	tp_2_3();
 	return 0;
 }
 
 int p24_hand_wash_mode(void){
-	bp24_hand_wash_start();
+	bp_2_4();
 	do{
 		c1_on_off(C1_ON);
 		if (check_hand_sensor() || SYSTEM_MODE == NORMAL){
@@ -354,12 +354,12 @@ int p24_hand_wash_mode(void){
 
 	}while(SYSTEM_MODE == NORMAL);
 
-	tp24_hand_wash_stop();
+	tp_2_4();
 	return 0;
 }
 
 void p2411(void){
-	bp241();
+	bp_2_4_1();
 	b_sv4_start();
 	b_p2_start();
 	g.timer.alkali_discharge = timer_start_ms();
@@ -390,10 +390,10 @@ void p2413(void){
 	t_sv4_stop();
 	//TODO: アルカリ未吐水タイマ＝0
 
-	tp241();
+	tp_2_4_1();
 }
 void p2421(void){
-	bp242();
+	bp_2_4_2();
 	b_sv3_start();
 	b_p1_start();
 	g.timer.acid_discharge = timer_start_ms();
@@ -426,11 +426,11 @@ void p2423(void){
 	t_sv3_stop();
 	//TODO: 酸未吐水タイマ＝0
 
-	tp242();
+	tp_2_4_2();
 }
 
 void p2431(void){
-	bp243();
+	bp_2_4_3();
 	b_sv2_start();
 	g.timer.water_discharge = timer_start_ms();
 }
@@ -448,12 +448,12 @@ void p2433(void){
 	t_sv2_stop();
 	//TODO: 水未吐水タイマ＝0
 
-	tp243();
+	tp_2_4_3();
 }
 
 int p3_individual_mode(void) {
 	p8_stop_all_processing();
-	bp3_individual_start();
+	bp_3();
 	while (SYSTEM_MODE == INDIVIDUAL) {
 		if (g.flag.individual) {
 		//個別処理実施 (Individual processing)
@@ -471,7 +471,7 @@ int p3_individual_mode(void) {
 		}
 	}
 	p8_stop_all_processing();
-	tp3_individual_stop();
+	tp_3();
 	return 0;
 }
 int p31_sv1_individual_process(void){
@@ -570,7 +570,7 @@ int p312_alarm_on_off_process(void){
 	}
 	return CVCC_ALARM_OUT_PIN;
 }
-int p313_flow_rate_process(void){
+int p_3_13_flow_rate_process(void){
 	b_sv1_start();
 	wait(g_T_S.t3_s * 1000);
 	//TODO: Flow rate adjust process by hand
@@ -578,20 +578,20 @@ int p313_flow_rate_process(void){
 	return 0;
 }
 int p314_salt_tank_drain_process(void){
-	bp314();
+	bp_3_1_4();
 	c_19();
 	//TODO: How could we check V4 ??
 
 	b_sp_start();
 	//TODO: Wait for how long?
 	t_sp_stop();
-	tp314();
+	tp_3_1_4();
 	return 0;
 }
 
 int p8_stop_all_processing(void){
 	//TODO: C11 Electrolytic service emergency stop processing
-	c11();
+	c_1_1();
 	t_p1_stop();
 	t_p2_stop();
 	t_sp_stop();
@@ -602,5 +602,10 @@ int p8_stop_all_processing(void){
 	t_sv5_stop();
 	t_sv6_stop();
 	t_sv7_stop();
+	return 0;
+}
+int p9_stop(void){
+	p8_stop_all_processing();
+	tp_0();
 	return 0;
 }
