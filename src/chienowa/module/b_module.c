@@ -218,9 +218,9 @@ int bp_8(void){
 
 
 int b_p1_start(void){
-	if ( g.io.pump_1 == 0){
+	if ( g_P1_F == 0){
 		PUMP_1_PIN = PUMP_ON;
-		g.io.pump_1 = 1;
+		g_P1_F = 1;
 		g.timer.module.on.io.p1[0] = timer_restart_s(g_P1_ON_T1);
 		g.timer.module.on.io.p1[2] = timer_restart_s(g_P1_ON_T3);
 		g.timer.module.on.io.p1[1] = timer_start_ms();
@@ -229,9 +229,9 @@ int b_p1_start(void){
 	return 0;
 }
 int b_p2_start(void){
-	if( g.io.pump_2 == 0 ){
+	if( g_P1_F == 0 ){
 		PUMP_2_PIN = PUMP_ON;
-		g.io.pump_2 = 1;
+		g_P1_F = 1;
 		g.timer.module.on.io.p2[0] = timer_restart_s(g_P2_ON_T1);
 		g.timer.module.on.io.p2[0] = timer_restart_s(g_P2_ON_T1);
 		g.timer.module.on.io.p2[1] = timer_start_ms();
@@ -239,7 +239,7 @@ int b_p2_start(void){
 	return 0;
 }
 int b_sp_start(void){
-	if( g.io.salt_pump == 0 ){
+	if( g_P1_F == 0 ){
 		PUMP_2_PIN = PUMP_ON;
 		g.io.salt_pump = 1;
 		g.timer.module.on.io.sp[0] = timer_restart_s(g_SP_ON_T1);

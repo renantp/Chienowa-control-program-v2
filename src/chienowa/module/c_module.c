@@ -15,47 +15,84 @@
 #include "../adc.h"
 #include "e_module.h"
 #include "../runtime.h"
-
-int c1_on_off(uint8_t on_off){
-	if(on_off){
-		if(g.flag.module.c1 != 0){
-			c5_electrolysis_check_process();
-			//TODO: c23()
-
+/**
+ *
+ * @param on_off
+ * @return
+ */
+int c_1(uint8_t on_off){
+	switch (on_off) {
+		case 1:
+			if(!g_C_1_F){
+				if(!g_SP_F){
+					b_sv1_start();
+				}
+				if(elapsed_time_ms(g.timer.module.on.io.sp[1]/1000) >= g_T_S.t17_s){
+					bc_1();
+					g.timer.module.on.c1[2] = timer_restart_s(C_1_ON_T3);
+					return 1;
+				}
+				return -1;
+			}
+			c_5();
+			c_23();
 			return 0;
-		}
-		if(SP_PIN == PUMP_OFF){
-//		SP_PIN = PUMP_OFF; //SP_F=0?
-			b_sv1_start(); //SV１（給水） ON処理
-			b_sp_start(); //SP（塩ポンプ） ON処理
-		}
-		if(elapsed_time_s(SP_ON_T2)/1000 >= g_T_S.t17_s){
-			//BC-1 電解業務起動処理
-			bc_1();
-			C_1_ON_T3 = timer_restart_s(C_1_ON_T3);
+		case 0:
+			if(g_C_1_F){
+				if(g_SP_F){
+					t_sp_stop();
+				}
+				if(elapsed_time_s(g.timer.module.off.io.sp[1])/1000 >= g_T_S.t5_s){
+					t_sv1_stop();
+					tc_1();
+					C_1_ON_T3 = timer_stop_s(g.timer.module.on.c1[2]);
+					return 2;
+				}
+				return -2;
+			}
 			return 0;
-		}else{
-			return -1;
-		}
-	}else{
-		//C_1_F=1
-		if(g.flag.module.c1){
+		default:
 			return 0;
-		}
-		//SP_F=1
-		SP_PIN = PUMP_ON;
-		//T-SP   SP（塩ポンプ）Stop処理
-		t_sp_stop();
-		if(elapsed_time_ms(SP_OFF_T2)/1000 >= g_T_S.t5_s){
-			t_sv1_stop();
-			//TODO: tc1() flow chart is missing
-
-			C_1_ON_T3 = timer_stop_s(C_1_ON_T3);
-			return -1;
-		}else{
-			return -2;
-		}
 	}
+//	if(on_off){
+//		if(g.flag.module.c1 != 0){
+//			c5_electrolysis_check_process();
+//			//TODO: c23()
+//
+//			return 0;
+//		}
+//		if(SP_PIN == PUMP_OFF){
+////		SP_PIN = PUMP_OFF; //SP_F=0?
+//			b_sv1_start(); //SV１（給水） ON処理
+//			b_sp_start(); //SP（塩ポンプ） ON処理
+//		}
+//		if(elapsed_time_s(SP_ON_T2)/1000 >= g_T_S.t17_s){
+//			//BC-1 電解業務起動処理
+//			bc_1();
+//			C_1_ON_T3 = timer_restart_s(C_1_ON_T3);
+//			return 0;
+//		}else{
+//			return -1;
+//		}
+//	}else{
+//		//C_1_F=1
+//		if(g.flag.module.c1){
+//			return 0;
+//		}
+//		//SP_F=1
+//		SP_PIN = PUMP_ON;
+//		//T-SP   SP（塩ポンプ）Stop処理
+//		t_sp_stop();
+//		if(elapsed_time_ms(SP_OFF_T2)/1000 >= g_T_S.t5_s){
+//			t_sv1_stop();
+//			//TODO: tc1() flow chart is missing
+//
+//			C_1_ON_T3 = timer_stop_s(C_1_ON_T3);
+//			return -1;
+//		}else{
+//			return -2;
+//		}
+//	}
 //	return 0;
 }
 int c_1_1(void) {
@@ -63,66 +100,39 @@ int c_1_1(void) {
 	t_sp_stop();
 	wait(g_T_S.t15_s * 1000);
 	t_sv1_stop();
-	//中和タイマー停止処理
-	// C_1_ON_T3 = timer_start_s();
-	C_1_ON_T3 = timer_stop_s(C_1_ON_T3);
+	C_1_ON_T3 = timer_stop_s(g.timer.module.on.c1[2]);
 	return 1;
 }
-// int c2_alkali_tank_level_check(void) {
-// 	bc3();
-// 	const int status = s1_alkali_tank_data_set();
-// 	if(status < -1){
-// 		//TODO: E1025
-
-// 		return -255;
-// 	}else if(status == 0){
-// 		//TODO: E1029
-
-// 		return g_ALD;
-// 	}else {
-// 		return g_ALD;
-// 	}
-// 	return 0;
-// }
-int c2_alkali_tank_level_check(void) { 						//new_plan
+int c_2(void) { 						//new_plan
 	bc_3();
 	s1_alkali_tank_data_set();
 	switch(g_ALD){
 		case -3:
-//			E_1025();
-			break;
-		case -2:	
-//			E_1025();
-			break;
+		case -2:
 		case -1:
-//			E_1025();
+			e1025();
 			break;
 		case 0:
-//			E_1029();
+			e1029();
 			break;
 		case 1:
-			return g_ALD;
-//			break;
 		case 2:
-			return g_ALD;
-//			break;
 		case 3:
 			return g_ALD;
-//			break;
 		default:
 			break;
 	}
 	return g_ALD;
 }
-int c3_acid_tank_level_check(void){
+int c_3(void){
 	bc_3();
 	const int status = s2_acid_tank_data_set();
 	if(status <= -1){
-		//TODO: E1024
+		e1024();
 
 		return -255;
 	}else if(status == 0){
-		//TODO: E1028
+		e1028();
 
 		return g_ACD;
 	}else{
@@ -145,7 +155,7 @@ int c4_salt_tank_sensor_value_check_process(void){
 	}
 	return 0;
 }
-int c5_electrolysis_check_process(void){
+int c_5(void){
 	bc_5();
 	//過電圧1チェック処理
 	c51_over_voltage_1_check(&g_V_S.v1_V);
@@ -600,8 +610,8 @@ int c_22(void){
 }
 int c_23(void){
 	bc_23();
-	c2_alkali_tank_level_check();
-	c3_acid_tank_level_check();
+	c_2();
+	c_3();
 	c4_salt_tank_sensor_value_check_process();
 	c8();
 	c9();

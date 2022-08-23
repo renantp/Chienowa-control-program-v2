@@ -160,7 +160,7 @@
 #define g_SP_ON_T3			g.timer.module.work.io.sp[2]
 
 /*************************************************
- * B module flags
+ * Module Flags
  *************************************************/
 #define g_P_0_F			g.flag.module.bp0
 #define g_P_1_F			g.flag.module.bp1
@@ -215,6 +215,14 @@
 
 #define g_E_1_F			g.flag.module.e1
 #define g_E_2_F			g.flag.module.e2
+
+/*************************************************
+ * IO Flags
+ *************************************************/
+
+#define g_P1_F			g.io.pump_1
+#define g_P2_F			g.io.pump_2
+#define g_SP_F			g.io.salt_pump
 
 /*************************************************
  *

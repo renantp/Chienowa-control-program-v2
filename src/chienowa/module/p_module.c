@@ -51,8 +51,8 @@ int p1_initial_working_mode_start_process(void) {
 	bp_1();
 	p11_startup_draining_water();
 	p12_startup_water_supply();
-	c3_acid_tank_level_check();
-	c5_electrolysis_check_process();
+	c_3();
+	c_5();
 	p13_startup_electrolysis_operation();
 	p14_initial_2nd_draining_water();
 //	p15_2nd_electrolysis_water_generation_process();
@@ -220,7 +220,7 @@ int p152_2nd_initial_electrolysis_stop_process(void) {
 int p2_water_discharge_mode(void){
 	bp_2();
 	do{
-		c1_on_off(C1_ON);				//電解業務開始処理
+		c_1(C1_ON);				//電解業務開始処理
 		switch ((enum WASH_MODE_E) WASH_MODE) {
 			case HAND_WASHING_MODE:
 				p24_hand_wash_mode();
@@ -239,7 +239,7 @@ int p2_water_discharge_mode(void){
 				break;
 		}
 	}while(SYSTEM_MODE != 2);
-	c1_on_off(C1_OFF);
+	c_1(C1_OFF);
 	tp_2();
 	return 0;
 }
@@ -247,7 +247,7 @@ int p21_alkali_water_discharge_mode(void){
 	bp_2_1();
 	// Large loop
 	do {
-		c1_on_off(C1_ON);
+		c_1(C1_ON);
 		if(check_hand_sensor() || SYSTEM_MODE == NORMAL){
 			b_sv4_start();
 			b_p2_start();
@@ -259,7 +259,7 @@ int p21_alkali_water_discharge_mode(void){
 				if(check_hand_sensor() || elapsed_time_ms(g.timer.alkali_discharge) >= g_T_S.t35_s * 1000){
 					SYSTEM_MODE = NORMAL;
 				}else{
-					c1_on_off(C1_OFF);
+					c_1(C1_OFF);
 				}
 			}while(SYSTEM_MODE == WASHING);
 			t_p2_stop();
@@ -277,7 +277,7 @@ int p22_acid_water_discharge_mode(void){
 	bp_2_2();
 	//Large loop
 	do{
-		c1_on_off(C1_ON);
+		c_1(C1_ON);
 		if(check_hand_sensor() && SYSTEM_MODE == NORMAL){
 			SYSTEM_MODE = WASHING;
 			b_sv3_start();
@@ -290,7 +290,7 @@ int p22_acid_water_discharge_mode(void){
 				if (check_hand_sensor() || elapsed_time_ms(g.timer.acid_discharge) >= g_T_S.t34_s * 1000 ){
 					SYSTEM_MODE = NORMAL;
 				}else{
-					c1_on_off(C1_ON);
+					c_1(C1_ON);
 				}
 				runtime();
 			}while(SYSTEM_MODE == WASHING);
@@ -309,7 +309,7 @@ int p23_water_discharge_mode(void){
 	bp_2_3();
 	// Large loop
 	do{
-		c1_on_off(C1_ON);
+		c_1(C1_ON);
 		if(check_hand_sensor() || SYSTEM_MODE == NORMAL){
 			b_sv2_start();
 			//TODO: Blink LED on hand sensor
@@ -320,7 +320,7 @@ int p23_water_discharge_mode(void){
 				if (check_hand_sensor() || elapsed_time_ms(g.timer.water_discharge) >= g_T_S.t34_s * 1000 ){
 					SYSTEM_MODE = NORMAL;
 				}else{
-					c1_on_off(C1_ON);
+					c_1(C1_ON);
 				}
 				runtime();
 			}while(SYSTEM_MODE == WASHING);
@@ -338,7 +338,7 @@ int p23_water_discharge_mode(void){
 int p24_hand_wash_mode(void){
 	bp_2_4();
 	do{
-		c1_on_off(C1_ON);
+		c_1(C1_ON);
 		if (check_hand_sensor() || SYSTEM_MODE == NORMAL){
 			SYSTEM_MODE = WASHING;
 			p2411();
@@ -368,7 +368,7 @@ void p2411(void){
 void p2412(void){
 	//TODO: Turn ON hand sensor LED (Blue)
 	while (g_T_S.t29_s * 1000 - elapsed_time_ms(g.timer.alkali_discharge) > 2 * 1000 ){
-		c1_on_off(C1_ON);
+		c_1(C1_ON);
 		runtime();
 	}
 	//TODO: Blink hand sensor LED (Blue)
@@ -376,12 +376,12 @@ void p2412(void){
 	while (elapsed_time_ms(g.timer.alkali_discharge) <= g_T_S.t29_s * 1000 &&
 			g_T_S.t29_s * 1000 - elapsed_time_ms(g.timer.alkali_discharge) <= g_T_S.t32_ms){
 		runtime();
-		c1_on_off(C1_ON);
+		c_1(C1_ON);
 	}
 }
 void p2413(void){
 	while (elapsed_time_ms(g.timer.alkali_discharge) <= g_T_S.t29_s * 1000){
-		c1_on_off(C1_ON);
+		c_1(C1_ON);
 		runtime();
 	}
 	//TODO: Turn off hand sensor LED
@@ -403,7 +403,7 @@ void p2422(void){
 
 	//酸吐水減算タイマが２秒か?
 	while(g_T_S.t30_s * 1000 - elapsed_time_ms(g.timer.acid_discharge) > 2 * 1000 ){
-		c1_on_off(C1_ON);
+		c_1(C1_ON);
 		runtime();
 	}
 	//TODO: Blink hand sensor LED (Red)
@@ -411,13 +411,13 @@ void p2422(void){
 	while (elapsed_time_ms(g.timer.acid_discharge) <= g_T_S.t30_s * 1000 &&
 			g_T_S.t30_s * 1000 - elapsed_time_ms(g.timer.acid_discharge) <= g_T_S.t32_ms){
 		runtime();
-		c1_on_off(C1_ON);
+		c_1(C1_ON);
 	}
 }
 
 void p2423(void){
 	while (elapsed_time_ms(g.timer.acid_discharge) <= g_T_S.t30_s * 1000){
-		c1_on_off(C1_ON);
+		c_1(C1_ON);
 		runtime();
 	}
 	//TODO: Turn off hand sensor LED
@@ -440,7 +440,7 @@ void p2432(void){
 }
 void p2433(void){
 	while (elapsed_time_ms(g.timer.water_discharge) <= g_T_S.t31_s * 1000){
-		c1_on_off(C1_ON);
+		c_1(C1_ON);
 		runtime();
 	}
 	//TODO: Turn off hand sensor LED
