@@ -1,0 +1,9 @@
+-cpu=S3
+-c
+-dev="D:/An/E2Studio/.eclipse/com.renesas.platform_1223251604/DebugComp/RL78/RL78/Common/DR5F104ML.DVF"
+-MAKEUD="D:\An\E2Studio\HWM_v2\HardwareDebug\src"
+-I "C:\Program Files (x86)\Renesas Electronics\CS+\CC\CC-RL\V1.10.00\inc"
+-I "D:\An\E2Studio\HWM_v2\generate" 
+-character_set=utf8
+-lang=c99
+-g

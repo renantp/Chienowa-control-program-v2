@@ -27,7 +27,10 @@
 #define PUMP_1_PIN		(P6_bit.no2)
 #define PUMP_2_PIN		(P6_bit.no1)
 #define SP_PIN			(P6_bit.no0)
-#define SALT_LID_PIN	(P5_bit.no2)
+
+#define SW1_PIN			(P5_bit.no2)
+#define SW2_PIN			(P14_bit.no7)
+#define SW3_PIN			(P10_bit.no0)
 
 #define CVCC_CONTROL_PIN	(P14_bit.no2)
 #define CVCC_ALARM_OUT_PIN	(P0_bit.no4)

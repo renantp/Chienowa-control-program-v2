@@ -159,6 +159,8 @@
 #define g_SP_ON_T2			g.timer.module.work.io.sp[1]
 #define g_SP_ON_T3			g.timer.module.work.io.sp[2]
 
+#define C_5_5_20T		g.timer.c55_20
+
 /*************************************************
  * Module Flags
  *************************************************/
@@ -234,7 +236,7 @@
 #define C_5_4_ON_T3		g.timer.module.on.c54[2]
 #define SP_OFF_T2		g.timer.module.off.io.sp[1]
 #define SP_ON_T2		g.timer.module.on.io.sp[1]
-#define C_5_5_20T		g.timer.c55_20
+
 #define SV7_ON_T2		g.timer.module.on.io.sv7[1]
 #define SV1_ON_T1		g.timer.module.on.io.sv1[0]
 #define SV2_ON_T1		g.timer.module.on.io.sv2[0]
@@ -502,7 +504,7 @@ struct Module_Timer{
 
 	uint32_t c51[2];
 	uint32_t c52[3];
-	uint32_t c53[2];
+	uint32_t c53[3];
 	uint32_t c54[3];
 	uint32_t c55[2];
 	uint32_t c56[2];

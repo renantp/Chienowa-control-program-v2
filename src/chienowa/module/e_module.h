@@ -9,7 +9,47 @@
 #define CHIENOWA_MODULE_E_MODULE_H_
 
 #include "../../r_cg_macrodriver.h"
+extern enum ERROR_ENUM{
+	NO_ERROR,
+	E1,
+	M1000,
+	M1001,
+	M1002,
+	M1003,
+	M1004,
+	M1005,
+	M1006,
+	M1007,
+	M1008,
+	M1009,
+	M1020,
+	M1021,
+	M1022,
+	M1023,
+	M1024,
+	M1025,
+	M1026,
+	M1027,
+	M1028,
+	M1029,
+	M1030,
+	M1031,
+	M1032,
+	M1033,
+	M1034,
+	M1035,
+	M1036,
+	M1037,
+	M1038,
+	M1039,
+	M1051,
 
+	//Add by Mr.Goto
+	M5001,
+	M5002,
+	M5003,
+	M5005,
+}e_current_error;
 int e1_faucet_refresh_process(void);
 int e11(void);
 int e2(void);

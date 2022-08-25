@@ -1693,7 +1693,6 @@
     <TAG>
       <GlobleUserTag>
         <clock_option Name="clock_option" Value="F8" />
-        <cg_security7 Name="cg_security7" Value="00" />
         <cg_security5 Name="cg_security5" Value="00" />
         <wdt_option Name="wdt_option" Value="EF" />
         <cg_security8 Name="cg_security8" Value="00" />
@@ -1701,16 +1700,17 @@
         <pior1_value Name="pior1_value" Value="00" />
         <cg_security1 Name="cg_security1" Value="00" />
         <cg_security9 Name="cg_security9" Value="00" />
+        <rrm Name="rrm" Value="7FE00" />
         <lvi_option Name="lvi_option" Value="FF" />
         <cg_security6 Name="cg_security6" Value="00" />
         <cg_crc_area Name="cg_crc_area" Value="00" />
         <cg_iawctl_value Name="cg_iawctl_value" Value="00" />
         <cg_security0 Name="cg_security0" Value="00" />
-        <cg_security3 Name="cg_security3" Value="00" />
+        <cg_security7 Name="cg_security7" Value="00" />
         <ocdstart Name="ocdstart" Value="7FE00" />
         <cg_security4 Name="cg_security4" Value="00" />
         <cg_pms_value Name="cg_pms_value" Value="00" />
-        <rrm Name="rrm" Value="7FE00" />
+        <cg_security3 Name="cg_security3" Value="00" />
         <cg_onchip Name="cg_onchip" Value="" />
         <pior_value Name="pior_value" Value="00" />
         <cg_ocd_ram_size Name="cg_ocd_ram_size" Value="512" />
@@ -1877,7 +1877,7 @@
           <setting name="Output_value" value="0" />
         </P03>
         <P04>
-          <setting name="Operation" value="output" />
+          <setting name="Operation" value="input" />
           <setting name="Pull_up" value="unused" />
           <setting name="TTL_buffer" value="unused" />
           <setting name="N-ch_open-drain" value="unused" />
@@ -2124,21 +2124,21 @@
           <setting name="Pull_up" value="unused" />
           <setting name="TTL_buffer" value="unused" />
           <setting name="N-ch_open-drain" value="unused" />
-          <setting name="Output_value" value="0" />
+          <setting name="Output_value" value="1" />
         </P60>
         <P61>
           <setting name="Operation" value="output" />
           <setting name="Pull_up" value="unused" />
           <setting name="TTL_buffer" value="unused" />
           <setting name="N-ch_open-drain" value="unused" />
-          <setting name="Output_value" value="0" />
+          <setting name="Output_value" value="1" />
         </P61>
         <P62>
           <setting name="Operation" value="output" />
           <setting name="Pull_up" value="unused" />
           <setting name="TTL_buffer" value="unused" />
           <setting name="N-ch_open-drain" value="unused" />
-          <setting name="Output_value" value="0" />
+          <setting name="Output_value" value="1" />
         </P62>
         <P63>
           <setting name="Operation" value="output" />

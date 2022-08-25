@@ -1,0 +1,92 @@
+Renesas Optimizing Linker (W3.03.00 )             19-Aug-2022 11:29:35
+
+*** Options ***
+
+-subcommand=LinkerHWM_v2.tmp
+-MAKEUD=D:\An\E2Studio\HWM_v2\Debug/HWM_v2_l.ud
+-device="D:/An/E2Studio/.eclipse/com.renesas.platform_1223251604/DebugComp/RL78/RL78/Common/DR5F104ML.DVF"
+-list="HWM_v2.map"
+-nooptimize
+-auto_section_layout
+-security_id=0
+-input=".\generate\cstart.obj"
+-input=".\generate\stkinit.obj"
+-input=".\src/chienowa\adc.obj"
+-input=".\src/chienowa\circular_buffer.obj"
+-input=".\src/chienowa\crc8.obj"
+-input=".\src/chienowa\delay.obj"
+-input=".\src/chienowa\eeprom.obj"
+-input=".\src/chienowa\hand_sensor.obj"
+-input=".\src/chienowa\main.obj"
+-input=".\src/chienowa/module\b_module.obj"
+-input=".\src/chienowa/module\c_module.obj"
+-input=".\src/chienowa/module\e_module.obj"
+-input=".\src/chienowa/module\p_module.obj"
+-input=".\src/chienowa/module\s_module.obj"
+-input=".\src/chienowa/module\t_module.obj"
+-input=".\src/chienowa\runtime.obj"
+-input=".\src\r_cg_adc.obj"
+-input=".\src\r_cg_adc_user.obj"
+-input=".\src\r_cg_cgc.obj"
+-input=".\src\r_cg_cgc_user.obj"
+-input=".\src\r_cg_dac.obj"
+-input=".\src\r_cg_dac_user.obj"
+-input=".\src\r_cg_port.obj"
+-input=".\src\r_cg_port_user.obj"
+-input=".\src\r_cg_rtc.obj"
+-input=".\src\r_cg_rtc_user.obj"
+-input=".\src\r_cg_serial.obj"
+-input=".\src\r_cg_serial_user.obj"
+-input=".\src\r_cg_timer.obj"
+-input=".\src\r_cg_timer_user.obj"
+-input=".\src\r_main.obj"
+-input=".\src\r_systeminit.obj"
+-library="C:\Program Files (x86)\Renesas Electronics\CS+\CC\CC-RL\V1.10.00\lib\rl78em4s99.lib"
+-library="C:\Program Files (x86)\Renesas Electronics\CS+\CC\CC-RL\V1.10.00\lib\rl78em4r.lib"
+-library="C:\Program Files (x86)\Renesas Electronics\CS+\CC\CC-RL\V1.10.00\lib\malloc_n.lib"
+-output="HWM_v2.abs"
+-debug
+-nocompress
+-memory=high
+-rom=.data=.dataR,.sdata=.sdataR
+-nomessage
+-nologo
+
+*** Error information ***
+
+W0561520:"user option byte" in ".option_byte" created by device file
+W0561520:"on chip debug" in ".option_byte" created by device file
+
+*** Mapping List ***
+
+SECTION                            START      END         SIZE   ALIGN
+.vect
+                                  00000000  0000007f        80   0
+.constf
+                                  00000080  00000080         0   2
+.sdata
+                                  00000080  00000080         0   2
+.option_byte
+                                  000000c0  000000c3         4   1
+.security_id
+                                  000000c4  000000cd         a   1
+.SLIB
+                                  000000c4  000000c4         0   1
+.data
+                                  000000ce  00000149        7c   2
+.text
+                                  0000014a  000003b8       26f   1
+.textf
+                                  000003b9  00002ff6      2c3e   1
+.const
+                                  00003000  00003101       102   2
+.RLIB
+                                  00003102  000032ef       1ee   1
+.bss
+                                  000f3f00  000f498a       a8b   2
+.dataR
+                                  000f498c  000f4a07        7c   2
+.sbss
+                                  000ffe20  000ffe20         0   2
+.sdataR
+                                  000ffe20  000ffe20         0   2
