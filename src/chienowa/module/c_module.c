@@ -229,22 +229,9 @@ int c_5_3(float *voltage){
 	return 0;
 }
 
-void buzzer(uint8_t on_off){
-	//If buzzer setting is ON
-	if(){
-		if(on_off){
-			//Turn ON buzzer
-		}else{
-			//Turn off buzzer
-		}
-	}else{
-		//Turn OFF buzzer
-	}
-}
 int c_5_3_1(void){
 	bc_5_3_1();
 	//TODO: Alarm
-	buzzer(1);
 
 	const float cvcc_voltage = g_adc.voltage;
 	if(cvcc_voltage > g_V_S.v3_V){

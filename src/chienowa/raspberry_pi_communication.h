@@ -27,6 +27,7 @@ enum Communication_Header{
 	INDIVITUAL_OUTPUT,
 };
 
-
-void uart_callback(uint8_t *const pdata);
+uint8_t * get_pointer_uart_queue(void);
+void go_next_uart_queue(void);
+void uart_callback(void);
 #endif /* CHIENOWA_RASPBERRY_PI_COMMUNICATION_H_ */

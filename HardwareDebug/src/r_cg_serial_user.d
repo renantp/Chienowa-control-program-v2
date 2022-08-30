@@ -5,6 +5,8 @@ src/r_cg_serial_user.obj src/r_cg_serial_user.d: D:\An\E2Studio\HWM_v2\generate\
 D:\An\E2Studio\HWM_v2\generate\iodefine.h:
 src/r_cg_serial_user.obj src/r_cg_serial_user.d: ../src/r_cg_serial.h
 ../src/r_cg_serial.h:
+src/r_cg_serial_user.obj src/r_cg_serial_user.d: ../src/chienowa/raspberry_pi_communication.h
+../src/chienowa/raspberry_pi_communication.h:
 src/r_cg_serial_user.obj src/r_cg_serial_user.d: ../src/r_cg_userdefine.h
 ../src/r_cg_userdefine.h:
 src/r_cg_serial_user.obj src/r_cg_serial_user.d: ../src/chienowa/main.h

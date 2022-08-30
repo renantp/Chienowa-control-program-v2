@@ -32,6 +32,7 @@ Includes
 #include "r_cg_macrodriver.h"
 #include "r_cg_serial.h"
 /* Start user code for include. Do not edit comment generated here */
+#include "chienowa/raspberry_pi_communication.h"
 /* End user code. Do not edit comment generated here */
 #include "r_cg_userdefine.h"
 
@@ -276,6 +277,7 @@ static void r_uart2_callback_sendend(void)
 {
     /* Start user code. Do not edit comment generated here */
 	g_uart2_send_end++;
+	uart_callback();
 	/* End user code. Do not edit comment generated here */
 }
 
