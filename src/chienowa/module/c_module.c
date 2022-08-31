@@ -124,9 +124,13 @@ int c_2(void) { 						//new_plan
 	}
 	return g_ALD;
 }
+/**
+ *
+ * @return
+ */
 int c_3(void){
 	bc_3();
-	switch(s2_acid_tank_data_set()){
+	switch(s3_salt_tank_data_set()){
 		case 0:
 			e1028();
 			return 0;
@@ -134,13 +138,10 @@ int c_3(void){
 			return 1;
 		case 2:
 			return 2;
-		case 3:
-			return 3;
 		default:
 			e1024();
-			break;
+			return -1;
 	}
-	return 0;
 }
 int c_4(void){
 	bc_4();

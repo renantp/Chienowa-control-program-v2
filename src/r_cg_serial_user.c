@@ -23,7 +23,7 @@
 * Device(s)    : R5F104ML
 * Tool-Chain   : CCRL
 * Description  : This file implements device driver for Serial module.
-* Creation Date: 8/23/2022
+* Creation Date: 8/30/2022
 ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
@@ -246,10 +246,7 @@ static void __near r_uart2_interrupt_send(void)
 static void r_uart2_callback_receiveend(void)
 {
     /* Start user code. Do not edit comment generated here */
-	uint8_t data[10];
-	circular_buffer_get(&g_rx_data, data, 1);
-	R_UART2_Send(data, 1);
-	R_UART2_Receive(circular_buffer_calloc(&g_rx_data, 1), 1);
+	uart_receive_callback();
 	g_uart2_recieve_end++;
 	/* End user code. Do not edit comment generated here */
 }
@@ -277,7 +274,7 @@ static void r_uart2_callback_sendend(void)
 {
     /* Start user code. Do not edit comment generated here */
 	g_uart2_send_end++;
-	uart_callback();
+	uart_sended_callback();
 	/* End user code. Do not edit comment generated here */
 }
 

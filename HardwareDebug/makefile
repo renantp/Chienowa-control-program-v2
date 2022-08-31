@@ -78,6 +78,9 @@ endif
 LINKER_OUTPUT_OUTPUTS += \
 HWM_v2.abs
 
+CONVERTOR_OUTPUT_OUTPUTS += \
+HWM_v2.mot
+
 OBJS := \
 $(COMPILER_OBJS) \
 $(INDIVIDUAL_COMPILER_OBJS) \
@@ -86,29 +89,38 @@ $(CUSTOM_OBJS)
 
 
 # All Target
-all: $(LINKER_OUTPUT_OUTPUTS) HWM_v2.x HWM_v2.udm
+all: $(CONVERTOR_OUTPUT_OUTPUTS) HWM_v2.x HWM_v2.udm
 
 	@echo 'Build complete.'
 
+HWM_v2.mot: $(LINKER_OUTPUT_OUTPUTS) 
+	@echo 'Invoking: Converter'
+	@echo 'Building target:'
+	@echo ConverterHWM_v2.tmp=
+	@sed -e "s/^/    /" "ConverterHWM_v2.tmp"
+	rlink "HWM_v2.abs" -subcommand="ConverterHWM_v2.tmp"
+	@echo 'Finished building target:'
+	@echo ''
+
+
 HWM_v2.abs: $(OBJS)  $(ALL_ASMS)
 	@echo 'Invoking: Linker'
-	@echo 'Building target:'
 	@echo LinkerHWM_v2.tmp=
 	@sed -e "s/^/    /" "LinkerHWM_v2.tmp"
 	rlink -subcommand="LinkerHWM_v2.tmp"
-	@echo 'Finished building target:'
+	@echo 'Finished building:'
 	@echo ''
 
 
 HWM_v2.x: HWM_v2.abs
 		-D:\An\E2Studio\.eclipse\com.renesas.platform_1223251604\Utilities\\ccrl\renesas_cc_converter HWM_v2.abs HWM_v2.x
 
-HWM_v2.udm: $(LINKER_OUTPUT_OUTPUTS)
+HWM_v2.udm: $(LINKER_OUTPUT_OUTPUTS) $(CONVERTOR_OUTPUT_OUTPUTS)
 	udcollector -subcommand=udSubcommand.tmp -output=HWM_v2.udm
 
 # Other Targets
 clean:
-	-$(RM) $(LINKER_OUTPUT_OUTPUTS)
+	-$(RM) $(LINKER_OUTPUT_OUTPUTS) $(CONVERTOR_OUTPUT_OUTPUTS)
 ifneq ($(strip $(OBJS)),)
 	-$(file > clean_OBJS.tmp, $(OBJS))
 	-@xargs -s 4000 -t -a clean_OBJS.tmp rm -rf

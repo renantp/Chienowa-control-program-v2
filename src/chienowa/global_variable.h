@@ -338,14 +338,14 @@ enum STATUS {
 	WASHING,
 };
 struct IO_Struct{
-	uint8_t AlkalineEmptyLevel: 1;
-	uint8_t AlkalineLowLevel: 1;
-	uint8_t AlkalineHighLevel: 1;
-	uint8_t AcidEmptyLevel: 1;
-	uint8_t AcidLowLevel: 1;
-	uint8_t AcidHighLevel: 1;
-	uint8_t SaltLowLevel: 1;
-	uint8_t SaltHighLevel: 1;
+	uint8_t fl1: 1;
+	uint8_t fl2: 1;
+	uint8_t fl3: 1;
+	uint8_t fl4: 1;
+	uint8_t fl5: 1;
+	uint8_t fl6: 1;
+	uint8_t fl7: 1;
+	uint8_t fl8: 1;
 
 	struct{
 		uint8_t sv1: 1;
@@ -541,6 +541,8 @@ struct Timer {
 	struct Module_Timer off;
 };
 
+#define NUMBER_OF_IO_BYTE		(4 + 12)
+
 extern struct GLOBAL{
 	struct {
 		uint8_t electrolysis;
@@ -572,14 +574,20 @@ extern struct GLOBAL{
 		struct Timer module;
 		uint32_t c55_20;
 	}timer;
-
 	float flow_rate;
+	float cvvc_voltage; // 4 bytes
+	float cvcc_current; // 4 bytes
 	struct IO_Struct io;
-//	struct {
-//		union{
-//
-//		};
-//	}error;
+	union {
+		struct{
+			uint8_t drain :1;
+			uint8_t power_on :1;
+			uint8_t filter :1;
+			uint8_t biomectric :1;
+			uint8_t RSVD :4;
+		};
+		uint32_t raw;
+	}control_setting;
 	uint8_t system_mode;
 	enum WASH_MODE_E mode, previous_mode;
 	enum STATUS status;

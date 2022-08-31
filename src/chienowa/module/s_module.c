@@ -34,15 +34,15 @@ float s5_filter_change_formula(long SV1_T3, long SV2_T3, long g_V_S_v11_mg_L,lon
 int s3_salt_tank_data_set(void) {
 	union {
 		struct {
-			uint8_t bit1 :1;
 			uint8_t bit0 :1;
+			uint8_t bit1 :1;
 		};
 		uint8_t bit;
 	} data;
 
 
-	data.bit1=FL7;
-	data.bit0=FL8;
+	data.bit1=!FL8;
+	data.bit0=!FL7;
 
 	//data.bit = 2^2 = 4bit
 	//FL7.FL8 ---> bit1.bit0
@@ -77,6 +77,7 @@ int s3_salt_tank_data_set(void) {
 //}
 
 /**
+ * Checked with hardware 31082022
  * Check level sensor of Acid tank and return result
  * @return int [-4:3]
  * -4, -3, -2, -1: NG
@@ -85,17 +86,17 @@ int s3_salt_tank_data_set(void) {
 int s2_acid_tank_data_set(void) {
 	union {
 		struct {
-			uint8_t bit2 :1;
-			uint8_t bit1 :1;
 			uint8_t bit0 :1;
+			uint8_t bit1 :1;
+			uint8_t bit2 :1;
 		};
 		uint8_t bit;
 	} data;
 
 
-	data.bit2=FL1;
-	data.bit1=FL2;
-	data.bit0=FL3;
+	data.bit2 = FL3 == LEVEL_ON ? 1 : 0;
+	data.bit1= FL2 == LEVEL_ON ? 1 : 0;
+	data.bit0=FL1 == LEVEL_ON ? 1 : 0;
 
 	//data.bit = 2^3 = 8bit
 	//FL1.FL2.FL3 ---> bit2.bit1.bit0
@@ -136,6 +137,7 @@ int s2_acid_tank_data_set(void) {
 //}
 
 /**
+ * Checked with hardware 31082022
  * Check level sensor Alkali tank and return result
  * @return int [-4:3]
  * -4, -3, -2, -1: NG
@@ -145,17 +147,17 @@ int s1_alkali_tank_data_set(void) {
 
 	union {
 		struct {
-			uint8_t bit2 :1;
-			uint8_t bit1 :1;
 			uint8_t bit0 :1;
+			uint8_t bit1 :1;
+			uint8_t bit2 :1;
 		};
 		uint8_t bit;
 	} data;
 
 
-	data.bit2=FL4;
-	data.bit1=FL5;
-	data.bit0=FL6;
+	data.bit2=!FL6;
+	data.bit1=!FL5;
+	data.bit0=!FL4;
 
 	//data.bit = 2^3 = 8bit
 	//FL4.FL5.FL6 ---> bit2.bit1.bit0

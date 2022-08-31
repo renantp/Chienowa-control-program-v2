@@ -23,7 +23,7 @@
 * Device(s)    : R5F104ML
 * Tool-Chain   : CCRL
 * Description  : This file implements device driver for PORT module.
-* Creation Date: 8/23/2022
+* Creation Date: 8/30/2022
 ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
@@ -55,7 +55,7 @@ Global variables and functions
 ***********************************************************************************************************************/
 void R_PORT_Create(void)
 {
-    P0 = _00_Pn0_OUTPUT_0 | _00_Pn2_OUTPUT_0 | _00_Pn3_OUTPUT_0 | _00_Pn4_OUTPUT_0;
+    P0 = _00_Pn0_OUTPUT_0 | _00_Pn2_OUTPUT_0 | _00_Pn3_OUTPUT_0;
     P1 = _00_Pn5_OUTPUT_0 | _00_Pn6_OUTPUT_0 | _00_Pn7_OUTPUT_0;
     P4 = _00_Pn1_OUTPUT_0 | _00_Pn2_OUTPUT_0;
     P5 = _00_Pn0_OUTPUT_0 | _00_Pn1_OUTPUT_0 | _00_Pn5_OUTPUT_0;
@@ -73,7 +73,7 @@ void R_PORT_Create(void)
     PMC14 = _00_PMCn7_DI_ON | _7F_PMC14_DEFAULT;
     ADPC = _0A_ADPC_DI_ON;
     PM0 = _00_PMn0_MODE_OUTPUT | _02_PMn1_MODE_INPUT | _00_PMn2_MODE_OUTPUT | _00_PMn3_MODE_OUTPUT |
-          _00_PMn4_MODE_OUTPUT | _20_PMn5_MODE_INPUT | _40_PMn6_MODE_INPUT | _80_PM0_DEFAULT;
+          _10_PMn4_MODE_INPUT | _20_PMn5_MODE_INPUT | _40_PMn6_MODE_INPUT | _80_PM0_DEFAULT;
     PM1 = _01_PMn0_NOT_USE | _02_PMn1_NOT_USE | _04_PMn2_NOT_USE | _08_PMn3_NOT_USE | _10_PMn4_NOT_USE |
           _00_PMn5_MODE_OUTPUT | _00_PMn6_MODE_OUTPUT | _00_PMn7_MODE_OUTPUT;
     PM3 = _01_PMn0_MODE_INPUT | _02_PMn1_MODE_INPUT | _FC_PM3_DEFAULT;

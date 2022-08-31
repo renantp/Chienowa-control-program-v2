@@ -56,47 +56,60 @@ int p1_initial_working_mode_start_process(void) {
 	p13_startup_electrolysis_operation();
 	p14_initial_2nd_draining_water();
 //	p15_2nd_electrolysis_water_generation_process();
-	p11_startup_draining_water(); //replace p15 by this p11
+//	p11_startup_draining_water(); //replace p15 by this p11
 	tp_1();
 	return 0;
 }
-
+/**
+ * Checked in hardware 31082022
+ * @return
+ */
 int p11_startup_draining_water(void) {
 	bp_1_1();
 	p111_startup_drain_tank();
 	tp_1_1();
 	return 0;
 }
-
+/**
+ * Checked in hardware 31082022
+ * @return
+ */
 int p111_startup_drain_tank(void){
 	bp_1_1_1();
-	if(s1_alkali_tank_data_set() && g_ALD > 0){
+
+	g_ALD = s1_alkali_tank_data_set();
+	g_ACD = s2_acid_tank_data_set();
+
+	if(g_ALD > 0){
 		b_sv6_start();
 		wait(500);
 		b_p2_start();
 		g.flag.alkali_drainning = 1;
 	}
 
-	if(s2_acid_tank_data_set()){
+	if(g_ACD > 0){
 		b_sv5_start();
 		wait(500);
 		b_p1_start();
 		g.flag.acid_drainning = 1;
 	}
-	while(g_ALD > 0 || g_ACD > 0){
-		if(s1_alkali_tank_data_set() && g_ALD == 0){
+	while(g_ALD != 0 || g_ACD != 0){
+
+		g_ALD = s1_alkali_tank_data_set();
+		g_ACD = s2_acid_tank_data_set();
+		if(g_ALD == 0){
 			if(g.flag.alkali_drainning == 1){
 				g.flag.alkali_drainning = 0;
 				p112_alkali_drain_stop();
 			}
 		}
-
-		if(s2_acid_tank_data_set() && g_ACD == 0){
+		if(g_ACD == 0){
 			if(g.flag.acid_drainning == 1){
 				g.flag.acid_drainning = 0;
 				p113_acid_drain_stop();
 			}
 		}
+		runtime();
 	}
 	p114_alkali_drain_final_stop();
 	p115_acid_drain_final_stop();
@@ -133,9 +146,10 @@ int p115_acid_drain_final_stop(void){
 }
 int p12_startup_water_supply(void) {
 	bp_1_2();
-	wait(500);
 	b_sv2_start();
 	wait(30 * 1000);
+	b_sv1_start(); //Add 31082022
+	wait(500);
 	t_sv2_stop();
 	wait(g_T_S.t2_s * 1000);
 	//TODO: P313
@@ -146,8 +160,8 @@ int p12_startup_water_supply(void) {
 int p13_startup_electrolysis_operation(void) {
 	p131_electrolysis_start();
 	do {
-		s1_alkali_tank_data_set();
-		s2_acid_tank_data_set();
+		g_ALD = s1_alkali_tank_data_set();
+		g_ACD = s2_acid_tank_data_set();
 		runtime();
 	} while (g_ALD != 3 || g_ACD != 3);
 	p132_initial_electrolysis_stop();

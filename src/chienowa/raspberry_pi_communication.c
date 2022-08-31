@@ -11,7 +11,24 @@
 #include "crc8.h"
 #include "../r_cg_serial.h"
 
-#define HAS_UART_DATA	(uart_data.tail != uart_data.head)
+#define UART_DATA_POP()	(uart_receive_callback_count--)
+#define HAS_UART_DATA	(uart_receive_callback_count > 0)
+#define SET_RESPONSE(type)	(uart_response_type) = (type)
+
+#define SHIFT(cmd, bits) (((uint32_t)(cmd)) << (bits))
+
+#define PACK1(c1,...)          ( SHIFT(c1, 0) )
+#define PACK2(c1,c2,...)       ( SHIFT(c1, 8) | SHIFT(c2, 0) )
+#define PACK3(c1,c2,c3,...)    ( SHIFT(c1,16) | SHIFT(c2, 8) | SHIFT(c3,0) )
+#define PACK4(c1,c2,c3,c4,...) ( SHIFT(c1,24) | SHIFT(c2,16) | SHIFT(c3,8) | SHIFT(c4,0) )
+
+enum Response {
+	RESPONSE_INIT,
+	RESPONSE_IO_DATA
+}uart_response_type;
+
+uint32_t uart_receive_callback_count = 0;
+uint32_t uart_sended_callback_count = 0;
 
 struct {
 	uint8_t data[MAX_UART_DATA_QUEUE][6];
@@ -28,9 +45,6 @@ void go_next_uart_queue(void){
 	uint8_t next = uart_data.head + 1;
 	if(next >= MAX_UART_DATA_QUEUE)
 		next = 0;
-	if (next == uart_data.tail) {
-		return;
-	}
 	uart_data.head = next;
 }
 void push_uart_queue(uint8_t *const pdata){
@@ -80,40 +94,77 @@ void header_set_callback(uint8_t *const pdata){
 		case INDIVITUAL_OUTPUT:
 
 			break;
+		case WASHING_MODE:
+			break;
 		default:
 			break;
 	}
 }
+uint32_t uart_read_callback_count = 0;
+enum Communication_Header head;
+enum Communication_Command cmd;
 void header_read_callback(uint8_t *const pdata){
+	switch (head) {
+		case WASHING_MODE:
+			send_reponse(pdata, 1);
+			R_UART2_Receive(get_pointer_uart_queue(), 6);
+			break;
+		case CONTROL_SETTING:
+			send_reponse(pdata, g.control_setting.raw);
+			R_UART2_Receive(get_pointer_uart_queue(), 6);
+			break;
+		case MACHINE_IO_DATA:
+			uart_read_callback_count++;
+			send_reponse(pdata, NUMBER_OF_IO_BYTE);
+			SET_RESPONSE(RESPONSE_IO_DATA);
+			R_UART2_Receive(get_pointer_uart_queue(), 6);
+			break;
+		default:
+			send_reponse(pdata, 0);
+			R_UART2_Receive(get_pointer_uart_queue(), 6);
+			break;
+	}
 
 }
 void header_clear_callback(uint8_t *const pdata){
 
 }
-
 void communication_runtime(void){
 	if(HAS_UART_DATA){
-		uint8_t *const p_data = pop_uart_queue();
-		const enum Communication_Command cmd = (enum Communication_Command)p_data[0];
+		uint8_t *const pointer_data = pop_uart_queue();
+		cmd = (enum Communication_Command)pointer_data[0];
+		head = (enum Communication_Header)pointer_data[1];
+
 		switch (cmd) {
 			case H_SET:
-				header_set_callback(p_data);
+				header_set_callback(pointer_data);
 				break;
 			case H_READ:
-				header_read_callback(p_data);
+				header_read_callback(pointer_data);
 				break;
 			case H_ERROR:
-
 				break;
 			case H_CLEAR:
-				header_clear_callback(p_data);
+				header_clear_callback(pointer_data);
 				break;
 			default:
+				R_UART2_Receive(get_pointer_uart_queue(), 6);
 				break;
 		}
+		UART_DATA_POP();
 	}
 }
-
-void uart_callback(void){
-
+void uart_receive_callback(void){
+	uart_receive_callback_count++;
+}
+void uart_sended_callback(void){
+	uart_sended_callback_count++;
+	switch (uart_response_type) {
+		case RESPONSE_IO_DATA:
+			R_UART2_Send((uint8_t *)&g.io, NUMBER_OF_IO_BYTE);
+			uart_response_type = RESPONSE_INIT;
+			break;
+		default:
+			break;
+	}
 }

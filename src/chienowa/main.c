@@ -16,6 +16,9 @@ eeprom_config e_config = { .csi_flag = &g_csi01_flag, .csi_send_receive =
 		R_CSI01_Send_Receive };
 struct Number_Setting_s g_V_S, clone;
 struct Timer_Setting_s g_T_S;
+void set_timer_setting_default(void){
+	g_T_S.t2_s = 15;
+}
 void init(void) {
 	R_UART2_Receive(get_pointer_uart_queue(), 6);
 
@@ -23,7 +26,7 @@ void init(void) {
 	if (eeprom_init(&e_config) == 0) {
 		eeprom_set_block(NONE_BLOCK);
 	}
-
+	set_timer_setting_default();
 }
 
 const uint8_t max = 39;
