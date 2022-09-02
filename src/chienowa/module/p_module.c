@@ -43,6 +43,7 @@ int p0_system_main_prpocess(void){
 			break;
 		default:
 			//Not going here
+			p2_water_discharge_mode();
 			break;
 	}
 	return 0;
@@ -52,10 +53,11 @@ int p1_initial_working_mode_start_process(void) {
 	p11_startup_draining_water();
 	p12_startup_water_supply();
 	c_3();
-	c_5();
+//	c_5();
 	p13_startup_electrolysis_operation();
+
 	p14_initial_2nd_draining_water();
-//	p15_2nd_electrolysis_water_generation_process();
+	p15_2nd_electrolysis_water_generation_process();
 //	p11_startup_draining_water(); //replace p15 by this p11
 	tp_1();
 	return 0;
@@ -130,7 +132,7 @@ int p114_alkali_drain_final_stop(void){
 	b_sv6_start();
 	wait(500);
 	b_p2_start();
-	wait(g_T_S.t1_ms);
+	wait(g_T_S.t150_s);
 	t_p2_stop();
 	t_sv6_stop();
 	return 0;
@@ -139,7 +141,7 @@ int p115_acid_drain_final_stop(void){
 	b_sv5_start();
 	wait(500);
 	b_p1_start();
-	wait(g_T_S.t1_ms);
+	wait(g_T_S.t150_s);
 	t_p1_stop();
 	t_sv5_stop();
 	return 0;
@@ -151,7 +153,7 @@ int p12_startup_water_supply(void) {
 	b_sv1_start(); //Add 31082022
 	wait(500);
 	t_sv2_stop();
-	wait(g_T_S.t2_s * 1000);
+	wait(g_T_S.t149_s * 1000);
 	//TODO: P313
 
 	tp_1_2();
@@ -162,6 +164,7 @@ int p13_startup_electrolysis_operation(void) {
 	do {
 		g_ALD = s1_alkali_tank_data_set();
 		g_ACD = s2_acid_tank_data_set();
+		c_5();
 		runtime();
 	} while (g_ALD != 3 || g_ACD != 3);
 	p132_initial_electrolysis_stop();
@@ -179,7 +182,7 @@ int neutralized_timer_off(void) {
 int p131_electrolysis_start(void) {
 	b_sv1_start();
 	b_sp_start();
-	wait(g_T_S.t16_s * 1000);
+	wait(g_T_S.t107_s * 1000);
 	bp_1_3();
 	neutralized_timer_on();
 	g.timer.faucet_off = timer_start_ms();
@@ -187,9 +190,9 @@ int p131_electrolysis_start(void) {
 }
 
 int p132_initial_electrolysis_stop(void) {
-	tp_1_3();
+	tp_1_3(); //CVCC OFF
 	t_sp_stop();
-	wait(g_T_S.t5_s * 1000);
+	wait(g_T_S.t145_s * 1000);
 	t_sv1_stop();
 	neutralized_timer_off();
 	return 0;
@@ -202,15 +205,16 @@ int p14_initial_2nd_draining_water(void) {
 	return 0;
 }
 int p15_2nd_electrolysis_water_generation_process(void) {
-	do {
-		s1_alkali_tank_data_set();
-		s2_acid_tank_data_set();
-		runtime();
-	} while (g_ALD != 3 || g_ACD != 3);
+	CVCC_CONTROL_PIN = 1U;
+//	do {
+//		g_ALD = s1_alkali_tank_data_set();
+//		g_ACD = s2_acid_tank_data_set();
+//		runtime();
+//	} while (g_ALD != 3 || g_ACD != 3);
 	p151_2nd_electrolysis_start_process();
 	do {
-		s1_alkali_tank_data_set();
-		s2_acid_tank_data_set();
+		g_ALD = s1_alkali_tank_data_set();
+		g_ACD = s2_acid_tank_data_set();
 		runtime();
 	} while (g_ALD != 3 || g_ACD != 3);
 	p152_2nd_initial_electrolysis_stop_process();
@@ -219,14 +223,14 @@ int p15_2nd_electrolysis_water_generation_process(void) {
 int p151_2nd_electrolysis_start_process(void) {
 	b_sv1_start();
 	b_sp_start();
-	wait(g_T_S.t17_s * 1000);
+	wait(g_T_S.t151_s * 1000);
 	bp_1_5();
 	neutralized_timer_on();
 	return 0;
 }
 int p152_2nd_initial_electrolysis_stop_process(void) {
 	t_sp_stop();
-	wait(g_T_S.t5_s * 1000);
+	wait(g_T_S.t145_s * 1000);
 	t_sv1_stop();
 	neutralized_timer_off();
 	return 0;
@@ -270,7 +274,7 @@ int p21_alkali_water_discharge_mode(void){
 			g.timer.alkali_discharge = timer_start_ms();
 			// Small loop
 			do {
-				if(check_hand_sensor() || elapsed_time_ms(g.timer.alkali_discharge) >= g_T_S.t35_s * 1000){
+				if(check_hand_sensor() || elapsed_time_ms(g.timer.alkali_discharge) >= g_T_S.t125_s * 1000){
 					SYSTEM_MODE = NORMAL;
 				}else{
 					c_1(C1_OFF);
@@ -301,7 +305,7 @@ int p22_acid_water_discharge_mode(void){
 			g.timer.acid_discharge = timer_start_ms();
 			//Small loop
 			do{
-				if (check_hand_sensor() || elapsed_time_ms(g.timer.acid_discharge) >= g_T_S.t34_s * 1000 ){
+				if (check_hand_sensor() || elapsed_time_ms(g.timer.acid_discharge) >= g_T_S.t126_s * 1000 ){
 					SYSTEM_MODE = NORMAL;
 				}else{
 					c_1(C1_ON);
@@ -331,7 +335,7 @@ int p23_water_discharge_mode(void){
 			g.timer.water_discharge = timer_start_ms();
 			// Small loop
 			do {
-				if (check_hand_sensor() || elapsed_time_ms(g.timer.water_discharge) >= g_T_S.t34_s * 1000 ){
+				if (check_hand_sensor() || elapsed_time_ms(g.timer.water_discharge) >= g_T_S.t126_s * 1000 ){
 					SYSTEM_MODE = NORMAL;
 				}else{
 					c_1(C1_ON);
@@ -365,7 +369,7 @@ int p24_hand_wash_mode(void){
 			p2432();
 			p2433();
 		}
-
+		runtime();
 	}while(SYSTEM_MODE == NORMAL);
 
 	tp_2_4();
@@ -381,20 +385,20 @@ void p2411(void){
 
 void p2412(void){
 	//TODO: Turn ON hand sensor LED (Blue)
-	while (g_T_S.t29_s * 1000 - elapsed_time_ms(g.timer.alkali_discharge) > 2 * 1000 ){
+	while (g_T_S.t119_s * 1000 - elapsed_time_ms(g.timer.alkali_discharge) > 2 * 1000 ){
 		c_1(C1_ON);
 		runtime();
 	}
 	//TODO: Blink hand sensor LED (Blue)
 
-	while (elapsed_time_ms(g.timer.alkali_discharge) <= g_T_S.t29_s * 1000 &&
-			g_T_S.t29_s * 1000 - elapsed_time_ms(g.timer.alkali_discharge) <= g_T_S.t32_ms){
+	while (elapsed_time_ms(g.timer.alkali_discharge) <= g_T_S.t119_s * 1000 &&
+			g_T_S.t119_s * 1000 - elapsed_time_ms(g.timer.alkali_discharge) <= g_T_S.t120_ms){
 		runtime();
 		c_1(C1_ON);
 	}
 }
 void p2413(void){
-	while (elapsed_time_ms(g.timer.alkali_discharge) <= g_T_S.t29_s * 1000){
+	while (elapsed_time_ms(g.timer.alkali_discharge) <= g_T_S.t119_s * 1000){
 		c_1(C1_ON);
 		runtime();
 	}
@@ -416,21 +420,21 @@ void p2422(void){
 	//TODO: Turn ON hand sensor LED (Red)
 
 	//酸吐水減算タイマが２秒か?
-	while(g_T_S.t30_s * 1000 - elapsed_time_ms(g.timer.acid_discharge) > 2 * 1000 ){
+	while(g_T_S.t121_s * 1000 - elapsed_time_ms(g.timer.acid_discharge) > 2 * 1000 ){
 		c_1(C1_ON);
 		runtime();
 	}
 	//TODO: Blink hand sensor LED (Red)
 
-	while (elapsed_time_ms(g.timer.acid_discharge) <= g_T_S.t30_s * 1000 &&
-			g_T_S.t30_s * 1000 - elapsed_time_ms(g.timer.acid_discharge) <= g_T_S.t32_ms){
+	while (elapsed_time_ms(g.timer.acid_discharge) <= g_T_S.t121_s * 1000 &&
+			g_T_S.t121_s * 1000 - elapsed_time_ms(g.timer.acid_discharge) <= g_T_S.t120_ms){
 		runtime();
 		c_1(C1_ON);
 	}
 }
 
 void p2423(void){
-	while (elapsed_time_ms(g.timer.acid_discharge) <= g_T_S.t30_s * 1000){
+	while (elapsed_time_ms(g.timer.acid_discharge) <= g_T_S.t121_s * 1000){
 		c_1(C1_ON);
 		runtime();
 	}
@@ -453,7 +457,7 @@ void p2432(void){
 
 }
 void p2433(void){
-	while (elapsed_time_ms(g.timer.water_discharge) <= g_T_S.t31_s * 1000){
+	while (elapsed_time_ms(g.timer.water_discharge) <= g_T_S.t123_s * 1000){
 		c_1(C1_ON);
 		runtime();
 	}
@@ -586,7 +590,7 @@ int p312_alarm_on_off_process(void){
 }
 int p_3_13_flow_rate_process(void){
 	b_sv1_start();
-	wait(g_T_S.t3_s * 1000);
+	wait(g_T_S.t107_s * 1000);
 	//TODO: Flow rate adjust process by hand
 
 	return 0;
@@ -616,6 +620,7 @@ int p8_stop_all_processing(void){
 	t_sv5_stop();
 	t_sv6_stop();
 	t_sv7_stop();
+	CVCC_CONTROL_PIN = 0U;
 	return 0;
 }
 int p9_stop(void){

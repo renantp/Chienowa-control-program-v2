@@ -23,13 +23,19 @@ enum Communication_Command{
 
 enum Communication_Header{
 	HEADER_INIT,
-	TIMER_SETTING,
-	NUMBER_SETTING,
+	OK_USER,
+	TIME_SETTING = 2,
+	NUMBER_SETTING = 3,
 	ERROR_PACKAGE,
 	INDIVITUAL_OUTPUT,
 	MACHINE_IO_DATA = 23U,
 	WASHING_MODE = 24U,
 	CONTROL_SETTING = 44U,
+	/* Control Setting options */
+	CONTROL_DRAINAGE_MODE = 39U,
+	CONTROL_BIOMETRIC = 40U,
+	CONTROL_POWER_ON = 41U,
+	CONTROL_WATER_FILTER = 42U,
 };
 
 uint8_t * get_pointer_uart_queue(void);

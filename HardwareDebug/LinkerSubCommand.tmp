@@ -15,6 +15,7 @@
 -input=".\src/chienowa/module\t_module.obj"
 -input=".\src/chienowa\raspberry_pi_communication.obj"
 -input=".\src/chienowa\runtime.obj"
+-input=".\src/chienowa\water_flow_calculation.obj"
 -input=".\src\r_cg_adc.obj"
 -input=".\src\r_cg_adc_user.obj"
 -input=".\src\r_cg_cgc.obj"

@@ -40,9 +40,8 @@ int s3_salt_tank_data_set(void) {
 		uint8_t bit;
 	} data;
 
-
-	data.bit1=!FL8;
 	data.bit0=!FL7;
+	data.bit1=!FL8;
 
 	//data.bit = 2^2 = 4bit
 	//FL7.FL8 ---> bit1.bit0

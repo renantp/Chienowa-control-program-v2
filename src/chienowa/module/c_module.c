@@ -27,7 +27,7 @@ int c_1(uint8_t on_off){
 				if(!g_SP_F){
 					b_sv1_start();
 				}
-				if(elapsed_time_ms(g.timer.module.on.io.sp[1]/1000) >= g_T_S.t17_s){
+				if(elapsed_time_ms(g.timer.module.on.io.sp[1]/1000) >= g_T_S.t151_s){
 					bc_1();
 					g.timer.module.on.c1[2] = timer_restart_s(C_1_ON_T3);
 					return 1;
@@ -42,7 +42,7 @@ int c_1(uint8_t on_off){
 				if(g_SP_F){
 					t_sp_stop();
 				}
-				if(elapsed_time_s(g.timer.module.off.io.sp[1])/1000 >= g_T_S.t5_s){
+				if(elapsed_time_s(g.timer.module.off.io.sp[1])/1000 >= g_T_S.t145_s){
 					t_sv1_stop();
 					tc_1();
 					C_1_ON_T3 = timer_stop_s(g.timer.module.on.c1[2]);
@@ -98,7 +98,7 @@ int c_1(uint8_t on_off){
 int c_1_1(void) {
 	tc_1();
 	t_sp_stop();
-	wait(g_T_S.t15_s * 1000);
+	wait(g_T_S.t140_s * 1000);
 	t_sv1_stop();
 	C_1_ON_T3 = timer_stop_s(g.timer.module.on.c1[2]);
 	return 1;
@@ -130,7 +130,8 @@ int c_2(void) { 						//new_plan
  */
 int c_3(void){
 	bc_3();
-	switch(s3_salt_tank_data_set()){
+	g_SAD = s3_salt_tank_data_set();
+	switch(g_SAD){
 		case 0:
 			e1028();
 			return 0;
@@ -174,7 +175,7 @@ int c_5(void){
 	return 0;
 }
 int c_5_1(float *voltage){
-	if(elapsed_time_ms(g.timer.module.on.c1[1])/1000 > g_T_S.t11_s){
+	if(elapsed_time_ms(g.timer.module.on.c1[1])/1000 > g_T_S.t131_s){
 		//CVCC_VOLT= CVCC出力電圧
 		const float cvcc_voltage = g_adc.voltage;
 		//過電圧1チェック起動処理
@@ -199,7 +200,7 @@ int c_5_2(float *voltage){
 			bc_5_2();
 			g.timer.module.on.c52[2] = timer_start_ms();
 		}
-		if(elapsed_time_ms(g.timer.module.on.c52[2])/1000 > g_T_S.t41_s){
+		if(elapsed_time_ms(g.timer.module.on.c52[2])/1000 > g_T_S.t139_s){
 			e1003();
 			return -255;
 		}else{
@@ -212,7 +213,7 @@ int c_5_2(float *voltage){
 	}
 }
 int c_5_3(float *voltage){
-	if(elapsed_time_ms(g.timer.module.on.c1[1])/1000 > g_T_S.t41_s){
+	if(elapsed_time_ms(g.timer.module.on.c1[1])/1000 > g_T_S.t139_s){
 		//CVCC_VOLT= CVCC出力電圧
 		const float cvcc_voltage = g_adc.voltage;
 		//CVCC_VOLT>OVER_V3_ALARM_VALUE
@@ -236,19 +237,23 @@ int c_5_3_1(void){
 
 	const float cvcc_voltage = g_adc.voltage;
 	if(cvcc_voltage > g_V_S.v3_V){
-		if(elapsed_time_ms(g.timer.module.on.c53[2])/1000 > g_T_S.t13_s){
+		if(elapsed_time_ms(g.timer.module.on.c53[2])/1000 > g_T_S.t132_s){
 			e1004();
 			return -1;
 		}else
 			return 1;
 	}else{
-		e_current_error = NO_ERROR;
+		e_occur_error = NO_ERROR;
 		tc_5_3_1();
 		return 0;
 	}
 }
+/**
+ * Check CVCC under voltage
+ * @return
+ */
 int c_5_4(void){
-	if(elapsed_time_ms(C_1_ON_T2)/1000 > g_T_S.t14_s){
+	if(elapsed_time_ms(C_1_ON_T2)/1000 > g_T_S.t137_s){
 		const float cvcc_current = g_adc.current;
 		if(cvcc_current < g_V_S.v6_A){
 			if(!g_C_5_4_F){
@@ -263,7 +268,7 @@ int c_5_4(void){
 				g.flag.module.c54 = 1;
 
 			}
-			if(elapsed_time_ms(g.timer.module.on.c54[2])/1000 > g_T_S.t15_s){
+			if(elapsed_time_ms(g.timer.module.on.c54[2])/1000 > g_T_S.t140_s){
 				e1005();
 				return -255;
 			}else
@@ -271,7 +276,7 @@ int c_5_4(void){
 
 		}else {
 			if(g_C_5_4_F == 1){
-				e_current_error = NO_ERROR;
+				e_occur_error = NO_ERROR;
 				g_C_5_4_F = 0;
 			}
 			tc_5_4();
@@ -281,7 +286,7 @@ int c_5_4(void){
 	return 0;
 }
 int c_5_5(void){
-	if(elapsed_time_ms(C_1_ON_T2)/1000 > g_T_S.t16_s){
+	if(elapsed_time_ms(C_1_ON_T2)/1000 > g_T_S.t133_s){
 		bc_5_5();
 		c_5_5_1();
 		return 1;
@@ -374,7 +379,7 @@ int c_7(void){
 	return 0;
 }
 int c_8(void){
-	if(elapsed_time_ms(g.timer.module.on.io.sv1[1])/1000 > g_T_S.t2_s){
+	if(elapsed_time_ms(g.timer.module.on.io.sv1[1])/1000 > g_T_S.t149_s){
 		if(g.flag.module.c8 == 0){
 			bc_8();
 			g.timer.module.on.c8[2] = timer_start_ms();
@@ -383,13 +388,13 @@ int c_8(void){
 			if(g.flow_rate < g_V_S.v7_L_m){
 				tc_8();
 				return 1;
-			}else if(elapsed_time_ms(g.timer.module.on.c8[2])/1000 > g_T_S.t3_s){
+			}else if(elapsed_time_ms(g.timer.module.on.c8[2])/1000 > g_T_S.t151_s){
 				tc_8();
 				e1000();
 				return -255;
 			}
 			return -2;
-		}else if(elapsed_time_ms(g.timer.module.on.c8[2])/1000 > g_T_S.t13_s){
+		}else if(elapsed_time_ms(g.timer.module.on.c8[2])/1000 > g_T_S.t132_s){
 			tc_8();
 			e1001();
 			return -255;
@@ -400,7 +405,7 @@ int c_8(void){
 }
 int c_9(void){
 	bc_9();
-	if(elapsed_time_ms(g.timer.module.on.c1[2])/1000 > (uint32_t)g_T_S.t27_h * 60 * 60){
+	if(elapsed_time_ms(g.timer.module.on.c1[2])/1000 > (uint32_t)g_T_S.t155_h * 60 * 60){
 		e2();
 		return -255;
 	}
@@ -414,7 +419,7 @@ int c_10(void){
 					bc_10();
 					g.timer.module.on.c10[2] = timer_start_ms();
 				}
-				if(elapsed_time_ms(g.timer.module.on.c10[2])/1000 > g_T_S.t17_s){
+				if(elapsed_time_ms(g.timer.module.on.c10[2])/1000 > g_T_S.t151_s){
 					e1008();
 					return -255;
 				}
@@ -436,7 +441,7 @@ int c_11(void){
 		t_sv5_stop();
 		t_sv6_stop();
 		if(g.flag.leak_sensor == 1){
-			if(elapsed_time_ms(g.timer.module.on.c21[1])/1000 > g_T_S.t37_s){
+			if(elapsed_time_ms(g.timer.module.on.c21[1])/1000 > g_T_S.t137_s){
 				e1051();
 			}
 			return 1;
@@ -452,8 +457,8 @@ int c_12(void){
 			SV2_ON_T1,
 			g_V_S.v11_mg_L,
 			g_V_S.v12_L);
-	if(fc < g_T_S.t19_h){
-		if(fc < g_T_S.t20_h){
+	if(fc < g_T_S.t113_s){
+		if(fc < g_T_S.t114_s){
 			e1030();
 			return -1;
 		}else{
@@ -513,7 +518,7 @@ int c_15(void){
 	return 1;
 }
 int c_16(void){
-	if(elapsed_time_s(g.timer.module.on.p0[0]) > (uint32_t)g_T_S.t36_h * 60 * 60){
+	if(elapsed_time_s(g.timer.module.on.p0[0]) > (uint32_t)g_T_S.t128_s * 60 * 60){
 		bc_16();
 		if(g.flag.module.e1032 == 0){
 			e1032();
@@ -529,7 +534,7 @@ int c_17(void){
 		超えた場合
 		C_1_ON_T1> [42]
 	 */
-	if(elapsed_time_s(g.timer.module.on.c1[0]) > (uint32_t)g_T_S.t42_h * 60 * 60){
+	if(elapsed_time_s(g.timer.module.on.c1[0]) > (uint32_t)g_T_S.t149_s * 60 * 60){
 		bc_17();
 		if(g.flag.module.e1033 == 0){
 			e1033();

@@ -10,7 +10,7 @@
 
 #include "../r_cg_macrodriver.h"
 
-#define MAX_VOLTAGE (5.0)
+#define MAX_VOLTAGE (12.0)
 
 extern struct ADC_Struct {
 	uint16_t ani0;

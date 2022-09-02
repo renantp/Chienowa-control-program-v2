@@ -33,7 +33,8 @@
 #define SW3_PIN			(P10_bit.no0)
 
 #define CVCC_CONTROL_PIN	(P14_bit.no2)
-#define CVCC_ALARM_OUT_PIN	(P0_bit.no4)
+#define CVCC_ALARM_OUT_PIN	(P13_bit.no0)
+#define CVCC_ALARM_IN_PIN	(P0_bit.no4)
 
 #define FL1		(P7_bit.no1)
 #define FL2		(P7_bit.no2)
@@ -43,6 +44,8 @@
 #define FL6		(P7_bit.no0)
 #define FL7		(P5_bit.no4)
 #define FL8		(P5_bit.no3)
+
+#define FLOW_SENSOR_PIN		(P0_bit.no1)
 
 #define O_HS_IDA_PIN	(P1_bit.no5)
 #define O_HS_ICL_PIN	(P1_bit.no6)

@@ -13,6 +13,7 @@
 #define seconds()	(g_sec)
 #define MAX_QUEUE_LEN (16)
 
+uint32_t g_us;
 volatile uint32_t g_systemTick = 0;
 volatile uint32_t g_sec = 0;
 int ns_delay_ms(uint32_t *stamp, uint32_t ms) {
@@ -68,13 +69,14 @@ unsigned long elapsed_time_ms(unsigned long start_time){
 		elaps_time = 0xffffffff - start_time + millis();
 	return elaps_time;
 }
-unsigned long timer_restart_ms(unsigned long elapsed_time){
+unsigned long timer_restart_ms(unsigned long* elapsed_time){
 	unsigned long reset_start_time;
-	if(millis() >= elapsed_time)
-		reset_start_time = millis() - elapsed_time;
+	if(millis() >= *elapsed_time)
+		reset_start_time = millis() - *elapsed_time;
 	else{
-		reset_start_time = 0xffffffff - (elapsed_time - millis());
+		reset_start_time = 0xffffffff - (*elapsed_time - millis());
 	}
+	(*elapsed_time) = millis();
 	return reset_start_time;
 }
 unsigned long timer_stop_ms(unsigned long start_time){
@@ -113,4 +115,15 @@ unsigned long timer_stop_s(unsigned long start_time){
 	else
 		elaps_time = 0xffffffff - start_time + seconds();
 	return elaps_time;
+}
+
+unsigned long timer_restart_us(unsigned long * elapsed_time){
+	unsigned long reset_start_time;
+	if(g_us >= *elapsed_time)
+		reset_start_time = g_us - (*elapsed_time);
+	else{
+		reset_start_time = 0xffffffff - ((*elapsed_time) - g_us);
+	}
+	(*elapsed_time) = g_us;
+	return reset_start_time;
 }

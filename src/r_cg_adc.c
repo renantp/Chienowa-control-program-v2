@@ -23,7 +23,7 @@
 * Device(s)    : R5F104ML
 * Tool-Chain   : CCRL
 * Description  : This file implements device driver for ADC module.
-* Creation Date: 8/30/2022
+* Creation Date: 9/2/2022
 ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
@@ -59,9 +59,9 @@ void R_ADC_Create(void)
     ADM0 = _00_AD_ADM0_INITIALVALUE;  /* disable AD conversion and clear ADM0 register */
     ADMK = 1U;  /* disable INTAD interrupt */
     ADIF = 0U;  /* clear INTAD interrupt flag */
-    /* Set INTAD low priority */
-    ADPR1 = 1U;
-    ADPR0 = 1U;
+    /* Set INTAD high priority */
+    ADPR1 = 0U;
+    ADPR0 = 0U;
     /* The reset status of ADPC is analog input, so it's unnecessary to set. */
     /* Set ANI0 - ANI3 pin as analog input */
     PM2 |= 0x0FU;

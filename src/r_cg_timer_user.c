@@ -23,7 +23,7 @@
 * Device(s)    : R5F104ML
 * Tool-Chain   : CCRL
 * Description  : This file implements device driver for TAU module.
-* Creation Date: 8/30/2022
+* Creation Date: 9/2/2022
 ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
@@ -34,6 +34,8 @@ Includes
 /* Start user code for include. Do not edit comment generated here */
 #include "chienowa/hand_sensor.h"
 #include "chienowa/pin_define.h"
+#include "chienowa/water_flow_calculation.h"
+#include "chienowa/delay.h"
 /* End user code. Do not edit comment generated here */
 #include "r_cg_userdefine.h"
 
@@ -41,6 +43,7 @@ Includes
 Pragma directive
 ***********************************************************************************************************************/
 #pragma interrupt r_tau0_channel0_interrupt(vect=INTTM00)
+#pragma interrupt r_tau0_channel1_interrupt(vect=INTTM01)
 /* Start user code for pragma. Do not edit comment generated here */
 /* End user code. Do not edit comment generated here */
 
@@ -49,6 +52,7 @@ Global variables and functions
 ***********************************************************************************************************************/
 /* Start user code for global. Do not edit comment generated here */
 //volatile uint32_t g_systemTick = 0;
+uint8_t last_flow_state;
 /* End user code. Do not edit comment generated here */
 
 /***********************************************************************************************************************
@@ -66,6 +70,25 @@ static void __near r_tau0_channel0_interrupt(void)
 	}
 	hand_sensor_runtime();
 	/* End user code. Do not edit comment generated here */
+}
+
+/***********************************************************************************************************************
+* Function Name: r_tau0_channel1_interrupt
+* Description  : This function is INTTM01 interrupt service routine.
+* Arguments    : None
+* Return Value : None
+***********************************************************************************************************************/
+static void __near r_tau0_channel1_interrupt(void)
+{
+    /* Start user code. Do not edit comment generated here */
+	g_us++;
+	if(last_flow_state != FLOW_SENSOR_PIN){
+		last_flow_state = FLOW_SENSOR_PIN;
+		if(last_flow_state == 0U){
+			flow_pluse_callback();
+		}
+	}
+    /* End user code. Do not edit comment generated here */
 }
 
 /* Start user code for adding. Do not edit comment generated here */

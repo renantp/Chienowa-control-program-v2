@@ -23,7 +23,7 @@
 * Device(s)    : R5F104ML
 * Tool-Chain   : CCRL
 * Description  : This file implements main function.
-* Creation Date: 8/30/2022
+* Creation Date: 9/2/2022
 ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
@@ -92,9 +92,9 @@ void main(void)
 	while (1U) {
 		loop();
 
-		blink_led_1();
-		blink_led_2();
-		read_button();
+//		blink_led_1();
+//		blink_led_2();
+//		read_button();
 
 	}
 	/* End user code. Do not edit comment generated here */
@@ -120,6 +120,7 @@ void R_MAIN_UserInit(void)
 
 	R_TAU0_Create();
 	R_TAU0_Channel0_Start();
+	R_TAU0_Channel1_Start();
 
 	R_RTC_Create();
 	R_RTC_Start();

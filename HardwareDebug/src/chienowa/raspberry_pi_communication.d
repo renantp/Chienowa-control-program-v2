@@ -15,3 +15,5 @@ src/chienowa/raspberry_pi_communication.obj src/chienowa/raspberry_pi_communicat
 ../src/chienowa/crc8.h:
 src/chienowa/raspberry_pi_communication.obj src/chienowa/raspberry_pi_communication.d: ../src/chienowa/../r_cg_serial.h
 ../src/chienowa/../r_cg_serial.h:
+src/chienowa/raspberry_pi_communication.obj src/chienowa/raspberry_pi_communication.d: ../src/chienowa/delay.h
+../src/chienowa/delay.h:

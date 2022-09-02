@@ -12,7 +12,8 @@ C_SRCS += \
 ../src/chienowa/hand_sensor.c \
 ../src/chienowa/main.c \
 ../src/chienowa/raspberry_pi_communication.c \
-../src/chienowa/runtime.c 
+../src/chienowa/runtime.c \
+../src/chienowa/water_flow_calculation.c 
 
 COMPILER_OBJS += \
 src/chienowa/adc.obj \
@@ -23,7 +24,8 @@ src/chienowa/eeprom.obj \
 src/chienowa/hand_sensor.obj \
 src/chienowa/main.obj \
 src/chienowa/raspberry_pi_communication.obj \
-src/chienowa/runtime.obj 
+src/chienowa/runtime.obj \
+src/chienowa/water_flow_calculation.obj 
 
 C_DEPS += \
 src/chienowa/adc.d \
@@ -34,7 +36,8 @@ src/chienowa/eeprom.d \
 src/chienowa/hand_sensor.d \
 src/chienowa/main.d \
 src/chienowa/raspberry_pi_communication.d \
-src/chienowa/runtime.d 
+src/chienowa/runtime.d \
+src/chienowa/water_flow_calculation.d 
 
 # Each subdirectory must supply rules for building sources it contributes
 src/chienowa/%.obj: ../src/chienowa/%.c 

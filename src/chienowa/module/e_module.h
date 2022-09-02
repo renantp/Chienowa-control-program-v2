@@ -49,7 +49,9 @@ extern enum ERROR_ENUM{
 	M5002,
 	M5003,
 	M5005,
-}e_current_error;
+
+	E0003,
+}e_occur_error;
 int e1_faucet_refresh_process(void);
 int e11(void);
 int e2(void);

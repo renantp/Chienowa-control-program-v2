@@ -13,3 +13,7 @@ src/chienowa/runtime.obj src/chienowa/runtime.d: ../src/chienowa/circular_buffer
 ../src/chienowa/circular_buffer.h:
 src/chienowa/runtime.obj src/chienowa/runtime.d: ../src/chienowa/pin_define.h
 ../src/chienowa/pin_define.h:
+src/chienowa/runtime.obj src/chienowa/runtime.d: ../src/chienowa/adc.h
+../src/chienowa/adc.h:
+src/chienowa/runtime.obj src/chienowa/runtime.d: ../src/chienowa/water_flow_calculation.h
+../src/chienowa/water_flow_calculation.h:

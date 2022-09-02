@@ -25,3 +25,7 @@ src/chienowa/main.obj src/chienowa/main.d: ../src/chienowa/raspberry_pi_communic
 ../src/chienowa/raspberry_pi_communication.h:
 src/chienowa/main.obj src/chienowa/main.d: ../src/chienowa/../r_cg_serial.h
 ../src/chienowa/../r_cg_serial.h:
+src/chienowa/main.obj src/chienowa/main.d: ../src/chienowa/../r_cg_dac.h
+../src/chienowa/../r_cg_dac.h:
+src/chienowa/main.obj src/chienowa/main.d: ../src/chienowa/module/b_module.h
+../src/chienowa/module/b_module.h:

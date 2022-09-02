@@ -73,7 +73,7 @@ int bp_1_4(void){
 		g.flag.module.bp14 = 1;
 		g.timer.module.on.p14[0] = timer_restart_s(g_P_1_4_ON_T1);
 		g.timer.module.on.p14[1] = timer_start_ms();
-		CVCC_CONTROL_PIN = 1U;
+		CVCC_CONTROL_PIN = 0;
 	}
 	return 0;
 }

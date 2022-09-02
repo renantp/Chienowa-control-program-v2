@@ -23,7 +23,7 @@
 * Device(s)    : R5F104ML
 * Tool-Chain   : CCRL
 * Description  : This file implements device driver for CGC module.
-* Creation Date: 8/30/2022
+* Creation Date: 9/2/2022
 ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
@@ -55,9 +55,22 @@ Global variables and functions
 ***********************************************************************************************************************/
 void R_CGC_Create(void)
 {
+    uint8_t           temp_stab_set;
+    uint8_t           temp_stab_wait; 
+
     /* Set fMX */
-    CMC = _C0_CGC_HISYS_EXT | _30_CGC_SUB_EXT | _00_CGC_SYSOSC_DEFAULT | _00_CGC_SUBMODE_DEFAULT;
+    CMC = _40_CGC_HISYS_OSC | _30_CGC_SUB_EXT | _01_CGC_SYSOSC_OVER10M | _00_CGC_SUBMODE_DEFAULT;
+    OSTS = _07_CGC_OSCSTAB_SEL18;
     MSTOP = 0U;
+    temp_stab_set = _FF_CGC_OSCSTAB_STA18;
+    
+    do
+    {
+        temp_stab_wait = OSTC;
+        temp_stab_wait &= temp_stab_set;
+    }
+    while (temp_stab_wait != temp_stab_set);
+    
     /* Set fMAIN */
     MCM0 = 0U;
     /* Set fSUB */

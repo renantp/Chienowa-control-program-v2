@@ -264,52 +264,76 @@ extern circular_buffer g_rx_data;
 extern volatile int8_t g_uart2_recieve_end, g_uart2_send_end;
 extern volatile int8_t g_csi01_flag;
 extern uint32_t g_count;
-
 extern struct Timer_Setting_s{
-	uint32_t t1_ms;
-	uint32_t t2_s;
-	uint32_t t3_s;
-	uint32_t t4_2_s;
-	uint32_t t5_s;
-	uint32_t t6_h;
-	uint32_t t7_s;
-	uint32_t t8_s;
-	uint32_t t9_s;
-	uint32_t t10_s;
-	uint32_t t11_s;
-	uint32_t t12_s;
-	uint32_t t13_s;
-	uint32_t t14_s;
-	uint32_t t15_s;
-	uint32_t t16_s;
-	uint32_t t17_s;
-	uint32_t t18_h;
-	uint32_t t19_h;
-	uint32_t t20_h;
-	uint32_t t21_s;
-	uint32_t t22_s;
-	uint32_t t23_s;
-	uint32_t t24_s;
-	uint32_t t25_s;
-	uint32_t t26_s;
-	uint32_t t27_h;
-	uint32_t t28_s;
-	uint32_t t29_s;
-	uint32_t t30_s;
-	uint32_t t31_s;
-	uint32_t t32_ms;
-	uint32_t t33_s;
-	uint32_t t34_s;
-	uint32_t t35_s;
-	uint32_t t36_h;
-	uint32_t t37_s;
-	uint32_t t38_s;
-	uint32_t t39_h;
-	uint32_t t40_s;
-	uint32_t t41_s;
-	uint32_t t42_h;
-	char crc;
-}g_T_S;
+	uint16_t t101_h;
+	uint16_t t102_h;
+	uint16_t t103_s;
+	uint16_t t104_m;
+	uint16_t t105_;
+	uint16_t t106_;
+	uint16_t t107_s;
+	uint16_t t108_m;
+	uint16_t t109_;
+	uint16_t t110_;
+	uint16_t t111_;
+	uint16_t t112_;
+	uint16_t t113_s;
+	uint16_t t114_s;
+	uint16_t t115_s;
+	uint16_t t116_s;
+	uint16_t t117_s;
+	uint16_t t118_s;
+	uint16_t t119_s;
+	uint16_t t120_ms;
+	uint16_t t121_s;
+	uint16_t t122_ms;
+	uint16_t t123_s;
+	uint16_t t124_;
+	uint16_t t125_s;
+	uint16_t t126_s;
+	uint16_t t127_s;
+	uint16_t t128_s;
+	uint16_t t129_;
+	uint16_t t130_;
+	uint16_t t131_s;
+	uint16_t t132_s;
+	uint16_t t133_s;
+	uint16_t t134_;
+	uint16_t t135_;
+	uint16_t t136_;
+	uint16_t t137_s;
+	uint16_t t138_s;
+	uint16_t t139_s;
+	uint16_t t140_s;
+	uint16_t t141_;
+	uint16_t t142_;
+	uint16_t t143_s;
+	uint16_t t144_s;
+	uint16_t t145_s;
+	uint16_t t146_h;
+	uint16_t t147_;
+	uint16_t t148_;
+	uint16_t t149_s;
+	uint16_t t150_s;
+	uint16_t t151_s;
+	uint16_t t152_;
+	uint16_t t153_;
+	uint16_t t154_;
+	uint16_t t155_h;
+	uint16_t t156_s;
+	uint16_t t157_;
+	uint16_t t158_;
+	uint16_t t159_;
+	uint16_t t160_;
+	uint16_t t161_h;
+	uint16_t t162_s;
+	uint16_t t163_;
+	uint16_t t164_;
+	uint16_t t165_;
+	uint16_t t166_;
+
+	uint16_t crc;
+}g_T_S, g_T_S_buffer;
 extern struct Number_Setting_s {
 	float v1_V;
 	float v2_V;
@@ -323,10 +347,11 @@ extern struct Number_Setting_s {
 	float v10_V;
 	float v11_mg_L;
 	float v12_L;
-	char crc;
-} g_V_S;
+	uint32_t crc;
+} g_V_S, g_V_S_buffer;
 
 enum WASH_MODE_E {
+	WASH_MODE_INIT,
 	HAND_WASHING_MODE,
 	WATER_MODE,
 	ACID_MODE,
@@ -357,7 +382,10 @@ struct IO_Struct{
 		uint8_t sv7: 1;
 		uint8_t sv8: 1;
 
-		uint8_t RSVD: 8; //	Reserved
+		uint8_t sw1: 1;
+		uint8_t sw2: 1;
+		uint8_t sw3: 1;
+		uint8_t RSVD: 5; //	Reserved
 	}valve; // 2 byte
 
 	uint8_t pump_1: 1;
@@ -541,7 +569,9 @@ struct Timer {
 	struct Module_Timer off;
 };
 
-#define NUMBER_OF_IO_BYTE		(4 + 12)
+#define NUMBER_OF_IO_BYTE				(4 + 12)
+#define NUMBER_OF_TIMER_SETTING_BYTE	(sizeof(g_T_S))
+#define NUMBER_OF_NUMBER_SETTING_BYTE	(sizeof(g_V_S))
 
 extern struct GLOBAL{
 	struct {
@@ -562,7 +592,10 @@ extern struct GLOBAL{
 		uint8_t e_1022_cvcc_stop;
 		uint8_t e_1026_cvcc_stop;
 		uint8_t m1030;
-		uint8_t reset_button, completion_button; //For error button handle
+		//For error button handle
+		uint8_t reset_button,
+		completion_button,
+		setting_button;
 	}flag;
 
 	struct{
@@ -574,10 +607,10 @@ extern struct GLOBAL{
 		struct Timer module;
 		uint32_t c55_20;
 	}timer;
+	struct IO_Struct io;
 	float flow_rate;
 	float cvvc_voltage; // 4 bytes
 	float cvcc_current; // 4 bytes
-	struct IO_Struct io;
 	union {
 		struct{
 			uint8_t drain :1;

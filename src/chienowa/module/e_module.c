@@ -15,7 +15,7 @@
 #include "../runtime.h"
 #include "../delay.h"
 
-enum ERROR_ENUM e_current_error;
+enum ERROR_ENUM e_occur_error;
 
 /**
  *	Wait until the reset button on Raspberry was pressed.
@@ -27,7 +27,7 @@ void wait_for_reset_button(uint8_t clear_error){
 	}
 	RESET_ERROR_FLAG = 0;
 	if (clear_error)
-		e_current_error = NO_ERROR;
+		e_occur_error = NO_ERROR;
 }
 
 /**
@@ -38,7 +38,7 @@ void wait_for_reset_button(uint8_t clear_error){
 int e1_faucet_refresh_process(void){
 	be_1();
 	e11();
-	e_current_error = E1;
+	e_occur_error = E1;
 	te_1();
 	return 0;
 }
@@ -52,7 +52,7 @@ int e11(void){
 	b_sv1_start();
 	b_sv2_start();
 	b_b_led_b();
-	wait((uint32_t)g_T_S.t40_s * 1000);
+	wait((uint32_t)g_T_S.t162_s * 1000);
 	t_sv1_stop();
 	t_sv2_stop();
 	t_w_led_b();
@@ -67,7 +67,7 @@ int e11(void){
 int e2(void){
 	b_sv7_start();
 	//B_SV7_ont2>（[28]s Neutralized） ON?
-	if(elapsed_time_ms(SV7_ON_T2)/1000 > g_T_S.t28_s){
+	if(elapsed_time_ms(SV7_ON_T2)/1000 > g_T_S.t156_s){
 		C_1_ON_T3 = 0;
 		t_sv7_stop();
 	}
@@ -79,7 +79,7 @@ int e2(void){
  * @return
  */
 int e3(void){
-	e_current_error = M5005;  //タッチパネルに電源OFF依頼表示 Power off request display on touch panel
+//	e_current_error = M5005;  //タッチパネルに電源OFF依頼表示 Power off request display on touch panel
 	while(1){
 		runtime();
 	}
@@ -92,7 +92,7 @@ int e3(void){
  */
 int e1000(void){
 	c_1_1();
-	e_current_error = M1000;
+	e_occur_error = M1000;
 	p9_stop();
 	p_3_13_flow_rate_process();
 	e3();
@@ -105,7 +105,7 @@ int e1000(void){
  */
 int e1001(void){
 	c_1_1();
-	e_current_error = M1001;
+	e_occur_error = M1001;
 	p9_stop();
 	p_3_13_flow_rate_process();
 	e3();
@@ -118,7 +118,7 @@ int e1001(void){
  */
 int e1002(void){
 	c_1_1();
-	e_current_error = M1002;
+	e_occur_error = M1002;
 	p9_stop();
 	wait_for_reset_button(1);
 	return 0;
@@ -130,7 +130,7 @@ int e1002(void){
  */
 int e1003(void){
 	c_1_1();
-	e_current_error = M1003;
+	e_occur_error = M1003;
 	p9_stop();
 	wait_for_reset_button(1);
 	return 0;
@@ -142,7 +142,7 @@ int e1003(void){
  */
 int e1004(void){
 	c_1_1();
-	e_current_error = M1004;
+	e_occur_error = M1004;
 	wait_for_reset_button(1);
 	return 0;
 }
@@ -153,7 +153,7 @@ int e1004(void){
  */
 int e1005(void){
 	c_1_1();
-	e_current_error = M1005;
+	e_occur_error = M1005;
 	p9_stop();
 	wait_for_reset_button(1);
 	return 0;
@@ -164,7 +164,7 @@ int e1005(void){
  * @return
  */
 int e1006(void){
-	e_current_error = M1006;
+	e_occur_error = M1006;
 	return 0;
 }
 /**
@@ -174,7 +174,7 @@ int e1006(void){
  */
 int e1007(void){
 	c_1_1();
-	e_current_error = M1007;
+	e_occur_error = M1007;
 	p9_stop();
 	e3();
 	return 0;
@@ -186,7 +186,7 @@ int e1007(void){
  */
 int e1008(void){
 	c_1_1();
-	e_current_error = M1008;
+	e_occur_error = M1008;
 	p9_stop();
 	e3();
 	return 0;
@@ -198,7 +198,7 @@ int e1008(void){
  */
 int e1009(void){
 	c_1_1();
-	e_current_error = M1009;
+	e_occur_error = M1009;
 	p9_stop();
 	e3();
 	return 0;
@@ -210,7 +210,7 @@ int e1009(void){
  */
 int e1020(void){
 	c_1_1();
-	e_current_error = M1020;
+	e_occur_error = M1020;
 //	Wait （Drain by Human）
 	wait_for_reset_button(1);
 	return 0;
@@ -222,7 +222,7 @@ int e1020(void){
  */
 int e1021(void){
 	c_1_1();
-	e_current_error = M1021;
+	e_occur_error = M1021;
 	p9_stop();
 	wait_for_reset_button(1);
 	return 0;
@@ -234,7 +234,7 @@ int e1021(void){
  */
 int e1022(void){
 	c_1_1();
-	e_current_error = M1022;
+	e_occur_error = M1022;
 //	Wait （Close cap by human）
 	wait_for_reset_button(1);
 	return 0;
@@ -246,7 +246,7 @@ int e1022(void){
  */
 int e1023(void){
 	c_1_1();
-	e_current_error = M1023;
+	e_occur_error = M1023;
 	p9_stop();
 	e3();
 	return 0;
@@ -258,7 +258,7 @@ int e1023(void){
  */
 int e1024(void){
 	c_1_1();
-	e_current_error = M1024;
+	e_occur_error = M1024;
 	p9_stop();
 	e3();
 	return 0;
@@ -270,7 +270,7 @@ int e1024(void){
  */
 int e1025(void){
 	c_1_1();
-	e_current_error = M1025;
+	e_occur_error = M1025;
 	p9_stop();
 	e3();
 	return 0;
@@ -282,7 +282,7 @@ int e1025(void){
  */
 int e1026(void){
 	c_1_1();
-	e_current_error = M1026;
+	e_occur_error = M1026;
 	p9_stop();
 	e3();
 	return 0;
@@ -297,14 +297,15 @@ int e1028(void){
 		if(g.flag.module.e1028 == 0){
 			t_p1_stop();
 			t_sv3_stop();
-			e_current_error = M1028;
+			e_occur_error = M1028;
 			b_r_led_b();
 			g.flag.module.e1028 = 1;
 		}
+		runtime();
 	}
 	if(g.flag.module.e1028 == 1){
 		g.flag.module.e1028 = 0;
-		e_current_error = NO_ERROR;
+		e_occur_error = NO_ERROR;
 		t_r_led_b();
 	}
 	return 0;
@@ -319,14 +320,15 @@ int e1029(void){
         if(g.flag.module.e1029 == 0){
             t_p2_stop();
             t_sv4_stop();
-			e_current_error = M1029;
+			e_occur_error = M1029;
             b_b_led_b();
             g.flag.module.e1029 = 1;
         }
+        runtime();
     }
     if(g.flag.module.e1029 == 1){
     	g.flag.module.e1029 = 0;
-        e_current_error = NO_ERROR;
+        e_occur_error = NO_ERROR;
         t_b_led_b();
     }
 	return 0;
@@ -338,12 +340,12 @@ int e1029(void){
  */
 int e1030(void){
 	M1030_F++;
-	e_current_error = M1030;
+	e_occur_error = M1030;
 	return 0;
 }
 int e1031(void){
 	c_1_1();
-	e_current_error = M1031;
+	e_occur_error = M1031;
 //	Wait filter changed （Replace by human）
 	wait_for_reset_button(1);
 	return 0;
@@ -370,7 +372,7 @@ int e1031_1(void){
  * @return
  */
 int e1032(void){
-	e_current_error = M1032;
+	e_occur_error = M1032;
 	g.flag.module.e1032 = 1;
 	return 0;
 }
@@ -380,7 +382,7 @@ int e1032(void){
  * @return
  */
 int e1033(void){
-	e_current_error = M1033;
+	e_occur_error = M1033;
 	g.flag.module.e1033 = 1;
 	return 0;
 }
@@ -391,7 +393,7 @@ int e1033(void){
  */
 int e1034(void){
 	c_1_1();
-	e_current_error = M1034;
+	e_occur_error = M1034;
 	g.flag.module.e1034 = 1;
 	return 0;
 }
@@ -402,7 +404,7 @@ int e1034(void){
  */
 int e1035(void){
 	c_1_1();
-	e_current_error = M1035;
+	e_occur_error = M1035;
 	g.flag.module.e1035 = 1;
 	return 0;
 }
@@ -413,7 +415,7 @@ int e1035(void){
  */
 int e1051(void){
 	c_1_1();
-	e_current_error = M1051;
+	e_occur_error = M1051;
 	p9_stop();
 	e3();
 	return 0;
@@ -425,7 +427,7 @@ int e1051(void){
  */
 int e5001(void){
 	c_1_1();
-	e_current_error = M5001;
+	e_occur_error = M5001;
 	return 0;
 }
 /**
@@ -434,7 +436,7 @@ int e5001(void){
  * @return
  */
 int e5002(void){
-	e_current_error = M5002;
+	e_occur_error = M5002;
 	return 0;
 }
 /**
@@ -444,7 +446,7 @@ int e5002(void){
  */
 int e5003(void){
 	c_1_1();
-	e_current_error = M5003;
+	e_occur_error = M5003;
 	p8_stop_all_processing();
 	p1_initial_working_mode_start_process();
 	return 0;

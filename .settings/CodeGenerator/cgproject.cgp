@@ -301,8 +301,8 @@
         </Port11>
         <Port12>
           <P120 Chip="R5F104AF,R5F104AG,R5F104BF,R5F104BG,R5F104CF,R5F104CG,R5F104EF,R5F104EG,R5F104EH,R5F104FF,R5F104FG,R5F104FH,R5F104FJ,R5F104GF,R5F104GG,R5F104GH,R5F104GJ,R5F104GK,R5F104GL,R5F104JF,R5F104JG,R5F104JH,R5F104JJ,R5F104JK,R5F104JL,R5F104LF,R5F104LG,R5F104LH,R5F104LJ,R5F104LK,R5F104LL,R5F104MF,R5F104MG,R5F104MH,R5F104MJ,R5F104MK,R5F104ML,R5F104PF,R5F104PG,R5F104PH,R5F104PJ,R5F104PK,R5F104PL" Name="P120/ANI19/VCOUT0" DIN="true" Pullup="true" AltFunc="P120" Point="I/O" />
-          <P121 Name="P121/X1" AltFunc="" Point="I" />
-          <P122 Name="P122/X2/EXCLK" AltFunc="EXCLK" Point="I" />
+          <P121 Name="P121/X1" AltFunc="X1" Point="I" />
+          <P122 Name="P122/X2/EXCLK" AltFunc="X2" Point="I" />
           <P123 Chip="RL78G14_40pin,RL78G14_44pin,RL78G14_48pin,RL78G14_49pin,RL78G14_52pin,RL78G14_64pin,RL78G14_80pin,RL78G14_100pin,RL78G14_128pin" Name="P123/XT1" AltFunc="" Point="I" />
           <P124 Chip="RL78G14_40pin,RL78G14_44pin,RL78G14_48pin,RL78G14_49pin,RL78G14_52pin,RL78G14_64pin,RL78G14_80pin,RL78G14_100pin,RL78G14_128pin" Name="P124/XT2/EXCLKS" AltFunc="EXCLKS" Point="I" />
         </Port12>
@@ -667,7 +667,7 @@
             <INTTM00 InUse="1" ISR="r_tau0_channel0_interrupt" />
           </Channel0>
           <Channel1>
-            <INTTM01 InUse="0" ISR="r_tau0_channel1_interrupt" />
+            <INTTM01 InUse="1" ISR="r_tau0_channel1_interrupt" />
             <INTTM01H InUse="0" ISR="r_tau0_channel1_higher8bits_interrupt" />
           </Channel1>
           <Channel2>
@@ -1303,10 +1303,10 @@
               <R_TAU0_Channel0_Set_SoftwareTriggerOn UserName="" LibName="R_TAU_Channeln_Set_SoftwareTriggerOn" InUse="0" />
             </Channel0>
             <Channel1 InUse="">
-              <R_TAU0_Channel1_Start UserName="" LibName="R_TAU_Channeln_Start" InUse="0" />
+              <R_TAU0_Channel1_Start UserName="" LibName="R_TAU_Channeln_Start" InUse="1" />
               <R_TAU0_Channel1_Higher8bits_Start UserName="" LibName="R_TAU_Channeln_Higher8bits_Start" InUse="0" />
               <R_TAU0_Channel1_Lower8bits_Start UserName="" LibName="R_TAU_Channeln_Lower8bits_Start" InUse="0" />
-              <R_TAU0_Channel1_Stop UserName="" LibName="R_TAU_Channeln_Stop" InUse="0" />
+              <R_TAU0_Channel1_Stop UserName="" LibName="R_TAU_Channeln_Stop" InUse="1" />
               <R_TAU0_Channel1_Higher8bits_Stop UserName="" LibName="R_TAU_Channeln_Higher8bits_Stop" InUse="0" />
               <R_TAU0_Channel1_Lower8bits_Stop UserName="" LibName="R_TAU_Channeln_Lower8bits_Stop" InUse="0" />
               <R_TAU0_Channel1_Get_PulseWidth UserName="" LibName="R_TAU_Channeln_Get_PulseWidth" InUse="0" />
@@ -1402,7 +1402,7 @@
               <r_tau0_channel0_interrupt UserName="r_tau0_channel0_interrupt" INTHandle="" LibName="r_tau_channeln_interrupt" InUse="1" />
             </Channel0>
             <Channel1 InUse="">
-              <r_tau0_channel1_interrupt UserName="" INTHandle="" LibName="r_tau_channeln_interrupt" InUse="0" />
+              <r_tau0_channel1_interrupt UserName="r_tau0_channel1_interrupt" INTHandle="" LibName="r_tau_channeln_interrupt" InUse="1" />
               <r_tau0_channel1_higher8bits_interrupt UserName="" INTHandle="" LibName="r_tau_channeln_higher8bits_interrupt" InUse="0" />
             </Channel1>
             <Channel2 InUse="">
@@ -1699,23 +1699,23 @@
         <cg_security2 Name="cg_security2" Value="00" />
         <pior1_value Name="pior1_value" Value="00" />
         <cg_security1 Name="cg_security1" Value="00" />
+        <gtraceused Name="gtraceused" Value="" />
         <cg_security9 Name="cg_security9" Value="00" />
         <rrm Name="rrm" Value="7FE00" />
-        <lvi_option Name="lvi_option" Value="FF" />
         <cg_security6 Name="cg_security6" Value="00" />
         <cg_crc_area Name="cg_crc_area" Value="00" />
         <cg_iawctl_value Name="cg_iawctl_value" Value="00" />
         <cg_security0 Name="cg_security0" Value="00" />
-        <cg_security7 Name="cg_security7" Value="00" />
         <ocdstart Name="ocdstart" Value="7FE00" />
         <cg_security4 Name="cg_security4" Value="00" />
         <cg_pms_value Name="cg_pms_value" Value="00" />
         <cg_security3 Name="cg_security3" Value="00" />
         <cg_onchip Name="cg_onchip" Value="" />
         <pior_value Name="pior_value" Value="00" />
-        <cg_ocd_ram_size Name="cg_ocd_ram_size" Value="512" />
         <cg_option Name="cg_option" Value="84" />
-        <gtraceused Name="gtraceused" Value="" />
+        <cg_ocd_ram_size Name="cg_ocd_ram_size" Value="512" />
+        <cg_security7 Name="cg_security7" Value="00" />
+        <lvi_option Name="lvi_option" Value="FF" />
       </GlobleUserTag>
     </TAG>
   </DIR>
@@ -1806,7 +1806,7 @@
       <setting name="High_speed_internal_oscillator" value="operation" />
       <setting name="High_speed_internal_frequency" value="11" />
       <setting name="High_speed_system_clock" value="operation" />
-      <setting name="High_speed_system_input" value="external" />
+      <setting name="High_speed_system_input" value="X1" />
       <setting name="HighSpeedSystemStable" value="7" />
       <setting name="High_speed_system_clock_frequency" value="20" />
       <setting name="SubclockFrequency" value="32.768" />
@@ -2630,7 +2630,7 @@
       <setting name="AD_Trigger" value="softtri" />
       <setting name="AD_Trigger_Timer" value="0" />
       <setting name="Mode" value="ONESELECT" />
-      <setting name="InputPins" value="8" />
+      <setting name="InputPins" value="5" />
       <setting name="InputPinsAttach" value="ANI0 - ANI3" />
       <setting name="AD_Inputpin16" value="unused" />
       <setting name="AD_Inputpin17" value="unused" />
@@ -2650,7 +2650,7 @@
       <setting name="AREAFunction" value="AREA1" />
       <setting name="AREAValue_ADUL" value="255" />
       <setting name="AREAValue_ADLL" value="0" />
-      <setting name="Interrput_priority" value="3" />
+      <setting name="Interrput_priority" value="0" />
       <setting name="AD_interrupt" value="used" />
     </ADC>
     <DAC>
@@ -2681,19 +2681,19 @@
           <setting name="Intervalvalue_Low8bits_Scale" value="-1" />
           <setting name="Generate_interrupt_when_couting_started" value="no" />
           <setting name="Interrupt" value="used" />
-          <setting name="Interrupt_priority" value="3" />
+          <setting name="Interrupt_priority" value="0" />
           <setting name="InterruptH_priority" value="3" />
           <setting name="InterruptH8" value="unused" />
         </TAUInterval0>
       </Channel0>
       <Channel1>
-        <setting name="ChannelFunction" value="0" />
+        <setting name="ChannelFunction" value="1" />
         <setting name="Pinselection" value="-1" />
         <TAUInterval1>
           <setting name="OperationMode" value="16bits" />
           <setting name="Count_clock" value="MCK clock" />
           <setting name="Sub_clock_mode" value="-1" />
-          <setting name="Interval_value" value="100" />
+          <setting name="Interval_value" value="1" />
           <setting name="Value_scale" value="1" />
           <setting name="Intervalvalue_High8bits" value="100" />
           <setting name="Intervalvalue_High8bits_scale" value="1" />
