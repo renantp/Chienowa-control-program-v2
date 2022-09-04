@@ -217,7 +217,7 @@ int bp_8(void){
 }
 
 
-int b_p1_start(void){
+int b_p1(void){
 	if ( g_P1_F == 0){
 		PUMP_1_PIN = PUMP_ON;
 		g_P1_F = 1;
@@ -228,7 +228,7 @@ int b_p1_start(void){
 	}
 	return 0;
 }
-int b_p2_start(void){
+int b_p2(void){
 	if( g_P2_F == 0 ){
 		PUMP_2_PIN = PUMP_ON;
 		g_P2_F = 1;
@@ -248,7 +248,7 @@ int b_sp_start(void){
 	}
 	return 0;
 }
-int b_sv1_start(void){
+int b_sv1(void){
 	if ( g.io.valve.sv1 == 0){
 		SV1_PIN = VALVE_ON;
 		g.io.valve.sv1 = 1;
@@ -259,7 +259,7 @@ int b_sv1_start(void){
 	}
 	return 0;
 }
-int b_sv2_start(void){
+int b_sv2(void){
 	if( g.io.valve.sv2 == 0){
 		SV2_PIN = VALVE_ON;
 		g.io.valve.sv2 = 1;
@@ -270,7 +270,7 @@ int b_sv2_start(void){
 	}
 	return 0;
 }
-int b_sv3_start(void){
+int b_sv3(void){
 	if(g.io.valve.sv3 == 0){
 		SV3_PIN = VALVE_ON;
 		g.io.valve.sv3 = 1;
@@ -281,7 +281,7 @@ int b_sv3_start(void){
 	}
 	return 0;
 }
-int b_sv4_start(void){
+int b_sv4(void){
 	if(g.io.valve.sv4 == 0){
 		SV4_PIN = VALVE_ON;
 		g.io.valve.sv4 = 1;
@@ -292,7 +292,7 @@ int b_sv4_start(void){
 	}
 	return 0;
 }
-int b_sv5_start(void){
+int b_sv5(void){
 	if ( g.io.valve.sv5 == 0){
 		SV5_PIN = VALVE_ON;
 		g.io.valve.sv5 = 1;
@@ -303,7 +303,7 @@ int b_sv5_start(void){
 	}
 	return 0;
 }
-int b_sv6_start(void){
+int b_sv6(void){
 	if( g.io.valve.sv6 == 0 ){
 		SV6_PIN = VALVE_ON;
 		g.io.valve.sv6 = 1;

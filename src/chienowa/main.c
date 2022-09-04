@@ -28,7 +28,7 @@ void set_timer_setting_default(void){
 //	g_T_S.t105_;
 //	g_T_S.t106_;
 	g_T_S.t107_s = 10;
-	g_T_S.t108_m = 30;
+	g_T_S.t108_m = 3;
 //	g_T_S.t109_;
 //	g_T_S.t110_;
 //	g_T_S.t111_;
@@ -69,7 +69,7 @@ void set_timer_setting_default(void){
 	g_T_S.t146_h = 168;
 //	g_T_S.t147_;
 //	g_T_S.t148_;
-	g_T_S.t149_s = 15;
+	g_T_S.t149_s = 15U * 60;
 	g_T_S.t150_s = 600;
 	g_T_S.t151_s = 5;
 //	g_T_S.t152_;
@@ -125,6 +125,6 @@ void init(void) {
 const uint8_t max = 39;
 uint16_t sended, checked;
 void loop(void) {
-	p0_system_main_prpocess();
+	p_0();
 	runtime();
 }

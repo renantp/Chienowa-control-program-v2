@@ -16,7 +16,7 @@
 #include "../adc.h"
 #include "../runtime.h"
 /**
- *
+ * Check valid 02092022
  * @param on_off
  * @return
  */
@@ -25,9 +25,9 @@ int c_1(uint8_t on_off){
 		case 1:
 			if(!g_C_1_F){
 				if(!g_SP_F){
-					b_sv1_start();
+					b_sv1();
 				}
-				if(elapsed_time_ms(g.timer.module.on.io.sp[1]/1000) >= g_T_S.t151_s){
+				if(elapsed_time_ms(g.timer.module.on.io.sp[1]/1000) >= g_T_S.t151_s){		// Change from g_T_S.t17_s to g_T_S.t151_s
 					bc_1();
 					g.timer.module.on.c1[2] = timer_restart_s(C_1_ON_T3);
 					return 1;
@@ -40,10 +40,10 @@ int c_1(uint8_t on_off){
 		case 0:
 			if(g_C_1_F){
 				if(g_SP_F){
-					t_sp_stop();
+					t_sp();
 				}
-				if(elapsed_time_s(g.timer.module.off.io.sp[1])/1000 >= g_T_S.t145_s){
-					t_sv1_stop();
+				if(elapsed_time_s(g.timer.module.off.io.sp[1])/1000 >= g_T_S.t145_s){		// Change from g_T_S.t5_s to g_T_S.t145_s
+					t_sv1();
 					tc_1();
 					C_1_ON_T3 = timer_stop_s(g.timer.module.on.c1[2]);
 					return 2;
@@ -54,55 +54,23 @@ int c_1(uint8_t on_off){
 		default:
 			return 0;
 	}
-//	if(on_off){
-//		if(g.flag.module.c1 != 0){
-//			c5_electrolysis_check_process();
-//			//TODO: c23()
-//
-//			return 0;
-//		}
-//		if(SP_PIN == PUMP_OFF){
-////		SP_PIN = PUMP_OFF; //SP_F=0?
-//			b_sv1_start(); //SV１（給水） ON処理
-//			b_sp_start(); //SP（塩ポンプ） ON処理
-//		}
-//		if(elapsed_time_s(SP_ON_T2)/1000 >= g_T_S.t17_s){
-//			//BC-1 電解業務起動処理
-//			bc_1();
-//			C_1_ON_T3 = timer_restart_s(C_1_ON_T3);
-//			return 0;
-//		}else{
-//			return -1;
-//		}
-//	}else{
-//		//C_1_F=1
-//		if(g.flag.module.c1){
-//			return 0;
-//		}
-//		//SP_F=1
-//		SP_PIN = PUMP_ON;
-//		//T-SP   SP（塩ポンプ）Stop処理
-//		t_sp_stop();
-//		if(elapsed_time_ms(SP_OFF_T2)/1000 >= g_T_S.t5_s){
-//			t_sv1_stop();
-//			//TODO: tc1() flow chart is missing
-//
-//			C_1_ON_T3 = timer_stop_s(C_1_ON_T3);
-//			return -1;
-//		}else{
-//			return -2;
-//		}
-//	}
-//	return 0;
 }
+/**
+ * Check valid 02092022
+ * @return
+ */
 int c_1_1(void) {
 	tc_1();
-	t_sp_stop();
-	wait(g_T_S.t140_s * 1000);
-	t_sv1_stop();
+	t_sp();
+	wait(g_T_S.t140_s * 1000); // Change g_T_S.t15_s to g_T_S.t140_s
+	t_sv1();
 	C_1_ON_T3 = timer_stop_s(g.timer.module.on.c1[2]);
 	return 1;
 }
+/**
+ * Check valid 02092022
+ * @return
+ */
 int c_2(void) { 						//new_plan
 	bc_3();
 	s1_alkali_tank_data_set();
@@ -125,7 +93,7 @@ int c_2(void) { 						//new_plan
 	return g_ALD;
 }
 /**
- *
+ * Check valid 02092022
  * @return
  */
 int c_3(void){
@@ -144,10 +112,15 @@ int c_3(void){
 			return -1;
 	}
 }
+/**
+ * Check valid 02092022
+ * @return
+ */
 int c_4(void){
 	bc_4();
-//	塩タンク状況（SAD）取得
-	switch(s3_salt_tank_data_set()){
+	//	塩タンク状況（SAD）取得
+	g_SAD = s3_salt_tank_data_set();
+	switch(g_SAD){
 		case 0:
 			e1021();	//TODO: E1021
 			break;
@@ -163,19 +136,21 @@ int c_4(void){
 	return 0;
 }
 int c_5(void){
-	bc_5();
-	//過電圧1チェック処理
-	c_5_1(&g_V_S.v1_V);
-	c_5_2(&g_V_S.v2_V);
-	c_5_3(&g_V_S.v3_V);
-	c_5_4();
-	c_5_5();
-	c_5_6();
-	tc_5();
+	if(CVCC_CONTROL_PIN == 1U){
+		bc_5();
+		//過電圧1チェック処理
+		c_5_1(&g_V_S.v1_V);
+		c_5_2(&g_V_S.v2_V);
+		c_5_3(&g_V_S.v3_V);
+		c_5_4();
+		c_5_5();
+		c_5_6();
+		tc_5();
+	}
 	return 0;
 }
 int c_5_1(float *voltage){
-	if(elapsed_time_ms(g.timer.module.on.c1[1])/1000 > g_T_S.t131_s){
+	if(elapsed_time_ms(g.timer.module.on.c1[1])/1000 > g_T_S.t131_s){	// Change g_T_S.t11_s to g_T_S.t131_s
 		//CVCC_VOLT= CVCC出力電圧
 		const float cvcc_voltage = g_adc.voltage;
 		//過電圧1チェック起動処理
@@ -435,11 +410,11 @@ int c_11(void){
 	//漏水センサーON
 	if(g.flag.leak_sensor == 1){
 		bc_11();
-		t_sv2_stop();
-		t_sv3_stop();
-		t_sv4_stop();
-		t_sv5_stop();
-		t_sv6_stop();
+		t_sv2();
+		t_sv3();
+		t_sv4();
+		t_sv5();
+		t_sv6();
 		if(g.flag.leak_sensor == 1){
 			if(elapsed_time_ms(g.timer.module.on.c21[1])/1000 > g_T_S.t137_s){
 				e1051();

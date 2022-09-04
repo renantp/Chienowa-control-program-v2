@@ -13,38 +13,38 @@
 /***********************************************************************************************************************
  Main operation
  ***********************************************************************************************************************/
-int p1_initial_working_mode_start_process(void);
-int p0_system_main_prpocess(void);
-int p01_system_main_sub_system(void); //Do not need
-int p11_startup_draining_water(void);
-int p111_startup_drain_tank(void);
-int p112_alkali_drain_stop(void);
-int p113_acid_drain_stop(void);
-int p114_alkali_drain_final_stop(void);
-int p115_acid_drain_final_stop(void);
-int p12_startup_water_supply(void);
-int p13_startup_electrolysis_operation(void);
-int p131_electrolysis_start(void);
-int p132_initial_electrolysis_stop(void);
-int p14_initial_2nd_draining_water(void);
-int p15_2nd_electrolysis_water_generation_process(void);
-int p151_2nd_electrolysis_start_process(void);
-int p152_2nd_initial_electrolysis_stop_process(void);
+int p_1(void);
+int p_0(void);
+int p(void); //Do not need
+int p_1_1(void);
+int p_1_1_1(void);
+int p_1_1_2(void);
+int p_1_1_3(void);
+int p_1_1_4(void);
+int p_1_1_5(void);
+int p_1_2(void);
+int p_1_3(void);
+int p_1_3_1(void);
+int p_1_3_2(void);
+int p_1_4(void);
+int p_1_5(void);
+int p_1_5_1(void);
+int p_1_5_2(void);
 
-int p2_water_discharge_mode(void);
-int p21_alkali_water_discharge_mode(void);
-int p22_acid_water_discharge_mode(void);
-int p23_water_discharge_mode(void);
-int p24_hand_wash_mode(void);
-void p2411(void);
-void p2412(void);
-void p2413(void);
-void p2421(void);
-void p2422(void);
-void p2423(void);
-void p2431(void);
-void p2432(void);
-void p2433(void);
+int p_2(void);
+int p_2_1(void);
+int p_2_2(void);
+int p_2_3(void);
+int p_2_4(void);
+void p_2_4_1_1(void);
+void p_2_4_1_2(void);
+void p_2_4_1_3(void);
+void p_2_4_2_1(void);
+void p_2_4_2_2(void);
+void p_2_4_2_3(void);
+void p_2_4_3_1(void);
+void p_2_4_3_2(void);
+void p_2_4_3_3(void);
 
 
 int p31_sv1_individual_process(void);
@@ -62,7 +62,7 @@ int p312_alarm_on_off_process(void);
 int p_3_13_flow_rate_process(void);
 int p314_salt_tank_drain_process(void);
 
-int p8_stop_all_processing(void);
+int p_8(void);
 int p9_stop(void);
 
 //int p_main(void);

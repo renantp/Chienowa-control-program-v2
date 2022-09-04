@@ -68,15 +68,15 @@ int b_r_led_b(void);
 int b_w_led_l(void);
 int b_w_led_b(void);
 
-int b_p1_start(void);
-int b_p2_start(void);
+int b_p1(void);
+int b_p2(void);
 int b_sp_start(void);
-int b_sv1_start(void);
-int b_sv2_start(void);
-int b_sv3_start(void);
-int b_sv4_start(void);
-int b_sv5_start(void);
-int b_sv6_start(void);
+int b_sv1(void);
+int b_sv2(void);
+int b_sv3(void);
+int b_sv4(void);
+int b_sv5(void);
+int b_sv6(void);
 int b_sv7_start(void);
 int bc_1(void);
 

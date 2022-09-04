@@ -92,7 +92,7 @@ void header_set_callback(uint8_t *const pdata){
 	const enum Communication_Header head = (enum Communication_Header)pdata[1];
 	switch (head) {
 		case WASHING_MODE:
-			g.mode = (enum WASH_MODE_E)pdata[5];
+			g.mode = (enum WASH_MODE_E)pdata[3]; //TODO: Change from pdata[5] to pdata[3]
 			send_reponse(pdata, g.mode);
 			R_UART2_Receive(get_pointer_uart_queue(), 6);
 			break;

@@ -351,16 +351,16 @@ extern struct Number_Setting_s {
 } g_V_S, g_V_S_buffer;
 
 enum WASH_MODE_E {
-	WASH_MODE_INIT,
-	HAND_WASHING_MODE,
-	WATER_MODE,
-	ACID_MODE,
-	ALKALI_MODE
+	WASH_MODE_INIT = 0,
+	HAND_WASHING_MODE = 1,
+	WATER_MODE = 2,
+	ACID_MODE = 3,
+	ALKALI_MODE = 4
 };
-enum STATUS {
-	NORMAL,
-	INDIVIDUAL,
-	WASHING,
+enum SYSTEM_MODE_NUMBER {
+	NORMAL = 0,
+	INDIVIDUAL = 1,
+	WASHING = 2,
 };
 struct IO_Struct{
 	uint8_t fl1: 1;
@@ -623,7 +623,7 @@ extern struct GLOBAL{
 	}control_setting;
 	uint8_t system_mode;
 	enum WASH_MODE_E mode, previous_mode;
-	enum STATUS status;
+	enum SYSTEM_MODE_NUMBER status;
 }g;
 
 

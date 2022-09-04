@@ -120,7 +120,7 @@ int tp_2(void) {
  * Deleted
  * @return
  */
-int tp21_alkali_discharge_stop(void){
+int tp_2_1(void){
 	if(g_P_2_1_F){
 		g_P_2_1_ON_T1 = timer_stop_s(g.timer.module.on.p23[0]);
 		g_P_2_1_ON_T2 = timer_stop_ms(g.timer.module.on.p23[1]);
@@ -132,7 +132,7 @@ int tp21_alkali_discharge_stop(void){
  * Deleted
  * @return
  */
-int tp22_acid_discharge_stop(void){
+int tp_2_2(void){
 	if(g_P_2_2_F){
 		g_P_2_2_ON_T1 = timer_stop_s(g.timer.module.on.p23[0]);
 		g_P_2_2_ON_T2 = timer_stop_ms(g.timer.module.on.p23[1]);
@@ -201,7 +201,7 @@ int tp_3(void){
 	return 0;
 }
 
-int t_sv1_stop(void) {
+int t_sv1(void) {
 	if (g.io.valve.sv1 == 1) {
 		g_SV1_ON_T1 = timer_stop_s(g.timer.module.on.io.sv1[0]);
 		g_SV1_ON_T2 = timer_stop_s(g.timer.module.on.io.sv1[1]);
@@ -212,7 +212,7 @@ int t_sv1_stop(void) {
 	}
 	return 0;
 }
-int t_sv2_stop(void) {
+int t_sv2(void) {
 	if (g.io.valve.sv2 == 1) {
 		g_SV2_ON_T1 = timer_stop_s(g.timer.module.on.io.sv2[0]);
 		g_SV2_ON_T2 = timer_stop_s(g.timer.module.on.io.sv2[1]);
@@ -223,7 +223,7 @@ int t_sv2_stop(void) {
 	}
 	return 0;
 }
-int t_sv3_stop(void) {
+int t_sv3(void) {
 	if (g.io.valve.sv3 == 1) {
 		g_SV3_ON_T1 = timer_stop_s(g.timer.module.on.io.sv3[0]);
 		g_SV3_ON_T2 = timer_stop_s(g.timer.module.on.io.sv3[1]);
@@ -234,7 +234,7 @@ int t_sv3_stop(void) {
 	}
 	return 0;
 }
-int t_sv4_stop(void) {
+int t_sv4(void) {
 	if (g.io.valve.sv4 == 1) {
 		g_SV4_ON_T1 = timer_stop_s(g.timer.module.on.io.sv4[0]);
 		g_SV4_ON_T2 = timer_stop_s(g.timer.module.on.io.sv4[1]);
@@ -245,7 +245,7 @@ int t_sv4_stop(void) {
 	}
 	return 0;
 }
-int t_sv5_stop(void) {
+int t_sv5(void) {
 	if (g.io.valve.sv5 == 1) {
 		g_SV5_ON_T1 = timer_stop_s(g.timer.module.on.io.sv5[0]);
 		g_SV5_ON_T2 = timer_stop_s(g.timer.module.on.io.sv5[1]);
@@ -256,7 +256,7 @@ int t_sv5_stop(void) {
 	}
 	return 0;
 }
-int t_sv6_stop(void) {
+int t_sv6(void) {
 	if (g.io.valve.sv6 == 1) {
 		g_SV6_ON_T1 = timer_stop_s(g.timer.module.on.io.sv6[0]);
 		g_SV6_ON_T2 = timer_stop_s(g.timer.module.on.io.sv6[1]);
@@ -276,7 +276,7 @@ int t_sv7_stop(void){
 	}
 	return 0;
 }
-int t_p1_stop(void) {
+int t_p1(void) {
 	if (g_P1_F == 1) {
 		PUMP_1_PIN = PUMP_OFF;
 		g_P1_ON_T1 = timer_stop_s(g.timer.module.on.io.p1[0]);
@@ -288,7 +288,7 @@ int t_p1_stop(void) {
 	return 0;
 }
 
-int t_p2_stop(void) {
+int t_p2(void) {
 	if (g_P2_F == 1) {
 		PUMP_2_PIN = PUMP_OFF;
 		g_P2_ON_T1 = timer_stop_s(g.timer.module.on.io.p2[0]);
@@ -299,7 +299,7 @@ int t_p2_stop(void) {
 	}
 	return 0;
 }
-int t_sp_stop(void) {
+int t_sp(void) {
 	if (g_SP_F == 1) {
 		SP_PIN = PUMP_OFF;
 		g_SP_ON_T1 = timer_stop_s(g.timer.module.on.io.sp[0]);

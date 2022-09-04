@@ -163,23 +163,31 @@ int s1_alkali_tank_data_set(void) {
 
 	switch (data.bit) {
 	case 0: //000
-		return 0;
+		g_ALD = 0;
+		break;
 	case 1: //001
-		return 1;
+		g_ALD = 1;
+		break;
 	case 2: //010
-		return -4;
+		g_ALD = -4;
+		break;
 	case 3: //011
-		return 2;
+		g_ALD = 2;
+		break;
 	case 4: //100
-		return -2;
+		g_ALD = -2;
+		break;
 	case 5: //101
-		return -1;
+		g_ALD = -1;
+		break;
 	case 6: //110
-		return -3;
+		g_ALD = -3;
+		break;
 	case 7: //111
-		return 3;
+		g_ALD = 3;
+		break;
 	}
-	return -128;
+	return g_ALD;
 }
 
 /**

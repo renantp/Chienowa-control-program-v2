@@ -22,8 +22,8 @@ int tp_1_4_1(void);
 int tp_1_4_2(void);
 int tp_1_5(void);
 int tp_2(void);
-int tp21_alkali_discharge_stop(void);
-int tp22_acid_discharge_stop(void);
+int tp_2_1(void);
+int tp_2_2(void);
 int tp_2_3(void);
 int tp_2_4(void);
 int tp_2_4_1(void);
@@ -31,16 +31,16 @@ int tp_2_4_2(void);
 int tp_2_4_3(void);
 int tp_3(void);
 
-int t_sv1_stop(void);
-int t_sv2_stop(void);
-int t_sv3_stop(void);
-int t_sv4_stop(void);
-int t_sv5_stop(void);
-int t_sv6_stop(void);
+int t_sv1(void);
+int t_sv2(void);
+int t_sv3(void);
+int t_sv4(void);
+int t_sv5(void);
+int t_sv6(void);
 int t_sv7_stop(void);
-int t_p1_stop(void);
-int t_p2_stop(void);
-int t_sp_stop(void);
+int t_p1(void);
+int t_p2(void);
+int t_sp(void);
 
 int tp_3_1_4(void);
 int tp_8(void);
@@ -79,6 +79,7 @@ int t_r_led_l(void);
 int t_r_led_b(void);
 int t_r_led_l(void);
 int t_w_led_b(void);
-int t_w_led_b(void);
+int t_w_led_l(void);
+
 int te11(void);
 #endif /* CHIENOWA_MODULE_T_MODULE_H_ */

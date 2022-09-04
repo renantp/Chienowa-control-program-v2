@@ -49,12 +49,12 @@ int e1_faucet_refresh_process(void){
  */
 int e11(void){
 	be_1_1();
-	b_sv1_start();
-	b_sv2_start();
+	b_sv1();
+	b_sv2();
 	b_b_led_b();
 	wait((uint32_t)g_T_S.t162_s * 1000);
-	t_sv1_stop();
-	t_sv2_stop();
+	t_sv1();
+	t_sv2();
 	t_w_led_b();
 	te11();
 	return 0;
@@ -295,8 +295,8 @@ int e1026(void){
 int e1028(void){
 	while(s2_acid_tank_data_set() == 0){
 		if(g.flag.module.e1028 == 0){
-			t_p1_stop();
-			t_sv3_stop();
+			t_p1();
+			t_sv3();
 			e_occur_error = M1028;
 			b_r_led_b();
 			g.flag.module.e1028 = 1;
@@ -318,8 +318,8 @@ int e1028(void){
 int e1029(void){
     while(s1_alkali_tank_data_set() == 0){
         if(g.flag.module.e1029 == 0){
-            t_p2_stop();
-            t_sv4_stop();
+            t_p2();
+            t_sv4();
 			e_occur_error = M1029;
             b_b_led_b();
             g.flag.module.e1029 = 1;
@@ -447,7 +447,7 @@ int e5002(void){
 int e5003(void){
 	c_1_1();
 	e_occur_error = M5003;
-	p8_stop_all_processing();
-	p1_initial_working_mode_start_process();
+	p_8();
+	p_1();
 	return 0;
 }
