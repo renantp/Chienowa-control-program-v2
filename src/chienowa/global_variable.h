@@ -615,8 +615,8 @@ extern struct GLOBAL{
 		struct{
 			uint8_t drain :1;
 			uint8_t power_on :1;
-			uint8_t filter :1;
 			uint8_t biomectric :1;
+			uint8_t filter :1;
 			uint8_t RSVD :4;
 		};
 		uint32_t raw;
