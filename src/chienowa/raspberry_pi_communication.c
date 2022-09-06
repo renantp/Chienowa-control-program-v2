@@ -128,7 +128,7 @@ void header_set_callback(uint8_t *const pdata){
 			R_UART2_Receive(get_pointer_uart_queue(), 6);
 			break;
 		case ERROR_PACKAGE:
-			send_reponse(pdata, e_occur_error);
+//			send_reponse(pdata, e_occur_error);
 			break;
 		case INDIVITUAL_OUTPUT:
 

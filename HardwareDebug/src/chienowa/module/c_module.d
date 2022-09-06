@@ -11,8 +11,6 @@ src/chienowa/module/c_module.obj src/chienowa/module/c_module.d: ../src/chienowa
 ../src/chienowa/module/b_module.h:
 src/chienowa/module/c_module.obj src/chienowa/module/c_module.d: ../src/chienowa/module/t_module.h
 ../src/chienowa/module/t_module.h:
-src/chienowa/module/c_module.obj src/chienowa/module/c_module.d: ../src/chienowa/module/e_module.h
-../src/chienowa/module/e_module.h:
 src/chienowa/module/c_module.obj src/chienowa/module/c_module.d: ../src/chienowa/module/../pin_define.h
 ../src/chienowa/module/../pin_define.h:
 src/chienowa/module/c_module.obj src/chienowa/module/c_module.d: ../src/chienowa/module/../global_variable.h
@@ -23,5 +21,5 @@ src/chienowa/module/c_module.obj src/chienowa/module/c_module.d: ../src/chienowa
 ../src/chienowa/module/../delay.h:
 src/chienowa/module/c_module.obj src/chienowa/module/c_module.d: ../src/chienowa/module/../adc.h
 ../src/chienowa/module/../adc.h:
-src/chienowa/module/c_module.obj src/chienowa/module/c_module.d: ../src/chienowa/module/../runtime.h
-../src/chienowa/module/../runtime.h:
+src/chienowa/module/c_module.obj src/chienowa/module/c_module.d: ../src/chienowa/module/e_module.h
+../src/chienowa/module/e_module.h:

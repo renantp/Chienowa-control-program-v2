@@ -26,8 +26,10 @@ extern struct HAND_SENSOR_S {
 	uint8_t state, pre_state;
 }g_hs;
 void hand_sensor_blink(enum HS_COLOR color, uint32_t duration);
-void hand_sensor_light(enum HS_COLOR color);
 int check_hand_sensor(void);
 void hand_sensor_runtime(void);
 
+
+void hs_oda_intc_callback(void);
+void hs_ocl_intc_callback(void);
 #endif /* CHIENOWA_HAND_SENSOR_H_ */

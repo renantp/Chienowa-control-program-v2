@@ -32,6 +32,8 @@
 #define SW2_PIN			(P14_bit.no7)
 #define SW3_PIN			(P10_bit.no0)
 
+#define SALT_LID_PIN	SW1_PIN
+
 #define CVCC_CONTROL_PIN	(P14_bit.no2)
 #define CVCC_ALARM_OUT_PIN	(P13_bit.no0)
 #define CVCC_ALARM_IN_PIN	(P0_bit.no4)

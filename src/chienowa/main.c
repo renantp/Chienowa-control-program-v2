@@ -12,6 +12,8 @@
 #include "module/p_module.h"
 #include "../r_cg_dac.h"
 #include "module/b_module.h"
+#include "hand_sensor.h"
+#include "module/t_module.h"
 
 struct GLOBAL g = {
 		.mode = HAND_WASHING_MODE,
@@ -28,7 +30,7 @@ void set_timer_setting_default(void){
 //	g_T_S.t105_;
 //	g_T_S.t106_;
 	g_T_S.t107_s = 10;
-	g_T_S.t108_m = 3;
+	g_T_S.t108_ms = 3;
 //	g_T_S.t109_;
 //	g_T_S.t110_;
 //	g_T_S.t111_;
@@ -69,7 +71,7 @@ void set_timer_setting_default(void){
 	g_T_S.t146_h = 168;
 //	g_T_S.t147_;
 //	g_T_S.t148_;
-	g_T_S.t149_s = 15U * 60;
+	g_T_S.t149_s = 15;
 	g_T_S.t150_s = 600;
 	g_T_S.t151_s = 5;
 //	g_T_S.t152_;
@@ -113,13 +115,10 @@ void init(void) {
 	// Set setting to default
 	set_timer_setting_default();
 	set_number_setting_default();
-
 	uint8_t cur = 0xff * (float)(g_V_S.v9_A / 5.0f);
 	uint8_t sat = 0xff * (float)(g_V_S.v10_V / 5.0f);
-
 	R_DAC0_Set_ConversionValue(cur);
 	R_DAC1_Set_ConversionValue(sat);
-	b_w_led_b();
 }
 
 const uint8_t max = 39;
@@ -127,4 +126,5 @@ uint16_t sended, checked;
 void loop(void) {
 	p_0();
 	runtime();
+//	check_hand_sensor();
 }

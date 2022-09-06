@@ -51,40 +51,41 @@ extern enum ERROR_ENUM{
 	M5005,
 
 	E0003,
-}e_occur_error;
-int e1_faucet_refresh_process(void);
-int e11(void);
-int e2(void);
-int e3(void);
-int e1000(void);
-int e1001(void);
-int e1002(void);
-int e1003(void);
-int e1004(void);
-int e1005(void);
-int e1006(void);
-int e1007(void);
-int e1008(void);
-int e1009(void);
-int e1020(void);
-int e1021(void);
-int e1022(void);
-int e1023(void);
-int e1024(void);
-int e1025(void);
-int e1026(void);
-int e1028(void);
-int e1029(void);
-int e1030(void);
-int e1031(void);
-int e1031_1(void);
-int e1032(void);
-int e1033(void);
-int e1034(void);
-int e1035(void);
-int e1051(void);
-int e5001(void);
-int e5002(void);
-int e5003(void);
+}current_error;
+int e_1(void);
+int e_1_1(void);
+int e_2(void);
+int e_3(void);
+int e_1000(void);
+int e_1001(void);
+int e_1002(void);
+int e_1003(void);
+int e_1004(void);
+int e_1005(void);
+int e_1006(void);
+int e_1007(void);
+int e_1008(void);
+int e_1009(void);
+int e_1020(void);
+int e_1021(void);
+int e_1022(void);
+int e_1023(void);
+int e_1024(void);
+int e_1025(void);
+int e_1026(void);
+int e_1028(void);
+int e_1029(void);
+int e_1030(void);
+int e_1031(void);
+int e_1031_1(void);
+int e_1032(void);
+int e_1033(void);
+int e_1034(void);
+int e_1035(void);
+int e_1051(void);
+int e_5001(void);
+int e_5002(void);
+int e_5003(void);
+
 
 #endif /* CHIENOWA_MODULE_E_MODULE_H_ */

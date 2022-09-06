@@ -17,3 +17,5 @@ src/chienowa/runtime.obj src/chienowa/runtime.d: ../src/chienowa/adc.h
 ../src/chienowa/adc.h:
 src/chienowa/runtime.obj src/chienowa/runtime.d: ../src/chienowa/water_flow_calculation.h
 ../src/chienowa/water_flow_calculation.h:
+src/chienowa/runtime.obj src/chienowa/runtime.d: ../src/chienowa/hand_sensor.h
+../src/chienowa/hand_sensor.h:

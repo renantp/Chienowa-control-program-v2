@@ -10,6 +10,8 @@
 
 #include "../../r_cg_macrodriver.h"
 
+#define B_B_LED_L()		b_b_led_l()
+
 int bp_0(void);
 
 int bp_1_1_1(void);
@@ -70,15 +72,27 @@ int b_w_led_b(void);
 
 int b_p1(void);
 int b_p2(void);
-int b_sp_start(void);
+int b_sp(void);
 int b_sv1(void);
 int b_sv2(void);
 int b_sv3(void);
 int b_sv4(void);
 int b_sv5(void);
 int b_sv6(void);
-int b_sv7_start(void);
-int bc_1(void);
+int b_sv7(void);
 
+int bc_1(void);
+int bc_2_3(void);
+int bc_2_4(void);
+
+int bs_4(void);
+int bs_4_1(void);
+int bs_4_2(void);
+int bs_4_3(void);
+int bs_4_4(void);
+int bs_4_5(void);
+int bs_4_6(void);
+int bs_4_7(void);
+int bs_4_8(void);
 int be_1_1(void);
 #endif /* CHIENOWA_MODULE_B_MODULE_H_ */

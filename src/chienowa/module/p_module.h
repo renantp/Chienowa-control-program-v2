@@ -15,6 +15,7 @@
  ***********************************************************************************************************************/
 int p_1(void);
 int p_0(void);
+int p_3(void);
 int p(void); //Do not need
 int p_1_1(void);
 int p_1_1_1(void);
@@ -46,6 +47,7 @@ void p_2_4_3_1(void);
 void p_2_4_3_2(void);
 void p_2_4_3_3(void);
 
+int p_3_13(void);
 
 int p31_sv1_individual_process(void);
 int p32_sv2_individual_process(void);
@@ -63,7 +65,8 @@ int p_3_13_flow_rate_process(void);
 int p314_salt_tank_drain_process(void);
 
 int p_8(void);
-int p9_stop(void);
+int p_9(void);
+
 
 //int p_main(void);
 //int p1_initial_startup_operation(void);

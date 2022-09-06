@@ -10,6 +10,7 @@
 #include "pin_define.h"
 #include "adc.h"
 #include "water_flow_calculation.h"
+#include "hand_sensor.h"
 
 void input_flag_update(void){
 	g.io.fl1 = !FL1;
@@ -36,6 +37,9 @@ void output_flag_update(void){
 	g.io.valve.sv5 = SV5_PIN;
 	g.io.valve.sv6 = SV6_PIN;
 	g.io.valve.sv7 = SV7_PIN;
+	g.io.pump_1 = !PUMP_1_PIN;
+	g.io.pump_2 = !PUMP_2_PIN;
+	g.io.salt_pump = !SP_PIN;
 	g.io.cvcc_control = CVCC_CONTROL_PIN;
 	g.io.cvcc_alarm_out = CVCC_ALARM_OUT_PIN;
 }
@@ -52,4 +56,7 @@ void runtime(void){
 	eeprom_runtime();
 	communication_runtime();
 	water_flow_runtime();
+	hand_sensor_runtime();
+	//For debug
+//	check_hand_sensor();
 }

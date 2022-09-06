@@ -13,3 +13,7 @@ src/chienowa/hand_sensor.obj src/chienowa/hand_sensor.d: ../src/chienowa/circula
 ../src/chienowa/circular_buffer.h:
 src/chienowa/hand_sensor.obj src/chienowa/hand_sensor.d: ../src/chienowa/delay.h
 ../src/chienowa/delay.h:
+src/chienowa/hand_sensor.obj src/chienowa/hand_sensor.d: ../src/chienowa/module/b_module.h
+../src/chienowa/module/b_module.h:
+src/chienowa/hand_sensor.obj src/chienowa/hand_sensor.d: ../src/chienowa/module/t_module.h
+../src/chienowa/module/t_module.h:

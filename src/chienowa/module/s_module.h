@@ -12,13 +12,19 @@
 
 extern int g_ALD, g_ACD, g_SAD;
 
-int s1_alkali_tank_data_set(void);
-//int s1_alkali_tank_data_check(void);
-int s2_acid_tank_data_set(void);
-//int s21_acid_tank_data_check(void);
-int s3_salt_tank_data_set(void);
-//int s31_salt_tank_data_check(void);
-float s5_filter_change_formula(long SV1_T3, long SV2_T3, long g_V_S_v11_mg_L,long g_V_S_v12_L);
+int s_1(void);
+int s_2(void);
+int s_3(void);
+int s_4(void);
+int	s_4_1(void);
+int	s_4_2(void);
+int	s_4_3(void);
+int	s_4_4(void);
+int s_4_5(void);
+int s_4_6(void);
+int s_4_7(void);
+int s_4_8(void);
+float s_5(void);
 
 #endif /* CHIENOWA_MODULE_S_MODULE_H_ */
 

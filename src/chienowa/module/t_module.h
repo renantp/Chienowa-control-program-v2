@@ -37,7 +37,7 @@ int t_sv3(void);
 int t_sv4(void);
 int t_sv5(void);
 int t_sv6(void);
-int t_sv7_stop(void);
+int t_sv7(void);
 int t_p1(void);
 int t_p2(void);
 int t_sp(void);
@@ -70,7 +70,9 @@ int tc_16(void);
 int tc_17(void);
 int tc_18(void);
 int tc_19(void);
+
 int tc_2_3(void);
+int tc_2_4(void);
 
 int te_1(void);
 int t_b_led_l(void);
@@ -81,5 +83,17 @@ int t_r_led_l(void);
 int t_w_led_b(void);
 int t_w_led_l(void);
 
-int te11(void);
+int ts_4(void);
+int ts_4_1(void);
+int ts_4_2(void);
+int ts_4_3(void);
+int ts_4_4(void);
+int ts_4_5(void);
+int ts_4_6(void);
+int ts_4_7(void);
+int ts_4_8(void);
+
+int te_1_1(void);
+
+int t_p_2_1(void);
 #endif /* CHIENOWA_MODULE_T_MODULE_H_ */

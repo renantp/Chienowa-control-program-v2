@@ -15,11 +15,11 @@ src/chienowa/module/e_module.obj src/chienowa/module/e_module.d: ../src/chienowa
 ../src/chienowa/module/c_module.h:
 src/chienowa/module/e_module.obj src/chienowa/module/e_module.d: ../src/chienowa/module/s_module.h
 ../src/chienowa/module/s_module.h:
+src/chienowa/module/e_module.obj src/chienowa/module/e_module.d: ../src/chienowa/module/../delay.h
+../src/chienowa/module/../delay.h:
 src/chienowa/module/e_module.obj src/chienowa/module/e_module.d: ../src/chienowa/module/../global_variable.h
 ../src/chienowa/module/../global_variable.h:
 src/chienowa/module/e_module.obj src/chienowa/module/e_module.d: ../src/chienowa/module/../circular_buffer.h
 ../src/chienowa/module/../circular_buffer.h:
 src/chienowa/module/e_module.obj src/chienowa/module/e_module.d: ../src/chienowa/module/../runtime.h
 ../src/chienowa/module/../runtime.h:
-src/chienowa/module/e_module.obj src/chienowa/module/e_module.d: ../src/chienowa/module/../delay.h
-../src/chienowa/module/../delay.h:

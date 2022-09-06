@@ -23,7 +23,7 @@
 * Device(s)    : R5F104ML
 * Tool-Chain   : CCRL
 * Description  : This file implements device driver for TAU module.
-* Creation Date: 9/2/2022
+* Creation Date: 9/5/2022
 ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
@@ -78,8 +78,8 @@ void R_TAU0_Create(void)
     /* Mask channel 3 higher 8 bits interrupt */
     TMMK03H = 1U;    /* disable INTTM03H interrupt */
     TMIF03H = 0U;    /* clear INTTM03H interrupt flag */
-    /* Set INTTM00 high priority */
-    TMPR100 = 0U;
+    /* Set INTTM00 level 2 priority */
+    TMPR100 = 1U;
     TMPR000 = 0U;
     /* Set INTTM01 low priority */
     TMPR101 = 1U;

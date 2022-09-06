@@ -23,7 +23,7 @@
 * Device(s)    : R5F104ML
 * Tool-Chain   : CCRL
 * Description  : This file implements main function.
-* Creation Date: 9/2/2022
+* Creation Date: 9/5/2022
 ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
@@ -32,6 +32,7 @@ Includes
 #include "r_cg_macrodriver.h"
 #include "r_cg_cgc.h"
 #include "r_cg_port.h"
+#include "r_cg_intc.h"
 #include "r_cg_serial.h"
 #include "r_cg_adc.h"
 #include "r_cg_dac.h"
@@ -91,7 +92,6 @@ void main(void)
 	init();
 	while (1U) {
 		loop();
-
 //		blink_led_1();
 //		blink_led_2();
 //		read_button();
@@ -132,6 +132,10 @@ void R_MAIN_UserInit(void)
 	R_ADC_Create();
 	R_ADC_Set_OperationOn();
 	R_ADC_Start();
+
+	R_INTC_Create();
+	R_INTC8_Start();
+	R_INTC9_Start();
 	/* End user code. Do not edit comment generated here */
 }
 

@@ -29,3 +29,7 @@ src/chienowa/main.obj src/chienowa/main.d: ../src/chienowa/../r_cg_dac.h
 ../src/chienowa/../r_cg_dac.h:
 src/chienowa/main.obj src/chienowa/main.d: ../src/chienowa/module/b_module.h
 ../src/chienowa/module/b_module.h:
+src/chienowa/main.obj src/chienowa/main.d: ../src/chienowa/hand_sensor.h
+../src/chienowa/hand_sensor.h:
+src/chienowa/main.obj src/chienowa/main.d: ../src/chienowa/module/t_module.h
+../src/chienowa/module/t_module.h:

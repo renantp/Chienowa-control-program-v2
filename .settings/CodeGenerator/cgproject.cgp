@@ -287,8 +287,8 @@
           <P71 Chip="RL78G14_40pin,RL78G14_44pin,RL78G14_48pin,RL78G14_49pin,RL78G14_52pin,RL78G14_64pin,RL78G14_80pin,RL78G14_100pin,RL78G14_128pin" Name="P71/KR1/SI21/SDA21" Nch="true" AltFunc="P71" Point="I/O" />
           <P72 Chip="RL78G14_40pin,RL78G14_44pin,RL78G14_48pin,RL78G14_49pin,RL78G14_52pin,RL78G14_64pin,RL78G14_80pin,RL78G14_100pin,RL78G14_128pin" Name="P72/KR2/SO21" AltFunc="P72" Point="I/O" />
           <P73 Chip="RL78G14_40pin,RL78G14_44pin,RL78G14_80pin,RL78G14_100pin,RL78G14_128pin" Name="P73/KR3" AltFunc="P73" Point="I/O" />
-          <P74 Chip="RL78G14_80pin,RL78G14_100pin,RL78G14_128pin" Name="P74/KR4/INTP8" Nch="true" AltFunc="P74" Point="I/O" />
-          <P75 Chip="RL78G14_80pin,RL78G14_100pin,RL78G14_128pin" Name="P75/KR5/INTP9" AltFunc="P75" Point="I/O" />
+          <P74 Chip="RL78G14_80pin,RL78G14_100pin,RL78G14_128pin" Name="P74/KR4/INTP8" Nch="true" AltFunc="INTP8" Point="I/O" />
+          <P75 Chip="RL78G14_80pin,RL78G14_100pin,RL78G14_128pin" Name="P75/KR5/INTP9" AltFunc="INTP9" Point="I/O" />
           <P76 Chip="RL78G14_52pin,RL78G14_64pin,RL78G14_80pin,RL78G14_100pin,RL78G14_128pin" Name="P76/KR6/INTP10" AltFunc="P76" Point="I/O" />
           <P77 Chip="RL78G14_52pin,RL78G14_64pin,RL78G14_80pin,RL78G14_100pin,RL78G14_128pin" Name="P77/KR7/INTP11" AltFunc="P77" Point="I/O" />
         </Port7>
@@ -609,8 +609,8 @@
           <INTP5 InUse="0" ISR="r_intc5_interrupt" />
           <INTP6 Chip="RL78G14_48pin,RL78G14_49pin,RL78G14_52pin,RL78G14_64pin,RL78G14_80pin,RL78G14_81pin,RL78G14_100pin," InUse="0" ISR="r_intc6_interrupt" />
           <INTP7 Chip="RL78G14_64pin,RL78G14_80pin,RL78G14_81pin,RL78G14_100pin," InUse="0" ISR="r_intc7_interrupt " />
-          <INTP8 Chip="RL78G14_48pin,RL78G14_49pin,RL78G14_52pin,RL78G14_64pin,RL78G14_80pin,RL78G14_81pin,RL78G14_100pin," InUse="0" ISR="r_intc8_interrupt" />
-          <INTP9 Chip="RL78G14_48pin,RL78G14_49pin,RL78G14_52pin,RL78G14_64pin,RL78G14_80pin,RL78G14_81pin,RL78G14_100pin," InUse="0" ISR="r_intc9_interrupt" />
+          <INTP8 Chip="RL78G14_48pin,RL78G14_49pin,RL78G14_52pin,RL78G14_64pin,RL78G14_80pin,RL78G14_81pin,RL78G14_100pin," InUse="1" ISR="r_intc8_interrupt" />
+          <INTP9 Chip="RL78G14_48pin,RL78G14_49pin,RL78G14_52pin,RL78G14_64pin,RL78G14_80pin,RL78G14_81pin,RL78G14_100pin," InUse="1" ISR="r_intc9_interrupt" />
           <INTP10 Chip="RL78G14_64pin,RL78G14_80pin,RL78G14_81pin,RL78G14_100pin," InUse="0" ISR="r_intc10_interrupt" />
           <INTP11 Chip="RL78G14_64pin,RL78G14_80pin,RL78G14_81pin,RL78G14_100pin," InUse="0" ISR="r_intc11_interrupt" />
         </INTP>
@@ -803,57 +803,57 @@
         <r_cg_port.h UserName="r_cg_port.h" LibName=".h" InUse="1" />
       </PORT>
       <INTC>
-        <r_cg_intc.c UserName="" LibName=".c" InUse="">
+        <r_cg_intc.c UserName="r_cg_intc.c" LibName=".c" InUse="1">
           <Type R_INTC_Create="void R_INTC_Create(void)" R_INTCn_Start="void R_INTCn_Start(void)" R_INTCn_Stop="void R_INTCn_Stop(void)" R_KEY_Create="void R_KEY_Create(void)" R_KEY_Start="void R_KEY_Start(void)" R_KEY_Stop="void R_KEY_Stop(void)" />
           <INTP>
-            <R_INTC_Create UserName="R_INTC_Create" LibName="R_INTC_Create" InUse="" Init="2" InitMode="" />
+            <R_INTC_Create UserName="R_INTC_Create" LibName="R_INTC_Create" InUse="1" Init="2" InitMode="" />
             <INTP0>
-              <R_INTC0_Start UserName="R_INTC0_Start" LibName="R_INTCn_Start" InUse="" />
-              <R_INTC0_Stop UserName="R_INTC0_Stop" LibName="R_INTCn_Stop" InUse="" />
+              <R_INTC0_Start UserName="R_INTC0_Start" LibName="R_INTCn_Start" InUse="0" />
+              <R_INTC0_Stop UserName="R_INTC0_Stop" LibName="R_INTCn_Stop" InUse="0" />
             </INTP0>
             <INTP1>
-              <R_INTC1_Start UserName="R_INTC1_Start" LibName="R_INTCn_Start" InUse="" />
-              <R_INTC1_Stop UserName="R_INTC1_Stop" LibName="R_INTCn_Stop" InUse="" />
+              <R_INTC1_Start UserName="R_INTC1_Start" LibName="R_INTCn_Start" InUse="0" />
+              <R_INTC1_Stop UserName="R_INTC1_Stop" LibName="R_INTCn_Stop" InUse="0" />
             </INTP1>
             <INTP2>
-              <R_INTC2_Start UserName="R_INTC2_Start" LibName="R_INTCn_Start" InUse="" />
-              <R_INTC2_Stop UserName="R_INTC2_Stop" LibName="R_INTCn_Stop" InUse="" />
+              <R_INTC2_Start UserName="R_INTC2_Start" LibName="R_INTCn_Start" InUse="0" />
+              <R_INTC2_Stop UserName="R_INTC2_Stop" LibName="R_INTCn_Stop" InUse="0" />
             </INTP2>
             <INTP3>
-              <R_INTC3_Start UserName="R_INTC3_Start" LibName="R_INTCn_Start" InUse="" />
-              <R_INTC3_Stop UserName="R_INTC3_Stop" LibName="R_INTCn_Stop" InUse="" />
+              <R_INTC3_Start UserName="R_INTC3_Start" LibName="R_INTCn_Start" InUse="0" />
+              <R_INTC3_Stop UserName="R_INTC3_Stop" LibName="R_INTCn_Stop" InUse="0" />
             </INTP3>
             <INTP4>
-              <R_INTC4_Start UserName="R_INTC4_Start" LibName="R_INTCn_Start" InUse="" />
-              <R_INTC4_Stop UserName="R_INTC4_Stop" LibName="R_INTCn_Stop" InUse="" />
+              <R_INTC4_Start UserName="R_INTC4_Start" LibName="R_INTCn_Start" InUse="0" />
+              <R_INTC4_Stop UserName="R_INTC4_Stop" LibName="R_INTCn_Stop" InUse="0" />
             </INTP4>
             <INTP5>
-              <R_INTC5_Start UserName="R_INTC5_Start" LibName="R_INTCn_Start" InUse="" />
-              <R_INTC5_Stop UserName="R_INTC5_Stop" LibName="R_INTCn_Stop" InUse="" />
+              <R_INTC5_Start UserName="R_INTC5_Start" LibName="R_INTCn_Start" InUse="0" />
+              <R_INTC5_Stop UserName="R_INTC5_Stop" LibName="R_INTCn_Stop" InUse="0" />
             </INTP5>
             <INTP6 Chip="RL78G14_48pin,RL78G14_49pin,RL78G14_52pin,RL78G14_64pin,RL78G14_80pin,RL78G14_81pin,RL78G14_100pin,">
-              <R_INTC6_Start UserName="R_INTC6_Start" LibName="R_INTCn_Start" InUse="" />
-              <R_INTC6_Stop UserName="R_INTC6_Stop" LibName="R_INTCn_Stop" InUse="" />
+              <R_INTC6_Start UserName="R_INTC6_Start" LibName="R_INTCn_Start" InUse="0" />
+              <R_INTC6_Stop UserName="R_INTC6_Stop" LibName="R_INTCn_Stop" InUse="0" />
             </INTP6>
             <INTP7 Chip="RL78G14_64pin,RL78G14_80pin,RL78G14_81pin,RL78G14_100pin,">
-              <R_INTC7_Start UserName="R_INTC7_Start" LibName="R_INTCn_Start" InUse="" />
-              <R_INTC7_Stop UserName="R_INTC7_Stop" LibName="R_INTCn_Stop" InUse="" />
+              <R_INTC7_Start UserName="R_INTC7_Start" LibName="R_INTCn_Start" InUse="0" />
+              <R_INTC7_Stop UserName="R_INTC7_Stop" LibName="R_INTCn_Stop" InUse="0" />
             </INTP7>
             <INTP8 Chip="RL78G14_48pin,RL78G14_49pin,RL78G14_52pin,RL78G14_64pin,RL78G14_80pin,RL78G14_81pin,RL78G14_100pin,">
-              <R_INTC8_Start UserName="R_INTC8_Start" LibName="R_INTCn_Start" InUse="" />
-              <R_INTC8_Stop UserName="R_INTC8_Stop" LibName="R_INTCn_Stop" InUse="" />
+              <R_INTC8_Start UserName="R_INTC8_Start" LibName="R_INTCn_Start" InUse="1" />
+              <R_INTC8_Stop UserName="R_INTC8_Stop" LibName="R_INTCn_Stop" InUse="1" />
             </INTP8>
             <INTP9 Chip="RL78G14_48pin,RL78G14_49pin,RL78G14_52pin,RL78G14_64pin,RL78G14_80pin,RL78G14_81pin,RL78G14_100pin,">
-              <R_INTC9_Start UserName="R_INTC9_Start" LibName="R_INTCn_Start" InUse="" />
-              <R_INTC9_Stop UserName="R_INTC9_Stop" LibName="R_INTCn_Stop" InUse="" />
+              <R_INTC9_Start UserName="R_INTC9_Start" LibName="R_INTCn_Start" InUse="1" />
+              <R_INTC9_Stop UserName="R_INTC9_Stop" LibName="R_INTCn_Stop" InUse="1" />
             </INTP9>
             <INTP10 Chip="RL78G14_64pin,RL78G14_80pin,RL78G14_81pin,RL78G14_100pin,">
-              <R_INTC10_Start UserName="R_INTC10_Start" LibName="R_INTCn_Start" InUse="" />
-              <R_INTC10_Stop UserName="R_INTC10_Stop" LibName="R_INTCn_Stop" InUse="" />
+              <R_INTC10_Start UserName="R_INTC10_Start" LibName="R_INTCn_Start" InUse="0" />
+              <R_INTC10_Stop UserName="R_INTC10_Stop" LibName="R_INTCn_Stop" InUse="0" />
             </INTP10>
             <INTP11 Chip="RL78G14_64pin,RL78G14_80pin,RL78G14_81pin,RL78G14_100pin,">
-              <R_INTC11_Start UserName="R_INTC11_Start" LibName="R_INTCn_Start" InUse="" />
-              <R_INTC11_Stop UserName="R_INTC11_Stop" LibName="R_INTCn_Stop" InUse="" />
+              <R_INTC11_Start UserName="R_INTC11_Start" LibName="R_INTCn_Start" InUse="0" />
+              <R_INTC11_Stop UserName="R_INTC11_Stop" LibName="R_INTCn_Stop" InUse="0" />
             </INTP11>
           </INTP>
           <KEY Chip="RL78G14_40pin,RL78G14_44pin,RL78G14_48pin,RL78G14_49pin,RL78G14_52pin,RL78G14_64pin,RL78G14_80pin,RL78G14_81pin,RL78G14_100pin,">
@@ -862,29 +862,29 @@
             <R_KEY_Stop UserName="R_KEY_Stop" LibName="R_KEY_Stop" InUse="" />
           </KEY>
         </r_cg_intc.c>
-        <r_cg_intc_user.c UserName="" LibName="_user.c" InUse="">
+        <r_cg_intc_user.c UserName="r_cg_intc_user.c" LibName="_user.c" InUse="1">
           <Type R_INTC_Create_UserInit="void R_INTC_Create_UserInit(void)" R_INTC0_Interrupt="__interrupt static void r_intc0_interrupt(void)" R_INTC1_Interrupt="__interrupt static void r_intc1_interrupt(void)" R_INTC2_Interrupt="__interrupt static void r_intc2_interrupt(void)" R_INTC3_Interrupt="__interrupt static void r_intc3_interrupt(void)" R_INTC4_Interrupt="__interrupt static void r_intc4_interrupt(void)" R_INTC5_Interrupt="__interrupt static void r_intc5_interrupt(void)" R_INTC6_Interrupt="__interrupt static void r_intc6_interrupt(void)" R_INTC7_Interrupt="__interrupt static void r_intc7_interrupt(void)" R_INTC8_Interrupt="__interrupt static void r_intc8_interrupt(void)" R_INTC9_Interrupt="__interrupt static void r_intc9_interrupt(void)" R_INTC10_Interrupt="__interrupt static void r_intc10_interrupt(void)" R_INTC11_Interrupt="__interrupt static void r_intc11_interrupt(void)" R_KEY_Create_UserInit="void R_KEY_Create_UserInit(void)" R_KEY_Interrupt="__interrupt static void r_key_interrupt(void)" />
           <INTP>
-            <R_INTC_Create_UserInit UserName="R_INTC_Create_UserInit" LibName="R_INTC_Create_UserInit" InUse="" />
-            <r_intc0_interrupt UserName="r_intc0_interrupt" LibName="R_INTC0_Interrupt" INTHandle="" InUse="" />
-            <r_intc1_interrupt UserName="r_intc1_interrupt" LibName="R_INTC1_Interrupt" INTHandle="" InUse="" />
-            <r_intc2_interrupt UserName="r_intc2_interrupt" LibName="R_INTC2_Interrupt" INTHandle="" InUse="" />
-            <r_intc3_interrupt UserName="r_intc3_interrupt" LibName="R_INTC3_Interrupt" INTHandle="" InUse="" />
-            <r_intc4_interrupt UserName="r_intc4_interrupt" INTHandle="" LibName="R_INTC4_Interrupt" InUse="" />
-            <r_intc5_interrupt UserName="r_intc5_interrupt" LibName="R_INTC5_Interrupt" INTHandle="" InUse="" />
-            <r_intc6_interrupt Chip="RL78G14_48pin,RL78G14_49pin,RL78G14_52pin,RL78G14_64pin,RL78G14_80pin,RL78G14_81pin,RL78G14_100pin," UserName="r_intc6_interrupt" LibName="R_INTC6_Interrupt" INTHandle="" InUse="" />
-            <r_intc7_interrupt Chip="RL78G14_64pin,RL78G14_80pin,RL78G14_81pin,RL78G14_100pin," UserName="r_intc7_interrupt" LibName="R_INTC7_Interrupt" INTHandle="" InUse="" />
-            <r_intc8_interrupt Chip="RL78G14_48pin,RL78G14_49pin,RL78G14_52pin,RL78G14_64pin,RL78G14_80pin,RL78G14_81pin,RL78G14_100pin," UserName="r_intc8_interrupt" LibName="R_INTC8_Interrupt" INTHandle="" InUse="" />
-            <r_intc9_interrupt Chip="RL78G14_48pin,RL78G14_49pin,RL78G14_52pin,RL78G14_64pin,RL78G14_80pin,RL78G14_81pin,RL78G14_100pin," UserName="r_intc9_interrupt" LibName="R_INTC9_Interrupt" INTHandle="" InUse="" />
-            <r_intc10_interrupt Chip="RL78G14_64pin,RL78G14_80pin,RL78G14_81pin,RL78G14_100pin," UserName="r_intc10_interrupt" LibName="R_INTC10_Interrupt" INTHandle="" InUse="" />
-            <r_intc11_interrupt Chip="RL78G14_64pin,RL78G14_80pin,RL78G14_81pin,RL78G14_100pin," UserName="r_intc11_interrupt" LibName="R_INTC11_Interrupt" INTHandle="" InUse="" />
+            <R_INTC_Create_UserInit UserName="R_INTC_Create_UserInit" LibName="R_INTC_Create_UserInit" InUse="0" />
+            <r_intc0_interrupt UserName="r_intc0_interrupt" LibName="R_INTC0_Interrupt" INTHandle="" InUse="0" />
+            <r_intc1_interrupt UserName="r_intc1_interrupt" LibName="R_INTC1_Interrupt" INTHandle="" InUse="0" />
+            <r_intc2_interrupt UserName="r_intc2_interrupt" LibName="R_INTC2_Interrupt" INTHandle="" InUse="0" />
+            <r_intc3_interrupt UserName="r_intc3_interrupt" LibName="R_INTC3_Interrupt" INTHandle="" InUse="0" />
+            <r_intc4_interrupt UserName="r_intc4_interrupt" INTHandle="" LibName="R_INTC4_Interrupt" InUse="0" />
+            <r_intc5_interrupt UserName="r_intc5_interrupt" LibName="R_INTC5_Interrupt" INTHandle="" InUse="0" />
+            <r_intc6_interrupt Chip="RL78G14_48pin,RL78G14_49pin,RL78G14_52pin,RL78G14_64pin,RL78G14_80pin,RL78G14_81pin,RL78G14_100pin," UserName="r_intc6_interrupt" LibName="R_INTC6_Interrupt" INTHandle="" InUse="0" />
+            <r_intc7_interrupt Chip="RL78G14_64pin,RL78G14_80pin,RL78G14_81pin,RL78G14_100pin," UserName="r_intc7_interrupt" LibName="R_INTC7_Interrupt" INTHandle="" InUse="0" />
+            <r_intc8_interrupt Chip="RL78G14_48pin,RL78G14_49pin,RL78G14_52pin,RL78G14_64pin,RL78G14_80pin,RL78G14_81pin,RL78G14_100pin," UserName="r_intc8_interrupt" LibName="R_INTC8_Interrupt" INTHandle="" InUse="1" />
+            <r_intc9_interrupt Chip="RL78G14_48pin,RL78G14_49pin,RL78G14_52pin,RL78G14_64pin,RL78G14_80pin,RL78G14_81pin,RL78G14_100pin," UserName="r_intc9_interrupt" LibName="R_INTC9_Interrupt" INTHandle="" InUse="1" />
+            <r_intc10_interrupt Chip="RL78G14_64pin,RL78G14_80pin,RL78G14_81pin,RL78G14_100pin," UserName="r_intc10_interrupt" LibName="R_INTC10_Interrupt" INTHandle="" InUse="0" />
+            <r_intc11_interrupt Chip="RL78G14_64pin,RL78G14_80pin,RL78G14_81pin,RL78G14_100pin," UserName="r_intc11_interrupt" LibName="R_INTC11_Interrupt" INTHandle="" InUse="0" />
           </INTP>
           <KEY Chip="RL78G14_40pin,RL78G14_44pin,RL78G14_48pin,RL78G14_49pin,RL78G14_52pin,RL78G14_64pin,RL78G14_80pin,RL78G14_81pin,RL78G14_100pin,">
             <R_KEY_Create_UserInit UserName="R_KEY_Create_UserInit" LibName="R_KEY_Create_UserInit" InUse="" />
             <r_key_interrupt UserName="r_key_interrupt" LibName="R_KEY_Interrupt" INTHandle="" InUse="" />
           </KEY>
         </r_cg_intc_user.c>
-        <r_cg_intc.h UserName="" LibName=".h" InUse="" />
+        <r_cg_intc.h UserName="r_cg_intc.h" LibName=".h" InUse="1" />
       </INTC>
       <Serial>
         <r_cg_serial.c UserName="r_cg_serial.c" LibName=".c" InUse="1">
@@ -1700,20 +1700,20 @@
         <pior1_value Name="pior1_value" Value="00" />
         <cg_security1 Name="cg_security1" Value="00" />
         <gtraceused Name="gtraceused" Value="" />
+        <cg_onchip Name="cg_onchip" Value="" />
         <cg_security9 Name="cg_security9" Value="00" />
-        <rrm Name="rrm" Value="7FE00" />
         <cg_security6 Name="cg_security6" Value="00" />
         <cg_crc_area Name="cg_crc_area" Value="00" />
         <cg_iawctl_value Name="cg_iawctl_value" Value="00" />
         <cg_security0 Name="cg_security0" Value="00" />
         <ocdstart Name="ocdstart" Value="7FE00" />
-        <cg_security4 Name="cg_security4" Value="00" />
         <cg_pms_value Name="cg_pms_value" Value="00" />
         <cg_security3 Name="cg_security3" Value="00" />
-        <cg_onchip Name="cg_onchip" Value="" />
+        <cg_security4 Name="cg_security4" Value="00" />
         <pior_value Name="pior_value" Value="00" />
-        <cg_option Name="cg_option" Value="84" />
         <cg_ocd_ram_size Name="cg_ocd_ram_size" Value="512" />
+        <cg_option Name="cg_option" Value="84" />
+        <rrm Name="rrm" Value="7FE00" />
         <cg_security7 Name="cg_security7" Value="00" />
         <lvi_option Name="lvi_option" Value="FF" />
       </GlobleUserTag>
@@ -1726,9 +1726,9 @@
     <PORT Prepared="true" HelpID="port" SetFlag="True" NeedRefresh="False">
       <PORT SetFlag="True" MacroName="PORT" />
     </PORT>
-    <INTC SetFlag="" HelpID="int" NeedRefresh="False">
-      <INTP Accelerate="No" MacroName="INTP" />
-      <KEY Chip="RL78G14_40pin,RL78G14_44pin,RL78G14_48pin,RL78G14_49pin,RL78G14_52pin,RL78G14_64pin,RL78G14_80pin,RL78G14_81pin,RL78G14_100pin," MacroName="KEY" />
+    <INTC SetFlag="True" HelpID="int" NeedRefresh="False">
+      <INTP Accelerate="No" MacroName="INTP" SetFlag="True" TabEnable="True" />
+      <KEY Chip="RL78G14_40pin,RL78G14_44pin,RL78G14_48pin,RL78G14_49pin,RL78G14_52pin,RL78G14_64pin,RL78G14_80pin,RL78G14_81pin,RL78G14_100pin," MacroName="KEY" TabEnable="True" />
     </INTC>
     <Serial SetFlag="True" HelpID="serial" NeedRefresh="False">
       <SAU0 Accelerate="No" MacroName="SAU" Channel="0" SetFlag="True" TabEnable="True">
@@ -1939,14 +1939,14 @@
           <setting name="Pull_up" value="unused" />
           <setting name="TTL_buffer" value="unused" />
           <setting name="N-ch_open-drain" value="unused" />
-          <setting name="Output_value" value="0" />
+          <setting name="Output_value" value="1" />
         </P15>
         <P16>
           <setting name="Operation" value="output" />
           <setting name="Pull_up" value="unused" />
           <setting name="TTL_buffer" value="unused" />
           <setting name="N-ch_open-drain" value="unused" />
-          <setting name="Output_value" value="0" />
+          <setting name="Output_value" value="1" />
         </P16>
         <P17>
           <setting name="Operation" value="output" />
@@ -2206,14 +2206,14 @@
           <setting name="Output_value" value="0" />
         </P73>
         <P74>
-          <setting name="Operation" value="input" />
+          <setting name="Operation" value="unused" />
           <setting name="Pull_up" value="unused" />
           <setting name="TTL_buffer" value="unused" />
           <setting name="N-ch_open-drain" value="unused" />
           <setting name="Output_value" value="0" />
         </P74>
         <P75>
-          <setting name="Operation" value="input" />
+          <setting name="Operation" value="unused" />
           <setting name="Pull_up" value="unused" />
           <setting name="TTL_buffer" value="unused" />
           <setting name="N-ch_open-drain" value="unused" />
@@ -2681,7 +2681,7 @@
           <setting name="Intervalvalue_Low8bits_Scale" value="-1" />
           <setting name="Generate_interrupt_when_couting_started" value="no" />
           <setting name="Interrupt" value="used" />
-          <setting name="Interrupt_priority" value="0" />
+          <setting name="Interrupt_priority" value="2" />
           <setting name="InterruptH_priority" value="3" />
           <setting name="InterruptH8" value="unused" />
         </TAUInterval0>
@@ -2776,5 +2776,102 @@
       <setting name="Constant_value" value="0" />
       <setting name="INTRTC_alarm_interrupt" value="use" />
     </RTC>
+    <INTP>
+      <INTP0>
+        <setting name="Valid_edge" value="falling" />
+        <setting name="Operation" value="unused" />
+        <setting name="ValidEdge" value="0" />
+        <setting name="Interrupt_priority" value="3" />
+        <setting name="pinsel" value="-1" />
+      </INTP0>
+      <INTP1>
+        <setting name="Valid_edge" value="falling" />
+        <setting name="Operation" value="unused" />
+        <setting name="ValidEdge" value="0" />
+        <setting name="Interrupt_priority" value="3" />
+        <setting name="pinsel" value="-1" />
+      </INTP1>
+      <INTP2>
+        <setting name="Valid_edge" value="falling" />
+        <setting name="Operation" value="unused" />
+        <setting name="ValidEdge" value="0" />
+        <setting name="Interrupt_priority" value="3" />
+        <setting name="pinsel" value="-1" />
+      </INTP2>
+      <INTP3>
+        <setting name="Valid_edge" value="falling" />
+        <setting name="Operation" value="unused" />
+        <setting name="ValidEdge" value="0" />
+        <setting name="Interrupt_priority" value="3" />
+        <setting name="pinsel" value="-1" />
+      </INTP3>
+      <INTP4>
+        <setting name="Valid_edge" value="falling" />
+        <setting name="Operation" value="unused" />
+        <setting name="ValidEdge" value="0" />
+        <setting name="Interrupt_priority" value="3" />
+        <setting name="pinsel" value="-1" />
+      </INTP4>
+      <INTP5>
+        <setting name="Valid_edge" value="falling" />
+        <setting name="Operation" value="unused" />
+        <setting name="ValidEdge" value="0" />
+        <setting name="Interrupt_priority" value="3" />
+        <setting name="pinsel" value="-1" />
+      </INTP5>
+      <INTP6>
+        <setting name="Valid_edge" value="falling" />
+        <setting name="Operation" value="unused" />
+        <setting name="ValidEdge" value="0" />
+        <setting name="Interrupt_priority" value="3" />
+        <setting name="pinsel" value="-1" />
+      </INTP6>
+      <INTP7>
+        <setting name="Valid_edge" value="falling" />
+        <setting name="Operation" value="unused" />
+        <setting name="ValidEdge" value="0" />
+        <setting name="Interrupt_priority" value="3" />
+        <setting name="pinsel" value="-1" />
+      </INTP7>
+      <INTP8>
+        <setting name="Valid_edge" value="falling" />
+        <setting name="Operation" value="used" />
+        <setting name="ValidEdge" value="0" />
+        <setting name="Interrupt_priority" value="1" />
+        <setting name="pinsel" value="-1" />
+      </INTP8>
+      <INTP9>
+        <setting name="Valid_edge" value="rising" />
+        <setting name="Operation" value="used" />
+        <setting name="ValidEdge" value="1" />
+        <setting name="Interrupt_priority" value="1" />
+        <setting name="pinsel" value="-1" />
+      </INTP9>
+      <INTP10>
+        <setting name="Valid_edge" value="falling" />
+        <setting name="Operation" value="unused" />
+        <setting name="ValidEdge" value="0" />
+        <setting name="Interrupt_priority" value="3" />
+        <setting name="pinsel" value="-1" />
+      </INTP10>
+      <INTP11>
+        <setting name="Valid_edge" value="falling" />
+        <setting name="Operation" value="unused" />
+        <setting name="ValidEdge" value="0" />
+        <setting name="Interrupt_priority" value="3" />
+        <setting name="pinsel" value="-1" />
+      </INTP11>
+    </INTP>
+    <KEY>
+      <setting name="Interrupt_priority" value="3" />
+      <setting name="KR0" value="unused" />
+      <setting name="KR1" value="unused" />
+      <setting name="KR2" value="unused" />
+      <setting name="KR3" value="unused" />
+      <setting name="KR4" value="unused" />
+      <setting name="KR5" value="unused" />
+      <setting name="KR6" value="unused" />
+      <setting name="KR7" value="unused" />
+    </KEY>
   </SETTING>
 </RL78G14>
