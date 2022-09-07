@@ -124,7 +124,7 @@ void init(void) {
 const uint8_t max = 39;
 uint16_t sended, checked;
 void loop(void) {
-	p_0();
+//	p_0();
 	runtime();
 //	check_hand_sensor();
 }

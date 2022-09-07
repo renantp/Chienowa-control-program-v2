@@ -23,7 +23,7 @@
 * Device(s)    : R5F104ML
 * Tool-Chain   : CCRL
 * Description  : This file implements device driver for INTC module.
-* Creation Date: 9/5/2022
+* Creation Date: 9/7/2022
 ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
@@ -60,7 +60,6 @@ static void __near r_intc8_interrupt(void)
 {
     /* Start user code. Do not edit comment generated here */
 	hs_ocl_intc_callback();
-	R_INTC8_Start();
     /* End user code. Do not edit comment generated here */
 }
 
@@ -74,7 +73,6 @@ static void __near r_intc9_interrupt(void)
 {
     /* Start user code. Do not edit comment generated here */
 	hs_oda_intc_callback();
-	R_INTC9_Start();
     /* End user code. Do not edit comment generated here */
 }
 

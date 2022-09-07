@@ -57,6 +57,4 @@ void runtime(void){
 	communication_runtime();
 	water_flow_runtime();
 	hand_sensor_runtime();
-	//For debug
-//	check_hand_sensor();
 }

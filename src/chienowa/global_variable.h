@@ -537,8 +537,8 @@ struct IO_Struct{
 	uint8_t cvcc_control: 1;
 	uint8_t cvcc_alarm_out : 1;
 	uint8_t cvcc_alarm_in: 1;
-	uint8_t RSVD1: 1; // Reserved
-	uint8_t RSVD2: 1;
+	uint8_t hand_sensor_on: 1; // Reserved
+	uint8_t hand_sensor_off: 1;
 };
 union B_MODULE_F {
 	struct {

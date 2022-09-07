@@ -9,7 +9,7 @@
 #include "global_variable.h"
 #include "pin_define.h"
 
-#define MAX_LENGHT  10
+#define MAX_LENGHT  5
 #define CALIB_VALUE_10HZ 1.34f
 #define CALIB_VALUE_100HZ 1.45f
 #define CALIB_VALUE_1KHZ 1.49f
@@ -19,22 +19,9 @@ typedef struct{
     unsigned long buff[MAX_LENGHT];
     unsigned char buff_index;
 }Circle_buffer;
-Circle_buffer flow_buff = {
-    .buff[0] = 10,
-    .buff[1] = 10,
-    .buff[2] = 10,
-    .buff[3] = 50,
-    .buff[4] = 10,
-    .buff[5] = 52,
-    .buff[6] = 50,
-    .buff[7] = 50,
-    .buff[8] = 50,
-    .buff[9] = 99,
-    .buff_index = 2
-};
+Circle_buffer flow_buff;
 unsigned long flow_timer;
 uint32_t flow_pluse;
-uint8_t new_flow_pluse = 0;
 uint32_t flow_timeout;
 uint32_t flow_timeout_count;
 void add_flow_elapse_time(Circle_buffer *data, unsigned long input);
@@ -44,11 +31,9 @@ void flow_pluse_callback(void){
 	flow_pluse++;
 	unsigned long timer_result = timer_restart_us(&flow_timer);
 	add_flow_elapse_time(&flow_buff, timer_result);
-	new_flow_pluse = 1;
 }
 void water_flow_runtime(void){
-	if(new_flow_pluse){
-		new_flow_pluse = 0;
+	if(flow_pluse % 100 == 0){
 		g.flow_rate = calculate_flow(&flow_buff);
 		flow_timeout = timer_start_ms();
 		flow_timeout_count = flow_timeout_count > 0 ? --flow_timeout_count: flow_timeout_count;

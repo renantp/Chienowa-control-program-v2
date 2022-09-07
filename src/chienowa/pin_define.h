@@ -26,6 +26,7 @@
 #define SV7_PIN			(P6_bit.no5)
 #define PUMP_1_PIN		(P6_bit.no2)
 #define PUMP_2_PIN		(P6_bit.no1)
+#define PUMP_3_PIN		(P6_bit.no3)
 #define SP_PIN			(P6_bit.no0)
 
 #define SW1_PIN			(P5_bit.no2)

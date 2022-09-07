@@ -1700,20 +1700,20 @@
         <pior1_value Name="pior1_value" Value="00" />
         <cg_security1 Name="cg_security1" Value="00" />
         <gtraceused Name="gtraceused" Value="" />
-        <cg_onchip Name="cg_onchip" Value="" />
         <cg_security9 Name="cg_security9" Value="00" />
         <cg_security6 Name="cg_security6" Value="00" />
         <cg_crc_area Name="cg_crc_area" Value="00" />
         <cg_iawctl_value Name="cg_iawctl_value" Value="00" />
         <cg_security0 Name="cg_security0" Value="00" />
+        <cg_security3 Name="cg_security3" Value="00" />
         <ocdstart Name="ocdstart" Value="7FE00" />
         <cg_pms_value Name="cg_pms_value" Value="00" />
-        <cg_security3 Name="cg_security3" Value="00" />
+        <rrm Name="rrm" Value="7FE00" />
         <cg_security4 Name="cg_security4" Value="00" />
         <pior_value Name="pior_value" Value="00" />
         <cg_ocd_ram_size Name="cg_ocd_ram_size" Value="512" />
         <cg_option Name="cg_option" Value="84" />
-        <rrm Name="rrm" Value="7FE00" />
+        <cg_onchip Name="cg_onchip" Value="" />
         <cg_security7 Name="cg_security7" Value="00" />
         <lvi_option Name="lvi_option" Value="FF" />
       </GlobleUserTag>
@@ -2834,17 +2834,17 @@
         <setting name="pinsel" value="-1" />
       </INTP7>
       <INTP8>
-        <setting name="Valid_edge" value="falling" />
+        <setting name="Valid_edge" value="rising" />
         <setting name="Operation" value="used" />
-        <setting name="ValidEdge" value="0" />
-        <setting name="Interrupt_priority" value="1" />
+        <setting name="ValidEdge" value="1" />
+        <setting name="Interrupt_priority" value="0" />
         <setting name="pinsel" value="-1" />
       </INTP8>
       <INTP9>
         <setting name="Valid_edge" value="rising" />
         <setting name="Operation" value="used" />
         <setting name="ValidEdge" value="1" />
-        <setting name="Interrupt_priority" value="1" />
+        <setting name="Interrupt_priority" value="0" />
         <setting name="pinsel" value="-1" />
       </INTP9>
       <INTP10>

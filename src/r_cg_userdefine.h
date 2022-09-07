@@ -23,7 +23,7 @@
 * Device(s)    : R5F104ML
 * Tool-Chain   : CCRL
 * Description  : This file includes user definition.
-* Creation Date: 9/5/2022
+* Creation Date: 9/7/2022
 ***********************************************************************************************************************/
 
 #ifndef _USER_DEF_H

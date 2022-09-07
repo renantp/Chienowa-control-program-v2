@@ -31,6 +31,7 @@ enum Response {
 	RESPONSE_IO_DATA,
 	RESPONSE_TIME,
 	RESPONSE_NUMBER,
+	RESPONSE_IO_DATA_END,
 }uart_response_type;
 enum Receive {
 	RECEIVE_IDLE,
@@ -201,12 +202,11 @@ void communication_runtime(void){
 		UART_DATA_POP();
 
 		uart_timeout = timer_start_ms();
-	}else{
-		if(elapsed_time_ms(uart_timeout) > 2000 ){
-			R_UART2_Stop();
-			R_UART2_Start();
-			uart_timeout = timer_start_ms();
-		}
+	}
+	if(elapsed_time_ms(uart_timeout) > 10000 ){
+		R_UART2_Stop();
+		R_UART2_Start();
+		uart_timeout = timer_start_ms();
 	}
 }
 void uart_receive_callback(void){
@@ -234,6 +234,7 @@ void uart_receive_callback(void){
 			break;
 	}
 }
+uint32_t send_hand_sensor_on;
 void uart_sended_callback(void){
 	uart_sended_callback_count++;
 	switch (uart_response_type) {
@@ -247,6 +248,11 @@ void uart_sended_callback(void){
 			break;
 		case RESPONSE_IO_DATA:
 			R_UART2_Send((uint8_t *)&g.io, NUMBER_OF_IO_BYTE);
+			if(g.io.hand_sensor_on) ++send_hand_sensor_on;
+			uart_response_type = RESPONSE_IO_DATA_END;
+			break;
+		case RESPONSE_IO_DATA_END:
+			g.io.hand_sensor_on = g.io.hand_sensor_off = 0U;
 			uart_response_type = RESPONSE_IDLE;
 			break;
 		default:

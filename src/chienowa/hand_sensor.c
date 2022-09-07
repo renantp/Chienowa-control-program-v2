@@ -12,12 +12,14 @@
 #include "module/b_module.h"
 #include "module/t_module.h"
 
-#define SOFT_TIMEOUT_MS		(500U)
+#define SOFT_TIMEOUT_MS		(1000U)
 
 uint32_t hs_start_time;
-struct HAND_SENSOR_S g_hs;
-
-uint32_t reset_hs_timeout;
+struct HAND_SENSOR_TIMEOUT_S{
+	uint32_t on;
+	uint32_t off;
+}hs_timeout;
+struct HAND_SENSOR_S g_hs = { .off = 1};
 struct {
 	uint8_t ocl_intc8;
 	uint8_t oda_intc9;
@@ -82,41 +84,69 @@ void hand_sensor_runtime(void){
 		}
 		g_hs.start = timer_start_ms();
 	}else{
-		reset_hs_timeout++;
+		hs_start_time = timer_start_ms();
 	}
+
+	// Check hand sensor valid
+	if(hs_last_input.oda_intc9 != hs_input.oda_intc9 &&
+			hs_last_input.ocl_intc8 == hs_input.ocl_intc8){
+		if(elapsed_time_ms(hs_timeout.off) > SOFT_TIMEOUT_MS){
+			g_hs.off = !g_hs.off;
+			hs_last_input.oda_intc9 = hs_input.oda_intc9;
+		}
+	}else{
+		hs_timeout.off = timer_start_ms();
+	}
+	if(hs_last_input.ocl_intc8 != hs_input.ocl_intc8 &&
+			hs_last_input.oda_intc9 == hs_input.oda_intc9){
+		if(elapsed_time_ms(hs_timeout.on) >= SOFT_TIMEOUT_MS){
+			g_hs.on = !g_hs.on;
+			hs_last_input.ocl_intc8 = hs_input.ocl_intc8;
+//			switch (hs_input.oda_intc9 % 6) {
+//				case 0:
+//					t_b_led_l();
+//					break;
+//				case 1:
+//					b_b_led_l();
+//					break;
+//				case 2:
+//					b_r_led_l();
+//					break;
+//				case 3:
+//					b_w_led_l();
+//					break;
+//				case 4:
+//					b_b_led_b();
+//					break;
+//				case 5:
+//					b_r_led_b();
+//					break;
+//				default:
+//					break;
+//			}
+		}
+		hs_timeout.off = timer_start_ms();
+	}else{
+		hs_timeout.on = timer_start_ms();
+	}
+
+	// TODO: Debug Hand sensor
+//	check_hand_sensor();
 }
 
 int check_hand_sensor(void){
-	if(hs_input.ocl_intc8 != hs_last_input.ocl_intc8){
-		hs_last_input.ocl_intc8 = hs_input.ocl_intc8;
-//		 switch (hs_input.ocl_intc8 % 7) {
-//			case 0:
-//				t_b_led_l();
-//				break;
-//			case 1:
-//				b_b_led_l();
-//				break;
-//			case 2:
-//				b_b_led_b();
-//				break;
-//			case 3:
-//				b_r_led_l();
-//				break;
-//			case 4:
-//				b_r_led_b();
-//				break;
-//			case 5:
-//				b_w_led_l();
-//				break;
-//			case 6:
-//				b_w_led_b();
-//				break;
-//			default:
-//				break;
-//		}
-		return 1;
-	}
-	return 0;
+	return g_hs.on;
 }
 
+int check_hand_sensor_undetected(void){
+	return g_hs.off;
+}
+
+//TODO After done hand washing mode, add this function to reset hand-sensor before next check
+void refresh_hand_sensor(void){
+	hs_last_input.ocl_intc8 = hs_input.ocl_intc8;
+	hs_last_input.oda_intc9 = hs_input.oda_intc9;
+	g_hs.on = 0;
+	g_hs.off = 1;
+}
 

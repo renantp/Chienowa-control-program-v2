@@ -21,6 +21,7 @@ extern struct HAND_SENSOR_S {
 	uint8_t blink;
 	uint32_t start;
 	uint32_t period;
+	uint8_t on, off;
 	enum HS_COLOR color;
 
 	uint8_t state, pre_state;
