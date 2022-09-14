@@ -127,9 +127,15 @@
 #define g_C_18_ON_T2			g.timer.module.work.c18[1]
 #define g_C_19_ON_T1			g.timer.module.work.c19[0]
 #define g_C_19_ON_T2			g.timer.module.work.c19[1]
+#define g_C_23_ON_T1			g.timer.module.work.c23[0]
+#define g_C_23_ON_T2			g.timer.module.work.c23[1]
+#define g_C_24_ON_T1			g.timer.module.work.c24[0]
+#define g_C_24_ON_T2			g.timer.module.work.c24[1]
 
 #define g_E_1_ON_T1			g.timer.module.work.e1[0]
 #define g_E_1_ON_T2			g.timer.module.work.e1[1]
+#define g_E_1_1_ON_T1		g.timer.module.work.e11[0]
+#define g_E_1_1_ON_T2		g.timer.module.work.e11[1]
 
 #define g_SV1_ON_T1			g.timer.module.work.io.sv1[0]
 #define g_SV1_ON_T2			g.timer.module.work.io.sv1[1]
@@ -268,6 +274,7 @@
 #define g_FAUCET_OFF_T3		g.timer.faucet_off
 #define g_FAUCET_OFF_T		g.timer.faucet_off
 
+
 /*************************************************
  * Module Flags
  *************************************************/
@@ -325,10 +332,12 @@
 #define g_C_18_F			g.flag.module.bc18
 #define g_C_19_F			g.flag.module.bc19
 #define g_C_23_F			g.flag.module.bc23
+#define g_C_24_F			g.flag.module.bc24
 
 #define g_CVCC_RUN_F		g.flag.cvcc_run
 
 #define g_E_1_F			g.flag.module.e1
+#define g_E_1_1_F		g.flag.module.e11
 #define g_E_2_F			g.flag.module.e2
 #define g_E_1028_F		g.flag.module.e1028
 #define g_E_1029_F		g.flag.module.e1029
@@ -476,7 +485,7 @@ extern struct Timer_Setting_s{
 
 	uint16_t crc;
 }g_T_S, g_T_S_buffer;
-extern struct Number_Setting_s {
+struct Number_Setting_s {
 	float v1_V;
 	float v2_V;
 	float v3_V;
@@ -490,8 +499,8 @@ extern struct Number_Setting_s {
 	float v11_mg_L;
 	float v12_L;
 	uint32_t crc;
-} g_V_S, g_V_S_buffer;
-
+};
+extern struct Number_Setting_s g_V_S, g_V_S_buffer;
 enum WASH_MODE_E {
 	WASH_MODE_INIT = 0,
 	HAND_WASHING_MODE = 1,
@@ -589,6 +598,7 @@ union B_MODULE_F {
 		uint8_t bc18 : 1;
 		uint8_t bc19 : 1;
 		uint8_t bc23 : 1;
+		uint8_t bc24 : 1;
 
 		uint8_t bc51 : 1;
 		uint8_t bc52 : 1;
@@ -626,6 +636,8 @@ union B_MODULE_F {
 		uint8_t c10 : 1;
 		uint8_t c14 : 1;
 		uint8_t c20 : 1;
+		uint8_t c23: 1;
+		uint8_t c24: 1;
 
 		uint8_t e1 : 1;
 		uint8_t e1028 : 1;
@@ -634,6 +646,7 @@ union B_MODULE_F {
 		uint8_t e1033 : 1;
 		uint8_t e1034 : 1;
 		uint8_t e1035 : 1;
+		uint8_t e11 : 1;
 
 		uint8_t s4: 1;
 		uint8_t s41: 1;
@@ -705,6 +718,9 @@ struct Module_Timer{
 	uint32_t c18[2];
 	uint32_t c19[2];
 	uint32_t c21[2];
+	uint32_t c22[2];
+	uint32_t c23[2];
+	uint32_t c24[2];
 
 	uint32_t c51[2];
 	uint32_t c52[3];
@@ -716,6 +732,7 @@ struct Module_Timer{
 	uint32_t c531[2];
 
 	uint32_t e1[2];
+	uint32_t e11[2];
 
 	uint32_t b_led_l[2];
 	uint32_t b_led_b[2];
@@ -816,5 +833,6 @@ extern struct GLOBAL{
 
 //New add at 05092022
 
+extern uint8_t init_individual;
 extern uint8_t g_c_5_5_10F, g_c_5_5_20F, g_M1030_F;
 #endif /* CHIENOWA_GLOBAL_VARIABLE_H_ */

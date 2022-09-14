@@ -23,7 +23,7 @@
 * Device(s)    : R5F104ML
 * Tool-Chain   : CCRL
 * Description  : This file includes user definition.
-* Creation Date: 9/7/2022
+* Creation Date: 9/13/2022
 ***********************************************************************************************************************/
 
 #ifndef _USER_DEF_H
@@ -34,6 +34,6 @@ User definitions
 ***********************************************************************************************************************/
 
 /* Start user code for function. Do not edit comment generated here */
-#include "chienowa/main.h"
+#include "chienowa/c_main.h"
 /* End user code. Do not edit comment generated here */
 #endif

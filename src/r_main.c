@@ -23,7 +23,7 @@
 * Device(s)    : R5F104ML
 * Tool-Chain   : CCRL
 * Description  : This file implements main function.
-* Creation Date: 9/7/2022
+* Creation Date: 9/13/2022
 ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
@@ -37,8 +37,17 @@ Includes
 #include "r_cg_adc.h"
 #include "r_cg_dac.h"
 #include "r_cg_timer.h"
-#include "r_cg_rtc.h"
 /* Start user code for include. Do not edit comment generated here */
+#include "chienowa/delay.h"
+#include "chienowa/water_flow_calculation.h"
+#include "chienowa/runtime.h"
+#include "chienowa/raspberry_pi_communication.h"
+#include "chienowa/module/p_module.h"
+#include "r_cg_dac.h"
+#include "chienowa/module/b_module.h"
+#include "chienowa/hand_sensor.h"
+#include "chienowa/module/t_module.h"
+#include "chienowa/c_main.h"
 /* End user code. Do not edit comment generated here */
 #include "r_cg_userdefine.h"
 
@@ -53,29 +62,15 @@ Global variables and functions
 ***********************************************************************************************************************/
 /* Start user code for global. Do not edit comment generated here */
 uint32_t g_count;
-
+struct Number_Setting_s g_V_S, g_V_S_buffer;
+struct Timer_Setting_s g_T_S, g_T_S_buffer;
 struct {
 	uint32_t task1;
 	uint32_t task2;
 }stamp;
-uint32_t button_count;
-uint8_t button_state;
-void blink_led_1(void){
-	if(ns_delay_ms(&stamp.task1, 100)){
-		P4_bit.no1 = ~P4_bit.no1;
-	}
-}
-void blink_led_2(void){
-	if(ns_delay_ms(&stamp.task2, 50)){
-		P4_bit.no2 = ~P4_bit.no2;
-	}
-}
-void read_button(void){
-	if(button_state != P3_bit.no1 && !button_state){
-		button_count++;
-	}
-	button_state = P3_bit.no1;
-}
+eeprom_config e_config = {
+		.csi_flag = &g_csi01_flag,
+		.csi_send_receive =	R_CSI01_Send_Receive };
 /* End user code. Do not edit comment generated here */
 void R_MAIN_UserInit(void);
 
@@ -89,13 +84,15 @@ void main(void)
 {
     R_MAIN_UserInit();
     /* Start user code. Do not edit comment generated here */
-	init();
+    set_timer_setting_default(&g_T_S);
+	if (eeprom_init(&e_config) == 0) {
+		eeprom_set_block(NONE_BLOCK);
+	}
+	R_UART2_Receive(get_pointer_uart_queue(), 6);
 	while (1U) {
+		runtime();
 		loop();
-//		blink_led_1();
-//		blink_led_2();
-//		read_button();
-
+//		p_0();
 	}
 	/* End user code. Do not edit comment generated here */
 }
@@ -120,10 +117,10 @@ void R_MAIN_UserInit(void)
 
 	R_TAU0_Create();
 	R_TAU0_Channel0_Start();
-	R_TAU0_Channel1_Start();
-
-	R_RTC_Create();
-	R_RTC_Start();
+	R_TAU1_Create();
+	R_TAU1_Channel0_Start();
+//	R_RTC_Create();
+//	R_RTC_Start();
 
 	R_DAC_Create();
 	R_DAC0_Start();

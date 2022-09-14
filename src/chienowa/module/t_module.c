@@ -231,7 +231,8 @@ int t_sv1(void) {              //電磁バルブSV1停止処理
 	return 0;
 }
 int t_sv2(void) {              //電磁バルブSV2停止処理
-	if (g.io.valve.sv2 == 1) {
+	SV2_PIN = VALVE_OFF;
+	if (g_SV2_F == 1) {
 		g_SV2_ON_T1 = timer_stop_s(g.timer.module.on.io.sv2[0]);//SV2_ON_T1 STOP
 		g_SV2_ON_T2 = timer_stop_ms(g.timer.module.on.io.sv2[1]);//SV2_ON_T2 STOP  //*20220831 修正　（渡部夢二）
 		g_SV2_ON_T3 = timer_stop_ms(g.timer.module.on.io.sv2[2]);//フィルター交換で使用  //*20220831 修正　（渡部夢二）
@@ -769,10 +770,10 @@ int te_1_1(void){
 	return 0;
 }
 
-int tc_2_3(void){
+int tc_23(void){
 	return 0;
 }
-int tc_2_4(void){
+int tc_24(void){
 	return 0;
 }
 

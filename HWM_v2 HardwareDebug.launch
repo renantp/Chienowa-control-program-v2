@@ -6,6 +6,7 @@
     <intAttribute key="com.renesas.cdt.core.connectionTimeout" value="30"/>
     <stringAttribute key="com.renesas.cdt.core.initCommands" value=""/>
     <stringAttribute key="com.renesas.cdt.core.ipAddress" value="localhost"/>
+    <stringAttribute key="com.renesas.cdt.core.jtagDevice" value="E2 Lite (RL78)"/>
     <stringAttribute key="com.renesas.cdt.core.jtagDeviceId" value="com.renesas.hardwaredebug.rl78.e2"/>
     <listAttribute key="com.renesas.cdt.core.listGDBExe">
         <listEntry value="rl78-elf-gdb"/>

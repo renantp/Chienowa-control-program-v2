@@ -24,6 +24,7 @@ $ENDIF
 
 	.public	_start
 	.public _exit
+	.public _atexit
 
 ;-----------------------------------------------------------------------------
 ;	RAM section
@@ -191,6 +192,26 @@ $ENDIF
 ;	BNZ	$.L1_TEXT
 
 	;--------------------------------------------------
+	; call global constructor
+	;--------------------------------------------------
+	MOVW	BC,#LOWW(SIZEOF(.init))
+	BR	$.L2_INIT
+.L1_INIT:
+	DECW	BC
+	DECW	BC
+	MOVW	AX,BC
+	MOV	ES,#HIGHW(STARTOF(.init))
+	ADDW	AX,ES:!LOWW(STARTOF(.init))
+	MOV	CS,#0x00
+	PUSH	BC
+	CALL	AX
+	POP	BC
+.L2_INIT:
+	CLRW	AX
+	CMPW	AX,BC
+	BNZ	$.L1_INIT
+
+	;--------------------------------------------------
 	; call main function
 	;--------------------------------------------------
 	CALL	!!_main		; main();
@@ -201,6 +222,12 @@ $ENDIF
 	CLRW	AX		; exit(0)
 _exit:
 	BR	$_exit
+
+;-----------------------------------------------------------------------------
+;	atexit (only ret)
+;-----------------------------------------------------------------------------
+_atexit:
+	RET
 
 ;-----------------------------------------------------------------------------
 ;	section

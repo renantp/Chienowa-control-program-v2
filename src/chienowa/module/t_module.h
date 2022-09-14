@@ -71,10 +71,11 @@ int tc_17(void);
 int tc_18(void);
 int tc_19(void);
 
-int tc_2_3(void);
-int tc_2_4(void);
+int tc_23(void);
+int tc_24(void);
 
 int te_1(void);
+int te_1_1(void);
 int t_b_led_l(void);
 int t_b_led_b(void);
 int t_r_led_l(void);
@@ -93,6 +94,7 @@ int ts_4_6(void);
 int ts_4_7(void);
 int ts_4_8(void);
 
+int te_1(void);
 int te_1_1(void);
 
 int t_p_2_1(void);

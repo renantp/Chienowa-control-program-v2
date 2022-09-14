@@ -15,8 +15,8 @@ src/r_cg_timer_user.obj src/r_cg_timer_user.d: ../src/chienowa/delay.h
 ../src/chienowa/delay.h:
 src/r_cg_timer_user.obj src/r_cg_timer_user.d: ../src/r_cg_userdefine.h
 ../src/r_cg_userdefine.h:
-src/r_cg_timer_user.obj src/r_cg_timer_user.d: ../src/chienowa/main.h
-../src/chienowa/main.h:
+src/r_cg_timer_user.obj src/r_cg_timer_user.d: ../src/chienowa/c_main.h
+../src/chienowa/c_main.h:
 src/r_cg_timer_user.obj src/r_cg_timer_user.d: ../src/chienowa/global_variable.h
 ../src/chienowa/global_variable.h:
 src/r_cg_timer_user.obj src/r_cg_timer_user.d: ../src/chienowa/circular_buffer.h

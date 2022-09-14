@@ -23,7 +23,7 @@
 * Device(s)    : R5F104ML
 * Tool-Chain   : CCRL
 * Description  : This file implements system initializing function.
-* Creation Date: 9/7/2022
+* Creation Date: 9/13/2022
 ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
@@ -37,7 +37,6 @@ Includes
 #include "r_cg_adc.h"
 #include "r_cg_dac.h"
 #include "r_cg_timer.h"
-#include "r_cg_rtc.h"
 /* Start user code for include. Do not edit comment generated here */
 /* End user code. Do not edit comment generated here */
 #include "r_cg_userdefine.h"
@@ -71,7 +70,7 @@ void R_Systeminit(void)
     R_SAU1_Create();
     R_ADC_Create();
     R_TAU0_Create();
-    R_RTC_Create();
+    R_TAU1_Create();
     R_INTC_Create();
     R_DAC_Create();
     IAWCTL = 0x00U;

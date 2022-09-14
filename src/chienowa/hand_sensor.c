@@ -12,7 +12,7 @@
 #include "module/b_module.h"
 #include "module/t_module.h"
 
-#define SOFT_TIMEOUT_MS		(1000U)
+#define SOFT_TIMEOUT_MS		(200U)
 
 uint32_t hs_start_time;
 struct HAND_SENSOR_TIMEOUT_S{
@@ -71,7 +71,7 @@ void hand_sensor_blink(enum HS_COLOR color, uint32_t period_ms){
 }
 
 
-
+uint8_t hs_ready = 1;
 void hand_sensor_runtime(void){
 	//Handle blink sequence
 	if(g_hs.blink != 0 && elapsed_time_ms(g_hs.start) >= g_hs.period){
@@ -88,48 +88,69 @@ void hand_sensor_runtime(void){
 	}
 
 	// Check hand sensor valid
-	if(hs_last_input.oda_intc9 != hs_input.oda_intc9 &&
-			hs_last_input.ocl_intc8 == hs_input.ocl_intc8){
-		if(elapsed_time_ms(hs_timeout.off) > SOFT_TIMEOUT_MS){
-			g_hs.off = !g_hs.off;
-			hs_last_input.oda_intc9 = hs_input.oda_intc9;
-		}
-	}else{
-		hs_timeout.off = timer_start_ms();
-	}
-	if(hs_last_input.ocl_intc8 != hs_input.ocl_intc8 &&
-			hs_last_input.oda_intc9 == hs_input.oda_intc9){
-		if(elapsed_time_ms(hs_timeout.on) >= SOFT_TIMEOUT_MS){
+	if(hs_input.ocl_intc8 > hs_input.oda_intc9 && hs_ready == 1){
+		//Have detect
+		if(elapsed_time_ms(hs_timeout.on) > SOFT_TIMEOUT_MS){
 			g_hs.on = !g_hs.on;
-			hs_last_input.ocl_intc8 = hs_input.ocl_intc8;
-//			switch (hs_input.oda_intc9 % 6) {
-//				case 0:
-//					t_b_led_l();
-//					break;
-//				case 1:
-//					b_b_led_l();
-//					break;
-//				case 2:
-//					b_r_led_l();
-//					break;
-//				case 3:
-//					b_w_led_l();
-//					break;
-//				case 4:
-//					b_b_led_b();
-//					break;
-//				case 5:
-//					b_r_led_b();
-//					break;
-//				default:
-//					break;
-//			}
+			hs_ready = 0;
 		}
-		hs_timeout.off = timer_start_ms();
-	}else{
-		hs_timeout.on = timer_start_ms();
+	}else if (hs_input.ocl_intc8 < hs_input.oda_intc9){
+		//Have undetect
+	}
+	if(hs_input.ocl_intc8 == hs_input.oda_intc9){
+		hs_ready = 1;
 	}
 
+	if(!hs_ready){
+		hs_timeout.on = timer_start_ms();
+	}
+//	if(hs_last_input.oda_intc9 != hs_input.oda_intc9 &&
+//			hs_last_input.ocl_intc8 == hs_input.ocl_intc8){
+//		if(elapsed_time_ms(hs_timeout.off) > SOFT_TIMEOUT_MS){
+//			g_hs.off = !g_hs.off;
+//			hs_last_input.oda_intc9 = hs_input.oda_intc9;
+//			hs_timeout.off = timer_start_ms();
+//		}
+////		hs_timeout.on = timer_start_ms();
+//	}else{
+//		hs_timeout.off = timer_start_ms();
+//	}
+//	if(hs_last_input.ocl_intc8 != hs_input.ocl_intc8 &&
+//			hs_last_input.oda_intc9 == hs_input.oda_intc9){
+//		if(elapsed_time_ms(hs_timeout.on) >= SOFT_TIMEOUT_MS){
+//			g_hs.on = !g_hs.on;
+//			hs_last_input.ocl_intc8 = hs_input.ocl_intc8;
+////			switch (hs_input.oda_intc9 % 6) {
+////				case 0:
+////					t_b_led_l();
+////					break;
+////				case 1:
+////					b_b_led_l();
+////					break;
+////				case 2:
+////					b_r_led_l();
+////					break;
+////				case 3:
+////					b_w_led_l();
+////					break;
+////				case 4:
+////					b_b_led_b();
+////					break;
+////				case 5:
+////					b_r_led_b();
+////					break;
+////				default:
+////					break;
+////			}
+//			hs_timeout.on = timer_start_ms();
+//		}
+////		hs_timeout.off = timer_start_ms();
+//	}else{
+//		hs_timeout.on = timer_start_ms();
+//	}
+
+	g.io.hand_sensor_on = g_hs.on;
+	g.io.hand_sensor_off = g_hs.off;
 	// TODO: Debug Hand sensor
 //	check_hand_sensor();
 }
@@ -137,16 +158,20 @@ void hand_sensor_runtime(void){
 int check_hand_sensor(void){
 	return g_hs.on;
 }
-
-int check_hand_sensor_undetected(void){
-	return g_hs.off;
-}
-
-//TODO After done hand washing mode, add this function to reset hand-sensor before next check
 void refresh_hand_sensor(void){
 	hs_last_input.ocl_intc8 = hs_input.ocl_intc8;
 	hs_last_input.oda_intc9 = hs_input.oda_intc9;
 	g_hs.on = 0;
 	g_hs.off = 1;
 }
+
+void hs_reset(void){
+	refresh_hand_sensor();
+}
+
+int check_hand_sensor_undetected(void){
+	return g_hs.off;
+}
+
+//TODO After done hand washing mode, add this function to reset hand-sensor before next check
 

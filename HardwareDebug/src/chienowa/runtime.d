@@ -19,3 +19,9 @@ src/chienowa/runtime.obj src/chienowa/runtime.d: ../src/chienowa/water_flow_calc
 ../src/chienowa/water_flow_calculation.h:
 src/chienowa/runtime.obj src/chienowa/runtime.d: ../src/chienowa/hand_sensor.h
 ../src/chienowa/hand_sensor.h:
+src/chienowa/runtime.obj src/chienowa/runtime.d: ../src/chienowa/individual_mode.h
+../src/chienowa/individual_mode.h:
+src/chienowa/runtime.obj src/chienowa/runtime.d: ../src/chienowa/delay.h
+../src/chienowa/delay.h:
+src/chienowa/runtime.obj src/chienowa/runtime.d: ../src/chienowa/../r_cg_dac.h
+../src/chienowa/../r_cg_dac.h:

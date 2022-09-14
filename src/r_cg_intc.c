@@ -23,7 +23,7 @@
 * Device(s)    : R5F104ML
 * Tool-Chain   : CCRL
 * Description  : This file implements device driver for INTC module.
-* Creation Date: 9/7/2022
+* Creation Date: 9/13/2022
 ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
@@ -79,12 +79,12 @@ void R_INTC_Create(void)
     PIF10 = 0U;    /* clear INTP10 interrupt flag */
     PMK11 = 1U;    /* disable INTP11 operation */
     PIF11 = 0U;    /* clear INTP11 interrupt flag */
-    /* Set INTP8 high priority */
-    PPR18 = 0U;
-    PPR08 = 0U;
-    /* Set INTP9 high priority */
-    PPR19 = 0U;
-    PPR09 = 0U;
+    /* Set INTP8 low priority */
+    PPR18 = 1U;
+    PPR08 = 1U;
+    /* Set INTP9 low priority */
+    PPR19 = 1U;
+    PPR09 = 1U;
     EGP1 = _01_INTP8_EDGE_RISING_SEL | _02_INTP9_EDGE_RISING_SEL;
     /* Set INTP8 pin */
     PM7 |= 0x10U;

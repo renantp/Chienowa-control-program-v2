@@ -660,10 +660,10 @@ int be1(void){
 	return 0;
 }
 int b_b_led_l(void){
+	hand_sensor_blink(BLUE, 0);																		//Blue LED Light
 	if(g_B_LED_L_F == 0){
 		g_B_LED_L_ON_T1 = timer_restart_s(g_B_LED_L_ON_T1);
 		g_B_LED_L_ON_T2 = timer_start_ms();
-		hand_sensor_blink(BLUE, 0);																		//Blue LED Light
 		g_B_LED_L_F = 1;
 	}
 	return 0;
@@ -714,14 +714,34 @@ int b_w_led_b(void){
 	return 0;
 }
 int be_1_1(void){
+	if(g_E_1_F == 0){
+		g_E_1_1_ON_T1 = timer_restart_s(g_E_1_1_ON_T1);
+		g_E_1_1_ON_T2  = timer_start_ms();
+		g_E_1_1_F = 1;
+	}
 	return 0;
 }
 int be_1(void){
+	if(g_E_1_F == 0){
+		g_E_1_ON_T1 = timer_restart_s(g_E_1_ON_T1);
+		g_E_1_ON_T2  = timer_start_ms();
+		g_E_1_F = 1;
+	}
 	return 0;
 }
-int bc_2_3(void){
+int bc_23(void){
+	if(g_C_23_F == 0){
+		g_C_23_ON_T1 = timer_restart_s(g_C_23_ON_T1);
+		g_C_23_ON_T2  = timer_start_ms();
+		g_C_23_F = 1;
+	}
 	return 0;
 }
-int bc_2_4(void){
+int bc_24(void){
+	if(g_C_24_F == 0){
+		g_C_24_ON_T1 = timer_restart_s(g_C_24_ON_T1);
+		g_C_24_ON_T2  = timer_start_ms();
+		g_C_24_F = 1;
+	}
 	return 0;
 }

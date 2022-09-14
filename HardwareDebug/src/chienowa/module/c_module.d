@@ -23,3 +23,5 @@ src/chienowa/module/c_module.obj src/chienowa/module/c_module.d: ../src/chienowa
 ../src/chienowa/module/../adc.h:
 src/chienowa/module/c_module.obj src/chienowa/module/c_module.d: ../src/chienowa/module/e_module.h
 ../src/chienowa/module/e_module.h:
+src/chienowa/module/c_module.obj src/chienowa/module/c_module.d: ../src/chienowa/module/../runtime.h
+../src/chienowa/module/../runtime.h:

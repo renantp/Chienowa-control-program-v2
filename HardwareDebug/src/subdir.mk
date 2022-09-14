@@ -14,8 +14,6 @@ C_SRCS += \
 ../src/r_cg_intc_user.c \
 ../src/r_cg_port.c \
 ../src/r_cg_port_user.c \
-../src/r_cg_rtc.c \
-../src/r_cg_rtc_user.c \
 ../src/r_cg_serial.c \
 ../src/r_cg_serial_user.c \
 ../src/r_cg_timer.c \
@@ -34,8 +32,6 @@ src/r_cg_intc.obj \
 src/r_cg_intc_user.obj \
 src/r_cg_port.obj \
 src/r_cg_port_user.obj \
-src/r_cg_rtc.obj \
-src/r_cg_rtc_user.obj \
 src/r_cg_serial.obj \
 src/r_cg_serial_user.obj \
 src/r_cg_timer.obj \
@@ -54,8 +50,6 @@ src/r_cg_intc.d \
 src/r_cg_intc_user.d \
 src/r_cg_port.d \
 src/r_cg_port_user.d \
-src/r_cg_rtc.d \
-src/r_cg_rtc_user.d \
 src/r_cg_serial.d \
 src/r_cg_serial_user.d \
 src/r_cg_timer.d \

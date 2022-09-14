@@ -667,7 +667,7 @@
             <INTTM00 InUse="1" ISR="r_tau0_channel0_interrupt" />
           </Channel0>
           <Channel1>
-            <INTTM01 InUse="1" ISR="r_tau0_channel1_interrupt" />
+            <INTTM01 InUse="0" ISR="r_tau0_channel1_interrupt" />
             <INTTM01H InUse="0" ISR="r_tau0_channel1_higher8bits_interrupt" />
           </Channel1>
           <Channel2>
@@ -680,7 +680,7 @@
         </TAU0>
         <TAU1>
           <Channel0>
-            <INTTM10 InUse="0" ISR="r_tau1_channel0_interrupt" />
+            <INTTM10 InUse="1" ISR="r_tau1_channel0_interrupt" />
           </Channel0>
           <Channel1>
             <INTTM11 InUse="0" ISR="r_tau1_channel1_interrupt" />
@@ -1303,10 +1303,10 @@
               <R_TAU0_Channel0_Set_SoftwareTriggerOn UserName="" LibName="R_TAU_Channeln_Set_SoftwareTriggerOn" InUse="0" />
             </Channel0>
             <Channel1 InUse="">
-              <R_TAU0_Channel1_Start UserName="" LibName="R_TAU_Channeln_Start" InUse="1" />
+              <R_TAU0_Channel1_Start UserName="" LibName="R_TAU_Channeln_Start" InUse="0" />
               <R_TAU0_Channel1_Higher8bits_Start UserName="" LibName="R_TAU_Channeln_Higher8bits_Start" InUse="0" />
               <R_TAU0_Channel1_Lower8bits_Start UserName="" LibName="R_TAU_Channeln_Lower8bits_Start" InUse="0" />
-              <R_TAU0_Channel1_Stop UserName="" LibName="R_TAU_Channeln_Stop" InUse="1" />
+              <R_TAU0_Channel1_Stop UserName="" LibName="R_TAU_Channeln_Stop" InUse="0" />
               <R_TAU0_Channel1_Higher8bits_Stop UserName="" LibName="R_TAU_Channeln_Higher8bits_Stop" InUse="0" />
               <R_TAU0_Channel1_Lower8bits_Stop UserName="" LibName="R_TAU_Channeln_Lower8bits_Stop" InUse="0" />
               <R_TAU0_Channel1_Get_PulseWidth UserName="" LibName="R_TAU_Channeln_Get_PulseWidth" InUse="0" />
@@ -1328,11 +1328,11 @@
             </Channel3>
           </TAU0>
           <TAU1 Chip="RL78G14_80pin,RL78G14_100pin">
-            <R_TAU1_Create UserName="" LibName="R_TAU_Create" InUse="0" Init="1" InitMode="" />
+            <R_TAU1_Create UserName="" LibName="R_TAU_Create" InUse="1" Init="1" InitMode="" />
             <R_TAU1_Set_PowerOff UserName="" LibName="R_TAU_Set_PowerOff" InUse="0" />
             <Channel0 InUse="">
-              <R_TAU1_Channel0_Start UserName="" LibName="R_TAU_Channeln_Start" InUse="0" />
-              <R_TAU1_Channel0_Stop UserName="" LibName="R_TAU_Channeln_Stop" InUse="0" />
+              <R_TAU1_Channel0_Start UserName="" LibName="R_TAU_Channeln_Start" InUse="1" />
+              <R_TAU1_Channel0_Stop UserName="" LibName="R_TAU_Channeln_Stop" InUse="1" />
               <R_TAU1_Channel0_Get_PulseWidth Chip="RL78G14_80pin,RL78G14_100pin" UserName="" LibName="R_TAU_Channeln_Get_PulseWidth" InUse="0" />
               <R_TAU1_Channel0_Set_SoftwareTriggerOn Chip="RL78G14_80pin,RL78G14_100pin" UserName="" LibName="R_TAU_Channeln_Set_SoftwareTriggerOn" InUse="0" />
             </Channel0>
@@ -1402,7 +1402,7 @@
               <r_tau0_channel0_interrupt UserName="r_tau0_channel0_interrupt" INTHandle="" LibName="r_tau_channeln_interrupt" InUse="1" />
             </Channel0>
             <Channel1 InUse="">
-              <r_tau0_channel1_interrupt UserName="r_tau0_channel1_interrupt" INTHandle="" LibName="r_tau_channeln_interrupt" InUse="1" />
+              <r_tau0_channel1_interrupt UserName="r_tau0_channel1_interrupt" INTHandle="" LibName="r_tau_channeln_interrupt" InUse="0" />
               <r_tau0_channel1_higher8bits_interrupt UserName="" INTHandle="" LibName="r_tau_channeln_higher8bits_interrupt" InUse="0" />
             </Channel1>
             <Channel2 InUse="">
@@ -1416,7 +1416,7 @@
           <TAU1 Chip="RL78G14_80pin,RL78G14_100pin">
             <R_TAU1_Create_UserInit UserName="" LibName="R_TAU_Create_UserInit" InUse="0" />
             <Channel0 InUse="">
-              <r_tau1_channel0_interrupt UserName="" INTHandle="" LibName="r_tau_channeln_interrupt" InUse="0" />
+              <r_tau1_channel0_interrupt UserName="r_tau1_channel0_interrupt" INTHandle="" LibName="r_tau_channeln_interrupt" InUse="1" />
             </Channel0>
             <Channel1 InUse="">
               <r_tau1_channel1_interrupt UserName="" INTHandle="" LibName="r_tau_channeln_interrupt" InUse="0" />
@@ -1463,14 +1463,14 @@
         <r_cg_wdt.h UserName="" LibName=".h" InUse="0" />
       </WDT>
       <RTC>
-        <r_cg_rtc.c UserName="r_cg_rtc.c" LibName=".c" InUse="1">
+        <r_cg_rtc.c UserName="r_cg_rtc.c" LibName=".c" InUse="0">
           <Type R_RTC_Create="void R_RTC_Create(void)" R_RTC_Start="void R_RTC_Start(void)" R_RTC_Stop="void R_RTC_Stop(void)" R_RTC_Set_HourSystem="MD_STATUS R_RTC_SetHourSystem(rtc_hour_system_t hour_system)" R_RTC_Get_CounterValue="MD_STATUS R_RTC_Get_CounterValue(rtc_counter_value_t * const counter_read_val)" R_RTC_Set_CounterValue="MD_STATUS R_RTC_Set_CounterValue(rtc_counter_value_t counter_write_val)" R_RTC_Set_AlarmOn="void R_RTC_Set_AlarmOn(void)" R_RTC_Set_AlarmOff="void R_RTC_Set_AlarmOff(void)" R_RTC_Set_AlarmValue="void R_RTC_Set_AlarmValue(rtc_alarm_value_t alarm_val)" R_RTC_Get_AlarmValue="void R_RTC_Get_AlarmValue(rtc_alarm_value_t * const alarm_val)" R_RTC_Set_ConstPeriodInterruptOn="MD_STATUS R_RTC_Set_ConstPeriodInterruptOn(rtc_int_period_t period)" R_RTC_Set_ConstPeriodInterruptOff="void R_RTC_Set_ConstPeriodInterruptOff(void)" R_RTC_Set_RTC1HZOn="void R_RTC_Set_RTC1HZOn(void)" R_RTC_Set_RTC1HZOff="void R_RTC_Set_RTC1HZOff(void)" R_RTC_Set_PowerOff="void R_RTC_Set_PowerOff(void)" />
-          <R_RTC_Create UserName="" LibName="R_RTC_Create" InUse="1" Init="1" InitMode="" />
-          <R_RTC_Start UserName="" LibName="R_RTC_Start" InUse="1" />
-          <R_RTC_Stop UserName="" LibName="R_RTC_Stop" InUse="1" />
+          <R_RTC_Create UserName="" LibName="R_RTC_Create" InUse="0" Init="1" InitMode="" />
+          <R_RTC_Start UserName="" LibName="R_RTC_Start" InUse="0" />
+          <R_RTC_Stop UserName="" LibName="R_RTC_Stop" InUse="0" />
           <R_RTC_Set_HourSystem Chip="RL78G14_40pin,RL78G14_44pin,RL78G14_48pin,RL78G14_52pin,RL78G14_64pin,RL78G14_80pin,RL78G14_100pin" UserName="" LibName="R_RTC_Set_HourSystem" InUse="0" />
-          <R_RTC_Get_CounterValue Chip="RL78G14_40pin,RL78G14_44pin,RL78G14_48pin,RL78G14_52pin,RL78G14_64pin,RL78G14_80pin,RL78G14_100pin" UserName="" LibName="R_RTC_Get_CounterValue" InUse="1" />
-          <R_RTC_Set_CounterValue Chip="RL78G14_40pin,RL78G14_44pin,RL78G14_48pin,RL78G14_52pin,RL78G14_64pin,RL78G14_80pin,RL78G14_100pin" UserName="" LibName="R_RTC_Set_CounterValue" InUse="1" />
+          <R_RTC_Get_CounterValue Chip="RL78G14_40pin,RL78G14_44pin,RL78G14_48pin,RL78G14_52pin,RL78G14_64pin,RL78G14_80pin,RL78G14_100pin" UserName="" LibName="R_RTC_Get_CounterValue" InUse="0" />
+          <R_RTC_Set_CounterValue Chip="RL78G14_40pin,RL78G14_44pin,RL78G14_48pin,RL78G14_52pin,RL78G14_64pin,RL78G14_80pin,RL78G14_100pin" UserName="" LibName="R_RTC_Set_CounterValue" InUse="0" />
           <R_RTC_Set_AlarmOn Chip="RL78G14_40pin,RL78G14_44pin,RL78G14_48pin,RL78G14_52pin,RL78G14_64pin,RL78G14_80pin,RL78G14_100pin" UserName="" LibName="R_RTC_Set_AlarmOn" InUse="0" />
           <R_RTC_Set_AlarmOff Chip="RL78G14_40pin,RL78G14_44pin,RL78G14_48pin,RL78G14_52pin,RL78G14_64pin,RL78G14_80pin,RL78G14_100pin" UserName="" LibName="R_RTC_Set_AlarmOff" InUse="0" />
           <R_RTC_Set_AlarmValue Chip="RL78G14_40pin,RL78G14_44pin,RL78G14_48pin,RL78G14_52pin,RL78G14_64pin,RL78G14_80pin,RL78G14_100pin" UserName="" LibName="R_RTC_Set_AlarmValue" InUse="0" />
@@ -1481,14 +1481,14 @@
           <R_RTC_Set_RTC1HZOff Chip="RL78G14_40pin,RL78G14_44pin,RL78G14_48pin,RL78G14_52pin,RL78G14_64pin,RL78G14_80pin,RL78G14_100pin" UserName="" LibName="R_RTC_Set_RTC1HZOff" InUse="0" />
           <R_RTC_Set_PowerOff UserName="" LibName="R_RTC_Set_PowerOff" InUse="0" />
         </r_cg_rtc.c>
-        <r_cg_rtc_user.c UserName="r_cg_rtc_user.c" LibName="_user.c" InUse="1">
+        <r_cg_rtc_user.c UserName="r_cg_rtc_user.c" LibName="_user.c" InUse="0">
           <Type R_RTC_Create_UserInit="void R_RTC_Create_UserInit(void)" r_rtc_interrupt="__interrupt static void r_rtc_interrupt(void)" r_rtc_callback_constperiod="void r_rtc_callback_constperiod(void)" r_rtc_callback_alarm="void r_rtc_callback_alarm(void)" />
           <R_RTC_Create_UserInit UserName="" LibName="R_RTC_Create_UserInit" InUse="0" />
           <r_rtc_interrupt UserName="" INTHandle="" LibName="r_rtc_interrupt" InUse="0" />
           <r_rtc_callback_constperiod UserName="" LibName="r_rtc_callback_constperiod" InUse="0" />
           <r_rtc_callback_alarm Chip="RL78G14_40pin,RL78G14_44pin,RL78G14_48pin,RL78G14_52pin,RL78G14_64pin,RL78G14_80pin,RL78G14_100pin" UserName="" LibName="r_rtc_callback_alarm" InUse="0" />
         </r_cg_rtc_user.c>
-        <r_cg_rtc.h UserName="r_cg_rtc.h" LibName=".h" InUse="1" />
+        <r_cg_rtc.h UserName="r_cg_rtc.h" LibName=".h" InUse="0" />
       </RTC>
       <IT>
         <r_cg_it.c UserName="" LibName=".c" InUse="">
@@ -1701,19 +1701,19 @@
         <cg_security1 Name="cg_security1" Value="00" />
         <gtraceused Name="gtraceused" Value="" />
         <cg_security9 Name="cg_security9" Value="00" />
+        <rrm Name="rrm" Value="7FE00" />
         <cg_security6 Name="cg_security6" Value="00" />
         <cg_crc_area Name="cg_crc_area" Value="00" />
         <cg_iawctl_value Name="cg_iawctl_value" Value="00" />
         <cg_security0 Name="cg_security0" Value="00" />
-        <cg_security3 Name="cg_security3" Value="00" />
         <ocdstart Name="ocdstart" Value="7FE00" />
-        <cg_pms_value Name="cg_pms_value" Value="00" />
-        <rrm Name="rrm" Value="7FE00" />
         <cg_security4 Name="cg_security4" Value="00" />
-        <pior_value Name="pior_value" Value="00" />
-        <cg_ocd_ram_size Name="cg_ocd_ram_size" Value="512" />
-        <cg_option Name="cg_option" Value="84" />
+        <cg_pms_value Name="cg_pms_value" Value="00" />
+        <cg_security3 Name="cg_security3" Value="00" />
         <cg_onchip Name="cg_onchip" Value="" />
+        <pior_value Name="pior_value" Value="00" />
+        <cg_option Name="cg_option" Value="84" />
+        <cg_ocd_ram_size Name="cg_ocd_ram_size" Value="512" />
         <cg_security7 Name="cg_security7" Value="00" />
         <lvi_option Name="lvi_option" Value="FF" />
       </GlobleUserTag>
@@ -1754,7 +1754,7 @@
     </DAC>
     <TAU SetFlag="True" HelpID="timer" NeedRefresh="False">
       <TAU0 Accelerate="No" MacroName="TAU" Channel="0" ChannelNum="0,1,2,3" SetFlag="True" TabEnable="True" />
-      <TAU1 Chip="RL78G14_80pin,RL78G14_100pin" Accelerate="No" MacroName="TAU" Channel="1" ChannelNum="0,1,2,3" SetFlag="False" TabEnable="True" />
+      <TAU1 Chip="RL78G14_80pin,RL78G14_100pin" Accelerate="No" MacroName="TAU" Channel="1" ChannelNum="0,1,2,3" SetFlag="True" TabEnable="True" />
       <TMRJ0 SetFlag="False" MacroName="TMRJ" Channel="0" TabEnable="True" />
       <TMRD0 SetFlag="False" MacroName="TMRD" Channel="0" TabEnable="True" />
       <TMRD1 SetFlag="False" MacroName="TMRD" Channel="1" TabEnable="True" />
@@ -1763,8 +1763,8 @@
     <WDT Prepared="true" SetFlag="False" HelpID="watchdogtimer" NeedRefresh="False">
       <WDT SetFlag="False" MacroName="WDT" />
     </WDT>
-    <RTC SetFlag="True" HelpID="rtc" NeedRefresh="False">
-      <RTC MacroName="RTC" SetFlag="True" />
+    <RTC SetFlag="False" HelpID="rtc" NeedRefresh="False">
+      <RTC MacroName="RTC" SetFlag="False" />
     </RTC>
     <IT SetFlag="" HelpID="intervaltimer" NeedRefresh="False">
       <IT MacroName="IntervalTM" />
@@ -2681,13 +2681,13 @@
           <setting name="Intervalvalue_Low8bits_Scale" value="-1" />
           <setting name="Generate_interrupt_when_couting_started" value="no" />
           <setting name="Interrupt" value="used" />
-          <setting name="Interrupt_priority" value="2" />
+          <setting name="Interrupt_priority" value="3" />
           <setting name="InterruptH_priority" value="3" />
           <setting name="InterruptH8" value="unused" />
         </TAUInterval0>
       </Channel0>
       <Channel1>
-        <setting name="ChannelFunction" value="1" />
+        <setting name="ChannelFunction" value="0" />
         <setting name="Pinselection" value="-1" />
         <TAUInterval1>
           <setting name="OperationMode" value="16bits" />
@@ -2733,8 +2733,24 @@
     </TAU0>
     <TAU1>
       <Channel0>
-        <setting name="ChannelFunction" value="0" />
+        <setting name="ChannelFunction" value="1" />
         <setting name="Pinselection" value="-1" />
+        <TAUInterval0>
+          <setting name="OperationMode" value="16bits" />
+          <setting name="Count_clock" value="MCK clock" />
+          <setting name="Sub_clock_mode" value="-1" />
+          <setting name="Interval_value" value="1" />
+          <setting name="Value_scale" value="1" />
+          <setting name="Intervalvalue_High8bits" value="100" />
+          <setting name="Intervalvalue_High8bits_scale" value="-1" />
+          <setting name="Intervalvalue_Low8bits" value="100" />
+          <setting name="Intervalvalue_Low8bits_Scale" value="-1" />
+          <setting name="Generate_interrupt_when_couting_started" value="no" />
+          <setting name="Interrupt" value="used" />
+          <setting name="Interrupt_priority" value="3" />
+          <setting name="InterruptH_priority" value="3" />
+          <setting name="InterruptH8" value="unused" />
+        </TAUInterval0>
       </Channel0>
       <Channel1>
         <setting name="ChannelFunction" value="0" />
@@ -2765,7 +2781,7 @@
       <setting name="Counter_initialvalue" value="01/01/2000 00:00:00" />
       <setting name="Alarm_time" value="01/01/2000 00:00:00" />
       <setting name="Alarm_weekday" value="Unchecked,Unchecked,Unchecked,Unchecked,Unchecked,Unchecked,Unchecked," />
-      <setting name="RTC_mode" value="use" />
+      <setting name="RTC_mode" value="not use" />
       <setting name="AlarmEn" value="disable" />
       <setting name="Hour_system" value="1" />
       <setting name="Set_counter" value="true" />
@@ -2837,14 +2853,14 @@
         <setting name="Valid_edge" value="rising" />
         <setting name="Operation" value="used" />
         <setting name="ValidEdge" value="1" />
-        <setting name="Interrupt_priority" value="0" />
+        <setting name="Interrupt_priority" value="3" />
         <setting name="pinsel" value="-1" />
       </INTP8>
       <INTP9>
         <setting name="Valid_edge" value="rising" />
         <setting name="Operation" value="used" />
         <setting name="ValidEdge" value="1" />
-        <setting name="Interrupt_priority" value="0" />
+        <setting name="Interrupt_priority" value="3" />
         <setting name="pinsel" value="-1" />
       </INTP9>
       <INTP10>

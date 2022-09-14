@@ -1,4 +1,4 @@
-Renesas Optimizing Linker (W3.03.00 )             07-Sep-2022 15:28:16
+Renesas Optimizing Linker (W3.04.00 )             14-Sep-2022 09:06:58
 
 *** Options ***
 
@@ -17,12 +17,13 @@ Renesas Optimizing Linker (W3.03.00 )             07-Sep-2022 15:28:16
 -input=".\generate\cstart.obj"
 -input=".\generate\stkinit.obj"
 -input=".\src/chienowa\adc.obj"
+-input=".\src/chienowa\c_main.obj"
 -input=".\src/chienowa\circular_buffer.obj"
 -input=".\src/chienowa\crc8.obj"
 -input=".\src/chienowa\delay.obj"
 -input=".\src/chienowa\eeprom.obj"
 -input=".\src/chienowa\hand_sensor.obj"
--input=".\src/chienowa\main.obj"
+-input=".\src/chienowa\individual_mode.obj"
 -input=".\src/chienowa/module\b_module.obj"
 -input=".\src/chienowa/module\c_module.obj"
 -input=".\src/chienowa/module\e_module.obj"
@@ -42,17 +43,15 @@ Renesas Optimizing Linker (W3.03.00 )             07-Sep-2022 15:28:16
 -input=".\src\r_cg_intc_user.obj"
 -input=".\src\r_cg_port.obj"
 -input=".\src\r_cg_port_user.obj"
--input=".\src\r_cg_rtc.obj"
--input=".\src\r_cg_rtc_user.obj"
 -input=".\src\r_cg_serial.obj"
 -input=".\src\r_cg_serial_user.obj"
 -input=".\src\r_cg_timer.obj"
 -input=".\src\r_cg_timer_user.obj"
 -input=".\src\r_main.obj"
 -input=".\src\r_systeminit.obj"
--library="C:\Program Files (x86)\Renesas Electronics\CS+\CC\CC-RL\V1.10.00\lib\rl78em4s99.lib"
--library="C:\Program Files (x86)\Renesas Electronics\CS+\CC\CC-RL\V1.10.00\lib\rl78em4r.lib"
--library="C:\Program Files (x86)\Renesas Electronics\CS+\CC\CC-RL\V1.10.00\lib\malloc_n.lib"
+-library="D:\Renesas\RL78\1_11_0\lib\rl78em4s99.lib"
+-library="D:\Renesas\RL78\1_11_0\lib\rl78em4r.lib"
+-library="D:\Renesas\RL78\1_11_0\lib\malloc_n.lib"
 -output="HWM_v2.abs"
 -debug
 -nocompress
@@ -81,21 +80,23 @@ SECTION                            START      END         SIZE   ALIGN
 .monitor1
                                   000000ce  000000d7         a   1
 .data
-                                  000000d8  00000e6f       d98   2
+                                  000000d8  00000f05       e2e   2
 .text
-                                  00000e70  00001155       2e6   1
+                                  00000f06  000011d7       2d2   1
 .RLIB
-                                  00001156  00001650       4fb   1
+                                  000011d8  000016d2       4fb   1
 .const
-                                  00003000  00003100       101   2
+                                  00003000  00003101       102   2
 .textf
-                                  00003101  000082fc      51fc   1
+                                  00003102  00008180      507f   1
 .monitor2
                                   0007fe00  0007ffff       200   1
+.init
+                                  000f3f00  000f3f00         0   1
 .bss
-                                  000f4700  000f4a06       307   2
+                                  000f4700  000f49e1       2e2   2
 .dataR
-                                  000f4a08  000f579f       d98   2
+                                  000f49e2  000f580f       e2e   2
 .sbss
                                   000ffe20  000ffe20         0   2
 .sdataR

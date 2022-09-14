@@ -36,6 +36,7 @@ int bp_3_1_4(void);
 
 int bp_3(void);
 int bc_1(void);
+int bc_1_1(void);
 int bc_2(void);
 int bc_3(void);
 int bc_4(void);
@@ -62,7 +63,11 @@ int bc_17(void);
 int bc_18(void);
 int bc_19(void);
 int bc_23(void);
+int bc_24(void);
+
 int be_1(void);
+int be_1_1(void);
+
 int b_b_led_l(void);
 int b_b_led_b(void);
 int b_r_led_l(void);
@@ -81,9 +86,7 @@ int b_sv5(void);
 int b_sv6(void);
 int b_sv7(void);
 
-int bc_1(void);
-int bc_2_3(void);
-int bc_2_4(void);
+
 
 int bs_4(void);
 int bs_4_1(void);

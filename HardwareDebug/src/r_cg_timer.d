@@ -7,8 +7,8 @@ src/r_cg_timer.obj src/r_cg_timer.d: ../src/r_cg_timer.h
 ../src/r_cg_timer.h:
 src/r_cg_timer.obj src/r_cg_timer.d: ../src/r_cg_userdefine.h
 ../src/r_cg_userdefine.h:
-src/r_cg_timer.obj src/r_cg_timer.d: ../src/chienowa/main.h
-../src/chienowa/main.h:
+src/r_cg_timer.obj src/r_cg_timer.d: ../src/chienowa/c_main.h
+../src/chienowa/c_main.h:
 src/r_cg_timer.obj src/r_cg_timer.d: ../src/chienowa/pin_define.h
 ../src/chienowa/pin_define.h:
 src/r_cg_timer.obj src/r_cg_timer.d: ../src/chienowa/global_variable.h

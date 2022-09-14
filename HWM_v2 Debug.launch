@@ -4,14 +4,21 @@
     <booleanAttribute key=".setStepMode" value="false"/>
     <stringAttribute key="com.renesas.cdt.core.initCommands" value=""/>
     <stringAttribute key="com.renesas.cdt.core.ipAddress" value="localhost"/>
+    <stringAttribute key="com.renesas.cdt.core.jtagDevice" value="RL78 Simulator"/>
     <stringAttribute key="com.renesas.cdt.core.jtagDeviceId" value="com.renesas.hardwaredebug.simulator.rl78"/>
+    <listAttribute key="com.renesas.cdt.core.listGDBExe">
+        <listEntry value="rl78-elf-gdb"/>
+    </listAttribute>
+    <listAttribute key="com.renesas.cdt.core.listGDBLaunchName">
+        <listEntry value="main"/>
+    </listAttribute>
     <booleanAttribute key="com.renesas.cdt.core.loadImage" value="true"/>
     <stringAttribute key="com.renesas.cdt.core.optionInitCommands" value=""/>
     <intAttribute key="com.renesas.cdt.core.portNumber" value="61234"/>
     <stringAttribute key="com.renesas.cdt.core.runCommands" value=""/>
     <stringAttribute key="com.renesas.cdt.core.secondGDBExe" value="green_dsp-elf-gdb"/>
     <intAttribute key="com.renesas.cdt.core.secondGdbPortNumber" value="61237"/>
-    <stringAttribute key="com.renesas.cdt.core.serverParam" value="-g SIMULATOR  -t R5F104ML  -umFreq= 2.00 -usFreq= 32.768 -uresetOnReload= 1"/>
+    <stringAttribute key="com.renesas.cdt.core.serverParam" value="-g SIMULATOR  -usecurityIdSize &quot;10&quot; -t R5F104ML -uConnectionTimeout= 30 -umFreq= &quot;2.00&quot; -usFreq= &quot;32.768&quot; -uresetOnReload= 1 -udisplaySimGUI= 1 -uSimulatorSetting= &quot;${workspace_loc:/${ProjName}}/${LaunchConfigName}.simpj&quot;"/>
     <booleanAttribute key="com.renesas.cdt.core.setResume" value="true"/>
     <booleanAttribute key="com.renesas.cdt.core.setStopAt" value="true"/>
     <stringAttribute key="com.renesas.cdt.core.stopAt" value="main"/>

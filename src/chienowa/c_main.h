@@ -5,8 +5,8 @@
  *      Author: Renan
  */
 
-#ifndef CHIENOWA_MAIN_H_
-#define CHIENOWA_MAIN_H_
+#ifndef CHIENOWA_C_MAIN_H_
+#define CHIENOWA_C_MAIN_H_
 
 #include "../r_cg_macrodriver.h"
 #include "pin_define.h"
@@ -27,6 +27,8 @@
 void init(void);
 void loop(void);
 
+void set_timer_setting_default(struct Timer_Setting_s *g);
+void set_number_setting_default(struct Number_Setting_s *g);
 /***********************************************************************************************************************
  Status check
  ***********************************************************************************************************************/
@@ -185,4 +187,4 @@ void k9(void);
 //void t312_alarm_on_off_operation(void);
 //void t9_stop_operation(void);
 
-#endif /* CHIENOWA_MAIN_H_ */
+#endif /* CHIENOWA_C_MAIN_H_ */

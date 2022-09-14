@@ -7,6 +7,8 @@
  */
 
 #include "p_module.h"
+
+#include "../c_main.h"
 #include "s_module.h"
 #include "b_module.h"
 #include "c_module.h"
@@ -14,9 +16,7 @@
 #include "../runtime.h"
 #include "../pin_define.h"
 #include "../delay.h"
-#include "../main.h"
 #include "../hand_sensor.h"
-
 #define ON		(1U)
 #define OFF		(0U)
 
@@ -37,10 +37,22 @@ int p_0(void){                                    //システムメイン起動�
 	 * TODO Bypass init progcess for testing
 	 */
 //	SYSTEM_MODE = NORMAL;
-	if(SYSTEM_MODE == INIT)
+
+	if(SYSTEM_MODE == INIT){
 		p_1();                                        //初期動作モード
-	SYSTEM_MODE = NORMAL;
-	while ( 1 )	{												//20220903 フローチャートとの違いのため作成　goto
+		SYSTEM_MODE = NORMAL;
+	}
+//		b_w_led_l();
+//		c_1(1);
+//	 b_w_led_l();
+//	 wait(2000);
+//	 t_w_led_l();
+//		c_23();
+//		c_24();
+//		t_w_led_l();
+//		runtime();
+
+//	while ( 1 )	{												//20220903 フローチャートとの違いのため作成　goto
 		switch (SYSTEM_MODE) {                    //メモリに書かれているモードへ
 		case INDIVIDUAL:
 			p_3();									//個別動作モード
@@ -53,8 +65,9 @@ int p_0(void){                                    //システムメイン起動�
 			//Not going here
 			break;
 		}															//20220903 フローチャートとの違いのため作成　goto
-		runtime();
-	}
+//	}
+	runtime();
+	return 1;
 }								//TODO Fix add }
 int p_1(void){
 	runtime();
@@ -62,17 +75,27 @@ int p_1(void){
 	t_r_led_l();
 	t_w_led_l();
 	bp_1();                                       //初期動作モード起動水処理
-	p_1_1();                                      //初期抜水処理
+b_b_led_b();
+	p_1_1();                                      //初期抜水処理	b_b_led_l();
+b_r_led_b();
 	p_1_2();                                      //初期給水処理
+b_w_led_l();
 	c_4();                                        //塩Tankチェック処理
 	//c_5();                                        //電解業務チェック処理　フローチャートと相違　コメント行に　20220903goto
+b_w_led_b();
 	p_1_3();                                      //初期Electrolysis水生成処理
-	p_1_4();                                      //初期抜水第２処理
+b_b_led_l();
+	p_1_4(); 										//初期抜水第２処理
+b_w_led_l();
 	p_1_5(); 							//Electrolysis水作成第２処理
 //	p_1_5_2();
 	//Drain water
 //	p_1_1();                                      //replace p15 by this p11
+t_w_led_l();
 	tp_1();                                       //初期動作モードStop process
+	b_r_led_b();
+	wait(10000);
+	t_r_led_l();
 	return 0;
 }
 
@@ -97,7 +120,7 @@ int p_1_1_1(void){                                //初期両タンク抜水処�
 		b_sv5();                                  //(Acid Drain) 起動処理
 		wait(500);
 		b_p1();                                   //(Acid Pump) ポンプ 起動処理
-		g.flag.acid_drainning = 1;                //いらない
+//		g.flag.acid_drainning = 1;                //いらない
 	}
 	while(s_1() > 0 || s_2() > 0){                //タンク空確認
 		if(s_1() == 0 ){ 								//アルタンク空ではない,=を＞に修正　イシイ　　　//フロー＾チャート変更
@@ -156,6 +179,7 @@ int p_1_2(void) {                                 //初期給水処理
     wait(500);
 	t_sv2();                                      //(水吐水) OFF 停止処理
 	wait(g_T_S.t149_s * 1000);                      //g_T_S.t2_msをg_T_S.t149_Mに修正 (CY)
+	c_8();
 	p_3_13();
 	tp_1_2();                                     //初期給水停止処理
 	return 0;
@@ -200,7 +224,8 @@ int p_1_3_2(void) {                               //初期ElectrolysisStart終�
 	wait(g_T_S.t145_s * 1000);						 //g_T_S.t5_sをg_T_S.t145_Sに修正 (CY)
 	t_sv1();                                      //SV1（給水）停止処理
 	//neutralized_timer_off();                      //Neutralized Timer 停止処理
-	g_NEUTRAL_T = timer_stop_ms(g_NEUTRAL_T);				 //Neutralized Timer 停止処理 20220903 sdd GOTO
+	//Change from ms to stop second
+	g_NEUTRAL_T = timer_stop_s(g_NEUTRAL_T);		//Neutralized Timer 停止処理 20220903 sdd GOTO
 	return 0;
 }
 uint16_t we_are_here;
@@ -251,10 +276,14 @@ int p_1_5_2(void) { //2nd initial Electrolysis Stop process
 	g_NEUTRAL_T=timer_stop_s(g_NEUTRAL_T);				 // 中和タイマー停止処理
 	return 0;
 }
+
 int p_2(void){                                    //吐水モード
 	bp_2();										  //吐水モード起動処理
 	do{
-		c_1(C1_ON);				                  //電解業務開始処理
+//		c_1(ON);				                  //電解業務開始処理
+		hs_reset();
+		SYSTEM_MODE = WASHING;
+		WASH_MODE = HAND_WASHING_MODE;
 		switch ( WASH_MODE) {					//TODO: Change to WASHING_MODE
 			case HAND_WASHING_MODE:
 				p_2_4();                          //手洗いモード
@@ -278,36 +307,51 @@ int p_2(void){                                    //吐水モード
 	tp_2();                                       //吐水モード停止処理
 	return 0;
 }
+int16_t debug_here, hs_debug;
 int p_2_1(void){                                  //アルカリ水吐水モード
 	bp_2_1();                                     //アルカリ水吐水モード起動処理
 	// Large loop
+	debug_here = 1;
 	do {
-		c_1(ON);                               //電解業務処理 (ON)
-		c_23();
-		c_24();                                  //長時間チェック処理  追加(CY)
-		if(SYSTEM_MODE != WASHING ||  WASH_MODE != ALKALI_MODE ){	//吐水モードでないか、アルカリ性水モードでない
-			t_p_2_1();                                     //アルカリ吐水モード停止処理
-			return 0;
-		}
+//		c_1(ON);                               //電解業務処理 (ON)
+//		c_23();
+//		c_24();                                  //長時間チェック処理  追加(CY)
+//		if(SYSTEM_MODE != WASHING ||  WASH_MODE != ALKALI_MODE ){	//吐水モードでないか、アルカリ性水モードでない
+//			tp_2_1();                                     //アルカリ吐水モード停止処理
+//			return 0;
+//		}
+		debug_here = 255;
+		hs_reset();
 		if(check_hand_sensor() == 1){
+			hs_debug++;
+			hs_reset();
+			debug_here = 2;
 			b_sv4();                              //SV4(アル吐水) 起動処理
 			b_p2();                               //P2(アルポンプ) 起動処理
-			b_b_led_l();						//TODO: Blink led on Hand sensor
+			b_b_led_l();						//TODO: led on Hand sensor
 
 			//g.timer.alkali_discharge = timer_start_ms();
 			// Small loop
-			while( check_hand_sensor() == 1 || elapsed_time_ms(g_P_2_1_ON_T2) >= g_T_S.t125_s * 1000){	//g_T_S.t35_sをg_T_S.t125_Sに修正 (CY))
-				c_1(ON);
+			uint32_t start_alkaline_wash = timer_start_ms();
+//			while( check_hand_sensor() == 1 || elapsed_time_ms(g_P_2_1_ON_T2) <= g_T_S.t125_s * 1000){	//g_T_S.t35_sをg_T_S.t125_Sに修正 (CY))
+			while( elapsed_time_ms(start_alkaline_wash) <= (uint32_t)g_T_S.t125_s * 1000){	//OR を AND に変更 20220906goto
+				hs_debug =2;
+				debug_here = 3;
+//				c_1(ON);
+//				c_23();									//主チェック処理
 				runtime();
+				if (check_hand_sensor() == 1) break;
 			}
 
 			t_p2();                               //P2(アルポンプ) OFF 設定処理
 			t_sv4();                              //SV4 (アル吐水) OFF 設定処理
 			t_b_led_l();						//TODO: Turn off blinking LED on hand sensor
 			g_FAUCET_OFF_T3 = timer_start_s();
+			hs_reset();
 		}
 		runtime();
 	}while(SYSTEM_MODE == WASHING);				//吐水モードの間は続ける
+	tp_2_1(); 									// 吐水モードでなくなったら、P-2-1終了処理を処実施　20220906追加goto
 	return 0;
 
 }
@@ -315,67 +359,96 @@ int p_2_2(void){                                   //酸性水吐水モード
 	bp_2_2();                                     //酸性水吐水モード起動処理
 	// Large loop
 	do {
-		c_1(ON);                               //電解業務処理 (ON)
-		c_23();									//主チェック処理
-		c_24();                                  //長時間チェック処理  追加(CY)
+//		c_1(ON);                               //電解業務処理 (ON)
+//		c_23();									//主チェック処理
+//		c_24();                                  //長時間チェック処理  追加(CY)
 		if(SYSTEM_MODE != WASHING ||  WASH_MODE !=  ACID_MODE ){		//吐水モードでないか、酸性水モードでない
-			tp_2_2();                                     //酸性水吐水モード停止処理
+			tp_2_2();						 //酸性水吐水モード停止処理
+			c_1(ON);                               //電解業務処理 (ON)
+			c_23();									//主チェック処理
+			c_24();   							 
 			return 0;
 		}
+		hs_reset();
 		if(check_hand_sensor() == 1){
+			hs_debug++;
+
 			b_sv3();                              //SV3(酸性吐水) 起動処理
 			b_p1();                               //P2（酸性ポンプ) 起動処理
 			b_r_led_l();						//TODO: Blink led on Hand sensor
 
 			//g.timer.alkali_discharge = timer_start_ms();
 			// Small loop
-			while( check_hand_sensor() == 1 || elapsed_time_ms(g_P_2_2_ON_T2) >= g_T_S.t126_s * 1000){	//g_T_S.t35_sをg_T_S.t126_Sに修正 (CY))
-				c_1(ON);
-				c_23();									//主チェック処理
+//			while( check_hand_sensor() == 1 || elapsed_time_ms(g_P_2_2_ON_T2) >= g_T_S.t126_s * 1000){	//g_T_S.t35_sをg_T_S.t126_Sに修正 (CY))
+			uint32_t alkaline_wash_start = timer_start_ms();
+			while( elapsed_time_ms(alkaline_wash_start) <= g_T_S.t126_s * 1000){	//OR を AND に変更 20220906goto
+//				c_1(ON);
+//				c_23();									//主チェック処理
 				runtime();
+				if(check_hand_sensor() == 1) break;
 			}
 			t_p1();                               //P2(酸性ポンプ) OFF 設定処理
 			t_sv3();                              //SV4 (酸性吐水) OFF 設定処理
 			t_r_led_l();						//TODO: Turn off blinking LED on hand sensor
+//			c_1(ON);                               //電解業務処理 (ON)
+//			c_23();
 			g_FAUCET_OFF_T3 = timer_start_s();
+			hs_reset();
 		}
 		runtime();
 	}while(SYSTEM_MODE == WASHING);					//吐水モードの間は続ける
+	tp_2_2(); 									// 吐水モードでなくなったら、P-2-1終了処理を処実施　20220906追加goto
+	c_1(ON);                               //電解業務処理 (ON)
+	c_23();									//主チェック処理
+	c_24(); 
 	return 0;
 }
-//
-//int p_2_3(void){                                   //水吐水吐水モード
-//	bp_2_3();                                     //水吐水吐水モード起動処理
-//	// Large loop
-//	do {
-//		c_1(ON);                               //電解業務処理 (ON)
-//		c_23();									//主チェック処理
-//		c_24();                                  //長時間チェック処理  追加(CY)
-//		if(SYSTEM_MODE != WASHING ||  WASH_MODE != WATER_MODE ){		//吐水モードでないか、酸性水モードでない
-//			tp_2_2();                                     //水吐水吐水モード停止処理
-//			return 0;
-//		}
-//		if(check_hand_sensor() == 1){
-//			b_sv2();                              //SV2(水吐水吐水) 起動処理
-//			b_w_led_l();						//TODO: Blink led on Hand sensor
-//
-//			//g.timer.alkali_discharge = timer_start_ms();
-//			// Small loop
+
+int p_2_3(void){                                   //水吐水吐水モード
+	bp_2_3();                                     //水吐水吐水モード起動処理
+	// Large loop
+	do {
+		// c_1(ON);                               //電解業務処理 (ON)
+		// c_23();									//主チェック処理
+		// c_24();                                  //長時間チェック処理  追加(CY)
+		if(SYSTEM_MODE != WASHING ||  WASH_MODE != WATER_MODE ){		//吐水モードでないか、酸性水モードでない
+			tp_2_3();                                     //水吐水吐水モード停止処理
+			c_1(ON);                               //電解業務処理 (ON)
+			c_23();									//主チェック処理
+			c_24(); 
+			return 0;
+		}
+		hs_reset();
+		if(check_hand_sensor() == 1){
+			hs_debug++;
+			b_sv2();                              //SV2(水吐水吐水) 起動処理
+			b_w_led_l();						//TODO: Blink led on Hand sensor
+
+			//g.timer.alkali_discharge = timer_start_ms();
+			// Small loop
 //			while( check_hand_sensor() == 1 || elapsed_time_ms(g_P_2_3_ON_T2) >= g_T_S.t127_s * 1000){	//g_T_S.t34_sをg_T_S.t127_Sに修正 (CY))
+			uint32_t water_wash_start = timer_start_ms();
+			while( elapsed_time_ms(water_wash_start) <= g_T_S.t127_s * 1000){	//OR を AND に変更 20220906goto
 //				c_1(ON);
 //				c_23();									//主チェック処理
-//				runtime();
-//			}
-//			t_sv2();                              //SV4 (水吐水吐水) OFF 設定処理
-//			t_w_led_l();						//TODO: Turn off blinking LED on hand sensor
-//			FAUCET_OFF_T3 = timer_start_s();
-//		}
-//		runtime();
-//	}while(SYSTEM_MODE == WASHING);					//吐水モードの間は続ける
-//	return 0;
-//}
+				runtime();
+				if(check_hand_sensor() == 1) break;
+			}
+			t_sv2();                              //SV4 (水吐水吐水) OFF 設定処理
+			t_w_led_l();						//TODO: Turn off blinking LED on hand sensor
+			g_FAUCET_OFF_T3 = timer_start_s();
+			hs_reset();
+		}
+		runtime();
+	}while(SYSTEM_MODE == WASHING);					//吐水モードの間は続ける
+	tp_2_3();
+	c_1(ON);                               //電解業務処理 (ON)
+	c_23();									//主チェック処理
+	c_24(); 
+	return 0;
+}
 
-
+/*
 int p_2_3(void){                                  //水吐水処理
 	bp_2_3();                                     //水吐水モード起動処理
 	// Large loop
@@ -404,10 +477,10 @@ int p_2_3(void){                                  //水吐水処理
 		}
 		runtime();
 	}while(SYSTEM_MODE != INDIVIDUAL);
-
 	tp_2_3();                                     //水吐水モード停止処理
 	return 0;
 }
+*/
 uint8_t running_hand_washing_debug;
 //uint8_t state, pre_state;
 int p_2_4(void){                                  //手洗いモード(全部出る)
@@ -415,31 +488,34 @@ int p_2_4(void){                                  //手洗いモード(全部出
 	running_hand_washing_debug = 1;
 	do{
 		runtime();
-		c_1(C1_ON);                               //電解業務処理 (ON)
-		c_23();									//主チェック処理
-		c_24();                                   //長時間チェック処理  追加(CY)
+//		 c_1(C1_ON);                               //電解業務処理 (ON)
+//		 c_23();									//主チェック処理
+//	 c_24();                                   //長時間チェック処理  追加(CY)
 		if ((SYSTEM_MODE != NORMAL && SYSTEM_MODE != WASHING ) ||  WASH_MODE != HAND_WASHING_MODE){
 			tp_2_4();							//手洗い水モード停止処理
+			c_1(ON);                               //電解業務処理 (ON)
+//			c_23();									//主チェック処理
+			c_24(); 
 			return 0;
 		}
-
-		if(check_hand_sensor() == 1){
-			++running_hand_washing_debug;
+//		hs_reset();
+		while(check_hand_sensor() != 1){
+			c_1(ON);
+		}
+			hs_reset();
 		//	SYSTEM_MODE = WASHING;
 			p_2_4_1_1();                          //手洗いモード用アルカリ吐水開始処理
-			running_hand_washing_debug++;			//3
+		//3
 //			runtime();
 			p_2_4_1_2();                          //手洗いモード用アルカリ吐水処理
-			running_hand_washing_debug++;			//4
 //			runtime();
 			p_2_4_2_1();                          //手洗いモード用酸吐水開始処理
-			running_hand_washing_debug++;
 //			runtime();
 			p_2_4_1_3();                          //手洗いモード用アルカリ吐水終了処理
-			running_hand_washing_debug++;			//6
 //			runtime();
+			hs_reset();
 			p_2_4_2_2();                          //手洗いモード用酸吐水処理
-			running_hand_washing_debug++;			//7
+
 //			runtime();
 			p_2_4_3_1();                          //手洗いモード用水吐水開始処理
 			running_hand_washing_debug++;			//8
@@ -450,7 +526,17 @@ int p_2_4(void){                                  //手洗いモード(全部出
 			running_hand_washing_debug++;			//10
 			p_2_4_3_3();                          //手洗いモード用水吐水終了処理
 			running_hand_washing_debug++;			//11
-		}
+			hs_reset();
+
+			b_w_led_b();
+			b_w_led_b();
+			c_1(C1_ON);                               //電解業務処理 (ON)
+//			c_23();									//主チェック処理
+//			b_r_led_b();
+			c_24();
+			t_w_led_b();
+			hs_reset();
+
 		runtime();
 	}while(1);
 }
@@ -466,24 +552,25 @@ void p_2_4_1_1(void){                             //手洗モード用アルカ�
 void p_2_4_1_2(void){                             //手洗モード用アルカリ吐出処理
 	b_b_led_l();	                               //LED点灯処理 追加
 	washing_debug = DRAIN_ALKA;
-	if (elapsed_time_ms(g_P2_ON_T2) < (g_T_S.t119_s - 2)*1000){      //変更 (イシイ)
-		c_1(C1_ON);                               //電解業務処理（ON）
+	while (elapsed_time_ms(g_P2_ON_T2) < (g_T_S.t119_s - 2)*1000){      //変更 (イシイ)
+		 c_1(C1_ON);                               //電解業務処理（ON）
+		runtime();
 	}
 	b_b_led_b();                                     //Callan 青LED 点滅処理  // 20220905 修正　b_b_led_l→t_b_led_l goto
-
-	if (elapsed_time_ms(g_P2_ON_T2) > (g_T_S.t119_s * 1000) -  g_T_S.t120_ms){    //規定値
-		c_1(C1_ON);                               //電解業務処理（ON）
+//	while (elapsed_time_ms(g_P2_ON_T2) < ((g_T_S.t119_s * 1000) -  g_T_S.t120_ms)){    //規定値  不等号修正　”>”を”<”に修正　20220906 goto  20220907仮設定　1000ms
+	while (elapsed_time_ms(g_P2_ON_T2) < ((g_T_S.t119_s * 1000) -  1000)){    //規定値  不等号修正　”>”を”<”に修正　20220906 goto
+		 c_1(C1_ON);                               //電解業務処理（ON）
+		runtime();
 	}
     return ;
 }
 void p_2_4_1_3(void){                             //手洗モード用アルカリ吐出終了処理
 	washing_debug = OVERLAP_ALKA;
 	while (elapsed_time_ms(g_P2_ON_T2) <= g_T_S.t119_s * 1000){       //g_T_S.t29_sをg_T_S.t119_Sに修正 (イシイ)
-		c_1(C1_ON);                               //電解業務処理（ON）
+		 c_1(C1_ON);                               //電解業務処理（ON）
 		runtime();
 	}
-	t_b_led_l();                                 //LED点灯処理 追加
-
+	// t_b_led_l();                                 //LED点灯処理 追加
 	t_p2();                                       //P2（アルポンプ）停止処理
 	t_sv4();                                      //SV4（アル吐水）停止処理
 //	NOT_SPOUTING_TSTART
@@ -494,64 +581,73 @@ void p_2_4_2_1(void){                             //手洗モード用酸吐出�
 	bp_2_4_2();                                   //手洗いモード酸吐出起動処理
 	b_sv3();                                      //SV3（酸吐水）起動処理
 	b_p1();                                       //P1（酸ポンプ）起動処理
-	g.timer.acid_discharge = timer_start_ms();          //いらない イシイ
+	// g.timer.acid_discharge = timer_start_ms();          //いらない イシイ
 }
 void p_2_4_2_2(void){                             //手洗モード用酸吐出処理
 	b_r_led_l();			//TODO: Turn ON hand sensor LED (Red)         //Callan 赤LED 点灯処理
 	washing_debug = DRAIM_ACID;
-	if(elapsed_time_ms(g_P1_ON_T2) < (g_T_S.t121_s - 2)*1000){
-        c_1(ON);
+	g_P1_ON_T2 = timer_start_ms();
+	while (elapsed_time_ms(g_P1_ON_T2) < (g_T_S.t121_s- 2)*1000){
+         c_1(ON);
+		runtime();
     }
-	while(g_T_S.t121_s * 1000 - elapsed_time_ms(g_P1_ON_T2) > 2 * 1000 ){		 //g_T_S.t31_sをg_T_S.t121_Sに修正 (イシイ
-		c_1(C1_ON);                               //電解業務処理（ON）
+	b_r_led_b();
+	while (elapsed_time_ms(g_P1_ON_T2) < ((g_T_S.t121_s * 1000) -  g_T_S.t120_ms)){    //20220906　下記行　記述間違えによりこの行に修正した。　goto
+//	while(g_T_S.t121_s * 1000 - elapsed_time_ms(g_P1_ON_T2) > 2 * 1000 ){		 //g_T_S.t31_sをg_T_S.t121_Sに修正 (イシイ 　202209006　記述ミス　前の行に変更　ＧＯＴＯ
+		 c_1(C1_ON);                               //電解業務処理（ON）
 		runtime();
 	}
-	b_r_led_b();		//TODO: Blink hand sensor LED (Red)           //Callan 赤LED 点滅処理
+	//TODO: Blink hand sensor LED (Red)           //Callan 赤LED 点滅処理
+//	while (elapsed_time_ms(g_P1_ON_T2) <= g_T_S.t121_s * 1000 &&
+//			(uint32_t)g_T_S.t121_s * 1000 - elapsed_time_ms(g_P1_ON_T2) <= g_T_S.t120_ms){//g_T_S.t30_sをg_T_S.t121_Sに修正 g_T_S.t32_msをg_T_S.t120_msに修正 (CY)
+//		runtime();
+//		c_1(C1_ON);                               //電解業務処理（ON）
+//	}
 
-	while (elapsed_time_ms(g_P1_ON_T2) <= g_T_S.t121_s * 1000 &&
-			(uint32_t)g_T_S.t121_s * 1000 - elapsed_time_ms(g_P1_ON_T2) <= g_T_S.t120_ms){//g_T_S.t30_sをg_T_S.t121_Sに修正 g_T_S.t32_msをg_T_S.t120_msに修正 (CY)
-		runtime();
-		c_1(C1_ON);                               //電解業務処理（ON）
-	}
 }
 
 void p_2_4_2_3(void){                             //手洗モード用酸吐出終了処理
 	washing_debug = OVERLAP_ACID;
-	while (elapsed_time_ms(g_P1_ON_T2) <= (uint32_t)g_T_S.t121_s * 1000){//g_T_S.t30_sをg_T_S.t121_Sに修正 (CY)
+	while (elapsed_time_ms(g_P1_ON_T2) - ((uint32_t)g_T_S.t121_s * 1000) <= (uint32_t)g_T_S.t120_ms){//g_T_S.t30_sをg_T_S.t121_Sに修正 (CY)
 		c_1(C1_ON);                               //電解業務処理（ON）
 		runtime();
 	}
-	t_r_led_b();	//TODO: Turn off hand sensor LED              //Callan 赤LED 停止処理
-
+//	t_r_led_b();									//TODO: Turn off hand sensor LED              //Callan 赤LED 停止処理
 	t_p1();                                       //P1（酸ポンプ）OFF 設定処理
 	t_sv3();                                      //SV3（酸吐水）OFF 設定処理
 			//TODO: 酸未吐水タイマ＝0 P1_ON_T2 =0
 
 	tp_2_4_2();                                   //手洗いモード酸吐出停止処理
 }
-int p_2_4_3(void){                                //手洗いモード用水吐出処理
-    p_2_4_3_1();                                  //手洗いモード用水吐出開始処理
-    p_2_4_3_2();                                  //手洗いモード用水吐出処理
-    p_2_4_3_3();                                  //手洗いモード用水吐出終了処理
-    return 0;
-}
+//int p_2_4_3(void){                                //手洗いモード用水吐出処理
+//    p_2_4_3_1();                                  //手洗いモード用水吐出開始処理
+//    p_2_4_3_2();                                  //手洗いモード用水吐出処理
+//    p_2_4_3_3();                                  //手洗いモード用水吐出終了処理
+//    return 0;
+//}
 
 void p_2_4_3_1(void){                             //手洗モード用水吐出開始処理
 	bp_2_4_3();                                   //手洗いモード水吐出起動処理
 	b_sv2();                                      //SV2（水吐水）起動処理
 	g.timer.water_discharge = timer_start_ms();
 	washing_debug = DRAIN_WATER;
+	b_w_led_l();
 }
 void p_2_4_3_2(void){                             //手洗モード用水吐出処理
 	 b_w_led_l();//TODO: Turn ON hand sensor (WHITE)           //Callan 白LED 点灯処理
 
+	 b_w_led_l();
 }
+int ttime;
 void p_2_4_3_3(void){                             //手洗モード用水吐出終了処理
+ttime = elapsed_time_ms(g_SV2_ON_T2);
 	while (elapsed_time_ms(g_SV2_ON_T2) <= g_T_S.t123_s * 1000){				//g_T_S.t31_sをg_T_S.t123_Sに修正 (CY)
-		c_1(C1_ON);                               //電解業務処理（ON）
+		// c_1(C1_ON);                               //電解業務処理（ON）
 		runtime();
+		ttime = elapsed_time_ms(g_SV2_ON_T2);
 	}
 	t_w_led_b();//TODO: Turn off hand sensor LED
+	c_1(C1_ON);
 
 	t_sv2();                                      //SV2（水吐水）停止処理
 					//TODO: 水未吐水タイマ＝0

@@ -9,8 +9,8 @@ src/r_cg_serial_user.obj src/r_cg_serial_user.d: ../src/chienowa/raspberry_pi_co
 ../src/chienowa/raspberry_pi_communication.h:
 src/r_cg_serial_user.obj src/r_cg_serial_user.d: ../src/r_cg_userdefine.h
 ../src/r_cg_userdefine.h:
-src/r_cg_serial_user.obj src/r_cg_serial_user.d: ../src/chienowa/main.h
-../src/chienowa/main.h:
+src/r_cg_serial_user.obj src/r_cg_serial_user.d: ../src/chienowa/c_main.h
+../src/chienowa/c_main.h:
 src/r_cg_serial_user.obj src/r_cg_serial_user.d: ../src/chienowa/pin_define.h
 ../src/chienowa/pin_define.h:
 src/r_cg_serial_user.obj src/r_cg_serial_user.d: ../src/chienowa/global_variable.h

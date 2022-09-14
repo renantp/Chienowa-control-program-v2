@@ -11,7 +11,7 @@
 #include "../r_cg_macrodriver.h"
 
 #define MAX_UART_DATA_QUEUE	(10)
-
+float get_2_5(void);
 enum Communication_Command{
 	COMMAND_INIT = 0,
 	H_READ = 82, //0x52, R
@@ -27,14 +27,16 @@ enum Communication_Header{
 	TIME_SETTING = 2,
 	NUMBER_SETTING = 3,
 	ERROR_PACKAGE,
-	INDIVITUAL_OUTPUT,
 	MACHINE_IO_DATA = 23U,
 	WASHING_MODE = 24U,
+	TEST_INDIVITUAL_MODE = 33U,
+	NORMAL_MODE = 34,
 	CONTROL_SETTING = 44U,
+	SALT_PUMP_VOLTAGE = 45U,
 	/* Control Setting options */
 	CONTROL_DRAINAGE_MODE = 39U,
-	CONTROL_POWER_ON = 40U,
-	CONTROL_BIOMETRIC = 41U,
+	CONTROL_BIOMETRIC = 40U,
+	CONTROL_POWER_ON = 41U,
 	CONTROL_WATER_FILTER = 42U,
 };
 

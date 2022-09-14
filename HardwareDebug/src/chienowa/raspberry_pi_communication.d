@@ -17,3 +17,11 @@ src/chienowa/raspberry_pi_communication.obj src/chienowa/raspberry_pi_communicat
 ../src/chienowa/../r_cg_serial.h:
 src/chienowa/raspberry_pi_communication.obj src/chienowa/raspberry_pi_communication.d: ../src/chienowa/delay.h
 ../src/chienowa/delay.h:
+src/chienowa/raspberry_pi_communication.obj src/chienowa/raspberry_pi_communication.d: ../src/chienowa/hand_sensor.h
+../src/chienowa/hand_sensor.h:
+src/chienowa/raspberry_pi_communication.obj src/chienowa/raspberry_pi_communication.d: ../src/chienowa/individual_mode.h
+../src/chienowa/individual_mode.h:
+src/chienowa/raspberry_pi_communication.obj src/chienowa/raspberry_pi_communication.d: ../src/chienowa/water_flow_calculation.h
+../src/chienowa/water_flow_calculation.h:
+src/chienowa/raspberry_pi_communication.obj src/chienowa/raspberry_pi_communication.d: ../src/chienowa/../r_cg_dac.h
+../src/chienowa/../r_cg_dac.h:

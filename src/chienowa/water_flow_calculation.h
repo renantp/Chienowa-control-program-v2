@@ -9,6 +9,7 @@
 #define CHIENOWA_WATER_FLOW_CALCULATION_H_
 
 #include "../r_cg_macrodriver.h"
+extern uint32_t flow_pluse;
 void flow_pluse_callback(void);
 void water_flow_runtime(void);
 

@@ -14,6 +14,7 @@
 #include "../delay.h"
 #include "../adc.h"
 #include "e_module.h"
+#include "../runtime.h"
 
 uint8_t g_c_5_5_10F, g_c_5_5_20F, g_M1030_F;
 
@@ -21,26 +22,40 @@ uint8_t g_c_5_5_10F, g_c_5_5_20F, g_M1030_F;
 #define OFF		(0U)
 																			//訂正部分を//*とする
 int c_1(uint8_t on_off){
+	runtime();
 	switch(on_off){
 		case ON: 															//電解業務停止中(C_1_F=0)であれば停止処理実施
-			if(g_C_1_F == 0){
-				if(g_SP_F == 0){
-					b_sv1();											//SV１（給水） 起動処理
-					b_sp();												//SP（塩ポンプ） 起動処理
-				}
-				if(elapsed_time_s(g_SP_ON_T2)/1000 >= g_T_S.t144_s){			//設定値[144]：規定値2s  //*t4-2からt144へ変更　20220901
-					bc_1(); 													//BC-1 電解業務起動処理
-//					g_NEUTRAL_T = timer_restart_s(g_NEUTRAL_T); 				//中和タイマー起動　NEUTRAL_Tを再起動　 廃止　bc_1()モジュール内で実施　20220904goto
-					return 1;
-				}
-				return -1;
+			s_1();
+			s_2();
+			if(g_ALD == 3 && g_ACD == 3){
+				tc_1();
+				t_sv1();											//SV１（給水） 起動処理
+				t_sp();
+				return 0;
 			}
+			if(g_ALD == 1 || g_ACD == 1){
+				b_sv1();											//SV１（給水） 起動処理
+				b_sp();
+				bc_1();
+				g_C_1_F = 1;
+				return 1;
+			}
+//			if(elapsed_time_s(g_SP_ON_T2)/1000 > g_T_S.t144_s){			//設定値[144]：規定値2s  //*t4-2からt144へ変更　20220901
+//				t_sv1();											//SV１（給水） 起動処理
+//				t_sp();
+//				tc_1(); 													//BC-1 電解業務起動処理
+				//				g_NEUTRAL_T = timer_restart_s(g_NEUTRAL_T); 				//中和タイマー起動　NEUTRAL_Tを再起動　 廃止　bc_1()モジュール内で実施　20220904goto
+//				return 1;
+	//		}
 			c_5(); 															//電解業務チェック処理
+//			b_w_led_b();
 			c_23();			//TODO: c23()									//主チェック処理
+//			t_w_led_b();
 			return 0;
+
 		case OFF:							//電解業務停止中(C_1_F=1)であれば停止処理実施
 			if(g_C_1_F == 1){
-				if(g_SP_F == 1){
+				if(g_SP_F == 1 ){
 					t_sp();											//SP（塩ポンプ） 停止処理
 				}
 				if(elapsed_time_s(g_SP_F)/1000 >= g_T_S.t145_s){
@@ -66,28 +81,30 @@ int c_1_1(void) {
 	g_NEUTRAL_T = timer_stop_s(g_NEUTRAL_T);				 				//中和タイマー停止処理
 	return 1;
 }
+
 int c_2(void) {
-	bc_2(); 																	//アルカリタンク状態チェック起動処理
+	bc_2();//アルカリタンク状態チェック起動処理
 	const int status = s_1();												//アルカリタンク状況（ALD）
 	switch(status){														//※FL4,FL5,FL6センサーの異常を確認
-		case 0:															//ALD 0 タンク（空）
+		case 0:											//ALD 0 タンク（空）
 			e_1029(); 														//アルカリタンク空エラー処理
 			return 0;
 		case 1: 															//ALD 1
 			return 1;
 		case 2:															//ALD 2
 			return 2;
-		case 3: 															//ALD 3
+		case 3:											//ALD 3
 			return 3;
 		default: 															//ALD -1以下（センサ異常）
 			e_1025(); 														//アルカリタンクセンサーエラー処理
 			return -1;
 	}
 }
+
 int c_3(void){
 	bc_3();																//酸タンク状態チェック起動処理
-	const int status = s_2(); 												//酸タンク(ACD)
-	switch(status){ 														//※FL1,FL2,FL3センサーの異常確認
+	 											//酸タンク(ACD)
+	switch(s_2()){ 														//※FL1,FL2,FL3センサーの異常確認
 		case 0: 															//ACD 0 （タンク空）
 			e_1028(); 														//酸タンク空エラー処理
 			return 0;
@@ -373,14 +390,14 @@ int c_8(void){
 	}
 	return 0;
 }
-
+int keika_taime;
 int c_9(void){
-																			//中和タイマ（電解処理積算時間（3））を設置し利用 NEUTRAL_T
-	bc_9(); 																//通話処理チェック起動処理
-	if(elapsed_time_s(g_NEUTRAL_T) > g_T_S.t155_h * 60 ){
+																		//中和タイマ（電解処理積算時間（3））を設置し利用 NEUTRAL_T
+	bc_9(); 
+	keika_taime=elapsed_time_s(g_NEUTRAL_T);															//通話処理チェック起動処理
+	if(keika_taime > (g_T_S.t155_h * 3600)  ){     //* 60 add  * 60* 60 OK 20220906goto
 																			//中和タイマーが設定時間（[155]分） 超えた場合（注1）
-																			//設定値[155]：規定値60分
-																			//※注1：電解処理を一定時間実施したら、中和処理を実施する
+																		//設定値[155]：規定値60分																//※注1：電解処理を一定時間実施したら、中和処理を実施する
 		e_2();			//TODO: E2 											//中和処理
 		return 0;
 	}
@@ -493,6 +510,8 @@ int c_14(void){
 			if(g_C_14_F == 0){
         																	//満水フラグoff（C_14_TF_F＝0）？
 				g_C_14_F = 1;
+
+				c_1(0);
         																	//満水フラグon(C_14_TF_F＝1)
 				e_5001(); 													//貯水タンク満水エラー処理
 				return -1;
@@ -503,6 +522,8 @@ int c_14(void){
 	if(g_C_14_F == 1){
     																		//満水フラグon（C_14_TF_F＝1）？
 		g_C_14_F = 0;
+
+		c_1(1);
     																		//満水フラグoff(C_14_TF_F＝0)
 		e_5002(); 															//貯水タンク満水エラー解除処理
 		return 0;
@@ -510,9 +531,10 @@ int c_14(void){
 	return 1;
 }
 int c_15(void){
+
 	bc_15(); 																//塩タンク蓋開異常チェック起動処理
 	const int g_C_15_D = SALT_LID_PIN; 										//塩タンク蓋情報取得
-	if(g_C_15_D== 0){
+	if(g_C_15_D == 1){
     																		//開
 		tc_15(); 															//塩タンク蓋開異常チェック停止処理
 		e_1022();															//塩タンク蓋開異常エラー処理
@@ -546,8 +568,10 @@ int c_17(void){
 			e_1033(); 													//電解積算時間エラー警報処理
 			return -1;
 		}
+		tc_17();
 		return 0;
 	}
+	tc_17();
 	return 1;
 }
 int c_18(void){
@@ -581,30 +605,27 @@ int c_19(void){
 	}
 }
 int c_23(void){
-	bc_2_3(); 																//主チェック起動処理
-	c_2();
-  																			//アルカリタンク状態チェック処理
-	c_3();
-  																			//酸タンク状態チェック処理
-	c_4();
-  																			//塩タンク状態チェック処理
+	bc_23(); 																//主チェック起動処理
+	c_2(); 																			//アルカリタンク状態チェック処理
+	c_3(); 																			//酸タンク状態チェック処理
+	c_4();  																			//塩タンク状態チェック処理
 	c_8(); 																	//流量センサチェック処理
 	c_9(); 																	//中和処理チェック処理
 	c_10();				 													//給水電磁弁漏れチェック処理
 	c_11(); 																//漏水チェック処理
 	c_13(); 																//酸アルカリタンク溢れ処理
 	c_14(); 																//貯水タンク(アルカリ・酸)満水処理
-	c_15(); 																//塩タンク蓋開異常処理
-	tc_2_3();																//主チェック停止処理
+	c_15(); 																//塩タンク蓋開異常処理																//主チェック停止処理
+	tc_23();
 	return 0;
 }
 int c_24(void){
-	bc_2_4(); 																//長時間起動処理
+	bc_24(); 																//長時間起動処理
 	c_6(); 																	//カラン未使用チェック処理
 	c_7(); 																	//電解処理未使用チェック処理
 	c_12(); 																//フィルターチェック処理
 	c_16(); 																//運転積算時間警報チェック処理
 	c_17(); 																//電解積算時間警報チェック処理
-	tc_2_4(); 																//長時間チェック停止処理
+	tc_24(); 																//長時間チェック停止処理
 	return 0;
 }

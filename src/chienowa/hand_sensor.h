@@ -29,7 +29,7 @@ extern struct HAND_SENSOR_S {
 void hand_sensor_blink(enum HS_COLOR color, uint32_t duration);
 int check_hand_sensor(void);
 void hand_sensor_runtime(void);
-
+void hs_reset(void);
 
 void hs_oda_intc_callback(void);
 void hs_ocl_intc_callback(void);
